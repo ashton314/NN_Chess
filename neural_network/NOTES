@@ -1,0 +1,7 @@
+-*- mode: org -*-
+
+* Tue Sep  3 21:04:23 MDT 2013
+  I think I'll make two nn libraries: the first will be using
+  closures. Powerful, but a bit slower. The second will compile a nn
+  into more efficent code. I'll use the same base code so I don't have
+  to convert my networks from one to the other.
