@@ -1,0 +1,14 @@
+=head1 NAME
+
+Capstone Project -- Neural-network enhancements to a Negascout chess framework
+
+=head1 SYNOPSIS
+
+## WORKING HERE
+
+=head1 DESCRIPTION
+
+=head1 AUTHOR
+
+Ashton Wiersdorf
+
