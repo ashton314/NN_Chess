@@ -8,13 +8,24 @@
 (define *false-signal* 0)
 
 (define (make-node . data)
-  (let ((input-nodes  (or (assoc 'input-nodes data) '()))
-	(weights      (or (assoc 'weights data) '()))
-	(bias         (or (assoc 'bias data) *bias*))
-	(output       (or (assoc 'output data) #f))
-	(function     (or (assoc 'function data) (lambda (inputs weights)
-						   (apply + (map * inputs weights)))))
+  (if (not (null? data)) (set! data (cdr data)))
+
+  (define-syntax do-it
+    (syntax-rules ()
+      ((do-it slot default)
+       (or (let ((temp (assoc 'slot data)))
+	     (if temp
+		 temp
+		 default))))))
+
+  (let ((input-nodes  (do-it input-nodes '()))
+	(weights      (do-it weights '()))
+	(bias         (do-it bias *bias*))
+	(output       (do-it output #f))
+	(function     (do-it function (lambda (inputs weights)
+					(apply + (map * inputs weights)))))
 	(value #f))
+
     (lambda (operation)
       (case operation			; This could be a symbol or a list of values as inputs
 	((input-nodes) (lambda (op . rest) (if (eq? op 'get) input-nodes
