@@ -30,7 +30,7 @@
 		   (write-string " - ")
 		   (write-string test-name)
 		   (write-string "\n")))))
-  (set! is (lambda (one two test-name)
+  (set! is (lambda (two one test-name)
 	     (set! tests-run (+ tests-run 1))
 	     (if (equal? one two)
 		 (begin
@@ -49,7 +49,7 @@
 		   (write one)
 		   (write-string "\n     Got: ")
 		   (write-line two)))))
-  (set! is-eq (lambda (one two test-name)
+  (set! is-eq (lambda (two one test-name)
 		(set! tests-run (+ tests-run 1))
 		(if (eq? one two)
 		    (begin
