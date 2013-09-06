@@ -11,6 +11,8 @@
   (if (not (null? data)) (set! data (cdr data)))
 
   (define-syntax do-it
+    ;; This is just to make getting default data into the closure
+    ;; variables prettier and easier.
     (syntax-rules ()
       ((do-it slot default)
        (or (let ((temp (assoc 'slot data)))
