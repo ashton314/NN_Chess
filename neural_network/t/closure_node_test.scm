@@ -31,7 +31,7 @@
 
 (define output (make-node `(input-nodes (,input0 ,input1)) '(weights (.5 .5))))
 (define result #f)
-((output 'output) 'set! (lambda (val) (set! result #f) 'from-result))
+((output 'output) 'set! (lambda (val) (set! result val) 'from-result))
 
 (is ((output 'input-nodes) 'get) (list input0 input1) "input nodes correct for output")
 (is ((output 'weights) 'get) (list .5 .5) "weights correct for output node")
@@ -39,5 +39,7 @@
 (is-eq (output 'run) 'from-result "output.output returned correctly")
 (ok result "result is set")
 
-
 (done-testing)
+
+(write-string "Result: ")
+(pretty-print result)
