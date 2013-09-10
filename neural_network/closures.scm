@@ -8,7 +8,9 @@
 (define *false-signal* 0)
 
 (define (make-node . data)
-  (if (not (null? data)) (set! data (cdr data)))
+;  (if (not (null? data)) (set! data (cdr data)))
+
+;  (pretty-print data)
 
   (define-syntax do-it
     ;; This is just to make getting default data into the closure
@@ -17,7 +19,7 @@
       ((do-it slot default)
        (or (let ((temp (assoc 'slot data)))
 	     (if temp
-		 temp
+		 (cadr temp)
 		 default))))))
 
   (let ((input-nodes  (do-it input-nodes '()))
