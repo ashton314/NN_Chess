@@ -26,8 +26,13 @@
 (is ((input0 'bias) 'get) *bias* "bias set to default for input0")
 
 ((input0 'input-nodes) 'set! (list (lambda (op) *input0-input*)))
-((input0 'weights) 'set! (list *s0-weight*))
 
+(input0 'initilize-weights)
+(is (length ((input0 'weights) 'get)) 1 "correct number of weights initilized for input0")
+(ok (and (> (car ((input0 'weights) 'get)) 0) (< (car ((input0 'weights) 'get)) 1)) (format #f "weight set between 0 and 1 for input0: ~A"
+											    (car ((input0 'weights) 'get))))
+
+((input0 'weights) 'set! (list *s0-weight*))
 (is ((input0 'weights) 'get) (list *s0-weight*) "weights set correctlly for input0")
 
 (define input1 (make-node))
