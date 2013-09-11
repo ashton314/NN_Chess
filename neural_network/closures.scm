@@ -7,6 +7,9 @@
 (define *true-signal* 1)
 (define *false-signal* 0)
 
+(define (activation value)
+  (/ 1 (+ 1 (exp (- value)))))
+
 (define (make-node . data)
 ;  (if (not (null? data)) (set! data (cdr data)))
 
@@ -47,16 +50,11 @@
 					 (if (eq? op 'set!) (set! value (car rest)) (error "Unknown option -- value")))))
 	((reset) (set! value #f) (map (lambda (node) (node 'reset)) input-nodes))
 
-	((run) (begin
-		 (if value value
-		     (if (>= (function (map (lambda (node) (node 'run)) input-nodes) weights) bias) 
-			 (begin
-			   (set! value *true-signal*)
-			   (if output (output *true-signal*) *true-signal*))
-			 (begin
-			   (set! value *false-signal*)
-			   (if output (output *false-signal*) *false-signal*))))))
-
+	((run) (if value value
+		   (let* ((val (function (map (lambda (node) (node 'run)) input-nodes) weights))
+			  (out (activation val)))
+		     (set! value out)
+		     (if output (output out) out))))
 	(else (if (or (not (pair? operation)) (not (= (length operation) (length weights))))
 		  (error "Wrong input to neural node!")
 		  (if (>= (function operation weights) bias)
