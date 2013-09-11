@@ -4,6 +4,11 @@
 (load "../../lib/tap.scm")
 (load "../closures.scm")
 
+;; utility functions
+
+(define (good val1 val2 tol)
+  (< (abs (- val1 val2)) tol))
+
 ;; (plan-tests 11)
 
 (define *input0-input* 1)
@@ -44,9 +49,31 @@
 (is-eq (output 'run) 'from-result "output.output returned correctly")
 (ok result "result is set")
 
-(write-string "Result: ")
-(pretty-print result)
-(write-string "\n")
+;; (write-string "Result: ")
+;; (pretty-print result)
+;; (write-string "\n")
 
+;;; Single node testing
+
+(define test-node0 (make-node `(weights (.5 .2 .1)) (list 'input-nodes
+							  (list (lambda (op) .1) (lambda (op) .5) (lambda (op) .3)))))
+
+(is ((test-node0 'weights) 'get) '(.5 .2 .1) "weights set correctly for test-node0")
+(define test0-result (test-node0 'run))
+(ok (< (abs (- test0-result .545)) .001) (format #f "node computed value correctly: ~A" test0-result))
+
+;;; Two-layer network testing (no learning)
+
+(define *test1-input0* 0.2)
+(define *test1-input1* 0.4)
+
+(define test1-input0 (make-node '(weights (.1 .9)) `(input-nodes (,(lambda (op) *test1-input0*)
+								  ,(lambda (op) *test1-input1*)))))
+(define test1-input1 (make-node '(weights (.5 .8)) `(input-nodes (,(lambda (op) *test1-input0*)
+								  ,(lambda (op) *test1-input1*)))))
+(define test1-output (make-node '(weights (.7 .5)) `(input-nodes (,test1-input0 ,test1-input1))))
+
+(define test1-result (test1-output 'run))
+(ok (good test1-result 0.672 0.001) (format #f "network returned correctly: ~A" test1-result))
 
 (done-testing)
