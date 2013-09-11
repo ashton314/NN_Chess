@@ -3,7 +3,7 @@
 ;;; Part of the NN_Chess project
 
 (define *bias* 1)
-(define *learning-rate* 0.01)
+(define *learning-rate* 1)
 (define *true-signal* 1)
 (define *false-signal* 0)
 
@@ -78,6 +78,21 @@
 		    (out (activation val)))
 	       (set! value out)
 	       (if output (output out) out))))
+
+
+	;; Learning routines
+
+	((learn)
+	 ;; Calls back-prop on input nodes. This is to be called ONLY on output nodes
+	 (lambda (target)
+	   (let* ((out (activation (function (map (lambda (node) (node 'run)) input-nodes))))
+		  (d-a (* out (- 1 out) (- target out))))
+	     (set! weights (map (lambda (weight node) (+ weight (* *learning-rate* d-a ((node 'value) 'get)))) weights input-nodes)))))
+	     
+
+	((back-prop)
+	 (lambda (
+
 
 	(else (if (or (not (pair? operation)) (not (= (length operation) (length weights))))
 		  (error "Wrong input to neural node!")

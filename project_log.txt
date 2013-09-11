@@ -1,0 +1,9 @@
+Start: Wed Sep 11 08:00:02 MDT 2013
+End:   Wed Sep 11 08:20:49 MDT 2013
+
+This is to help me keep track of the project, and so that I don't have
+to clutter up the git commit with these longer entries.
+
+Today I'm working on implementing the backprop algorithm. I'm using
+that PDF series I found. Once I get that working I'll write some tests
+using the examples in the PDF.
