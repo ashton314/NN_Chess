@@ -99,9 +99,11 @@
 ;; (test2-hidden0 'init)
 ;; (test2-hidden1 'init)
 (test2-output 'init)
+(ok (not (null? ((test2-hidden0 'output-nodes) 'get))) "output nodes defined for hidden node 0")
+(ok (not (null? ((test2-hidden1 'output-nodes) 'get))) "output nodes defined for hidden node 1")
 
 (define test2-result0 (test2-output 'run))
-(ok (good test2-result0 0.69 0.01) (format #f "network ran correctly: ~A" test2-result0))
+(ok (good test2-result0 0.69 0.01) (format #f "learning network ran correctly (pass 1): ~A" test2-result0))
 
 ((test2-output 'calculate-error) *test2-target*)
 
@@ -110,6 +112,7 @@
 
 (test2-output 'learn)
 
-
+(define test2-result1 (test2-output 'run))
+(ok (good (abs (- test2-result1 0.5)) 0.18205 0.001) (format #f "network learned correctly: ~A" test2-result1))
 
 (done-testing)
