@@ -117,3 +117,12 @@
 (ok (good (abs (- test2-result1 0.5)) 0.18205 0.001) (format #f "network learned correctly: ~A" test2-result1))
 
 (done-testing)
+
+(do ((i 0 (+ i 1)))
+    ((> i 1000) (format #t "Final result: ~A~%" (test2-output 'run)))
+  ((test2-output 'calculate-error) *test2-target*)
+  (test2-output 'learn)
+  (test2-output 'reset)
+  (test2-output 'run))
+
+(write-string "Done.\n")
