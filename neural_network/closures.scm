@@ -57,111 +57,110 @@
 	 (error-delta #f)
 	 (value #f))
 
-    (letrec ((self (lambda (operation)			; I need to refer to this node within itself for the init function
-		     (case operation			; This could be a symbol or a list of values as inputs
-		       ((init)
-			;; This sends itself to all the nodes that it gets output from for backprop
-			(map (lambda (node) ((node 'push-outputs) self)) input-nodes))
-
-		       ((push-outputs)
-			;; takes a node closure and pushes it onto output-nodes
-			(lambda (node) (push! output-nodes node)))
-
-			((input-nodes)
-			 (getter-setter input-nodes))
-
-			((weights)
-			 (getter-setter weights))
-
-			((initilize-weights)
-			 ;; set weights to random values
-			 (set! weights (map (lambda (nul) (random-real)) input-nodes)))
-
-			((output)
-			 (getter-setter output))
-
-			((bias)
-			 (getter-setter bias))
-
-			((function)
-			 (getter-setter function))
-
-			((value)
-			 (getter-setter value))
-
-			((error-delta)
-			 (lambda (op . rest)
-			   (if (eq? op 'get)
-			       (if error-delta
-				   error-delta
-				   (begin
-				     (self 'back-prop)
-				     error-delta))
-			       (if (eq? op 'set!)
-				   (set! error-delta (car rest))
-				   (error (format #f "Unknown option passed to node: ~A -- error-delta" op))))))
-
-			((reset)
-			 ;; reset value to #f
-			 (set! value #f) (map (lambda (node) (node 'reset)) input-nodes))
-
-			((run)
-			 ;; probe the node (recursively calls any input nodes) and
-			 ;; memotize the value for the node
-			 (if value value
-			     (let* ((val (function (map (lambda (node) (node 'run)) input-nodes) weights))
-				    (out (activation val)))
-			       (set! value out)
-			       (if output (output out) out))))
-
-
-			;; Learning routines
-
-			((calculate-error)
-			 ;; This is to be called ONLY on output nodes
-			 ;; Must call on ALL the output nodes before running learn!!
-			 (lambda (target)
-			   (let* ((out (activation (function (map (lambda (node) (node 'run)) input-nodes))))
-				  (d-a (* out (- 1 out) (- target out))))
-			     (set! error-delta d-a)
-			     (format #t "Error for output node is: ~A~%" error-delta)
-			     (set! weights (map (lambda (weight node) (+ weight (* *learning-rate* d-a ((node 'value) 'get))))
-						weights input-nodes)))))
-
-			((learn)
-			 ;; Must call calculate-error on all output nodes BEFORE running this function
-			 ;; This function should be called ONCE (I think)
-			 (map (lambda (node) (node 'back-prop)) input-nodes))
-
-			((back-prop)
-			 ;; Grabs deltas from downstream nodes and uses it to calculate the deltas for its weights
-			 (if (null? output-nodes) (error "No output nodes defined for this node!"))
-			 
-			 (define (finder key key-list value-list)
-			   ;; this is so I can find the weight of this
-			   ;; node given the list of input nodes and
-			   ;; weights of the downstream node
-			   (if (or (null? key-list) (null? value-list))
-			       (error "Could not find key in list!")
-			       (if (eq? key (car key-list))
-				   (car value-list)
-				   (finder key (cdr key-list) (cdr value-list)))))
-
-			 (let ((delta (* value (- 1 value)
-					 (apply + (map (lambda (downstream-node)
-							 (* ((downstream-node 'error-delta) 'get) ; Downstream error
-							    (finder self ((downstream-node 'input-nodes) 'get)
-								    ((downstream-node 'weights) 'get))))
-						       output-nodes)))))
-			   (format #t "Error delta is: ~A~%" delta)
-			   (set! error-delta delta)
-			   (set! weights (map (lambda (weight node) (+ weight (* *learning-rate* delta ((node 'value) 'get))))
-					      weights input-nodes)))
-			 (map (lambda (node) (node 'back-prop)) input-nodes))
-
-
-			(else (if (or (not (pair? operation)) (not (= (length operation) (length weights))))
-				  (error "Wrong input to neural node!")
-				  (if (>= (function operation weights) bias)
-				      *true-signal*
-				      *false-signal*)))))))))))
+    (define self (lambda (operation)			; I need to refer to this node within itself for the init function
+		   (case operation			; This could be a symbol or a list of values as inputs
+		   ((init)
+		    ;; This sends itself to all the nodes that it gets output from for backprop
+		    (map (lambda (node) ((node 'push-outputs) self)) input-nodes))
+		   
+		   ((push-outputs)
+		    ;; takes a node closure and pushes it onto output-nodes
+		    (lambda (node) (push! output-nodes node)))
+		   
+		   ((input-nodes)
+		    (getter-setter input-nodes))
+		   
+		   ((weights)
+		    (getter-setter weights))
+		   
+		   ((initilize-weights)
+		    ;; set weights to random values
+		    (set! weights (map (lambda (nul) (random-real)) input-nodes)))
+		   
+		   ((output)
+		    (getter-setter output))
+		   
+		   ((bias)
+		    (getter-setter bias))
+		   
+		   ((function)
+		    (getter-setter function))
+		   
+		   ((value)
+		    (getter-setter value))
+		   
+		   ((error-delta)
+		    (lambda (op . rest)
+		      (if (eq? op 'get)
+			  (if error-delta
+			      error-delta
+			      (begin
+				(self 'back-prop)
+				error-delta))
+			  (if (eq? op 'set!)
+			      (set! error-delta (car rest))
+			      (error (format #f "Unknown option passed to node: ~A -- error-delta" op))))))
+		   
+		   ((reset)
+		    ;; reset value to #f
+		    (set! value #f) (map (lambda (node) (node 'reset)) input-nodes))
+		   
+		   ((run)
+		    ;; probe the node (recursively calls any input nodes) and
+		    ;; memotize the value for the node
+		    (if value value
+			(let* ((val (function (map (lambda (node) (node 'run)) input-nodes) weights))
+			       (out (activation val)))
+			  (set! value out)
+			  (if output (output out) out))))
+		   
+		   
+		   ;; Learning routines
+		   
+		   ((calculate-error)
+		    ;; This is to be called ONLY on output nodes
+		    ;; Must call on ALL the output nodes before running learn!!
+		    (lambda (target)
+		      (let* ((out (activation (function (map (lambda (node) (node 'run)) input-nodes))))
+			     (d-a (* out (- 1 out) (- target out))))
+			(set! error-delta d-a)
+			(format #t "Error for output node is: ~A~%" error-delta)
+			(set! weights (map (lambda (weight node) (+ weight (* *learning-rate* d-a ((node 'value) 'get))))
+					   weights input-nodes)))))
+		   
+		   ((learn)
+		    ;; Must call calculate-error on all output nodes BEFORE running this function
+		    ;; This function should be called ONCE (I think)
+		    (map (lambda (node) (node 'back-prop)) input-nodes))
+		   
+		   ((back-prop)
+		    ;; Grabs deltas from downstream nodes and uses it to calculate the deltas for its weights
+		    (letrec ((finder (lambda (key key-list value-list)
+				       ;; this is so I can find the weight of this
+				       ;; node given the list of input nodes and
+				       ;; weights of the downstream node
+				       (if (or (null? key-list) (null? value-list))
+					   (error "Could not find key in list!")
+					   (if (eq? key (car key-list))
+					       (car value-list)
+					       (finder key (cdr key-list) (cdr value-list)))))))
+		      (if (null? output-nodes) (error "No output nodes defined for this node!"))
+		    
+		      (let ((delta (* value (- 1 value)
+				      (apply + (map (lambda (downstream-node)
+						      (* ((downstream-node 'error-delta) 'get) ; Downstream error
+							 (finder self ((downstream-node 'input-nodes) 'get)
+								 ((downstream-node 'weights) 'get))))
+						    output-nodes)))))
+			(format #t "Error delta is: ~A~%" delta)
+			(set! error-delta delta)
+			(set! weights (map (lambda (weight node) (+ weight (* *learning-rate* delta ((node 'value) 'get))))
+					   weights input-nodes)))
+		      (map (lambda (node) (node 'back-prop)) input-nodes)))
+		   
+		   
+		   (else (if (or (not (pair? operation)) (not (= (length operation) (length weights))))
+			     (error "Wrong input to neural node!")
+			     (if (>= (function operation weights) bias)
+				 *true-signal*
+				 *false-signal*))))))))
