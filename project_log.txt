@@ -1,5 +1,6 @@
 Start: Wed Sep 11 08:00:02 MDT 2013
 End:   Wed Sep 11 08:20:49 MDT 2013
+Total: ~0:20
 
 This is to help me keep track of the project, and so that I don't have
 to clutter up the git commit with these longer entries.
@@ -7,3 +8,29 @@ to clutter up the git commit with these longer entries.
 Today I'm working on implementing the backprop algorithm. I'm using
 that PDF series I found. Once I get that working I'll write some tests
 using the examples in the PDF.
+
+.
+
+
+Start: Thu Sep 12 17:29:03 MDT 2013
+End:   Thu Sep 12 20:32:24 MDT 2013
+Subtractions: 1:00
+Total: ~2:00
+
+Finished writing a crude back propogation algorithm! The interface is
+very messy, but it passed the tests. Now that I've got the very basics
+of the network working, I'll try my network model out on some more
+complicated examples, and test doing "real" learning with it. For fun,
+I could teach it to play tic-tac-toe.
+
+I'm wanting to rewrite the network simulator. The model I've got right
+now is kinda messy and probably fairly inefficent. I think I'll try
+writing another closure-based network system, but this time do it
+better.
+
+Eventually, I'd like to write the network with closures that compile
+into some nice, fast code. I might wait to do this until after I've
+got other elements of this project working, such as the chess engine
+and the Negascout framework.
+
+.
