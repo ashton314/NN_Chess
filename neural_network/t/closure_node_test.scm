@@ -68,6 +68,7 @@
 (ok (< (abs (- test0-result .545)) .001) (format #f "node computed value correctly: ~A" test0-result))
 
 ;;; Two-layer network testing (no learning)
+ ;; Side note: This might actually be a three-layer network...
 
 (define *test1-input0* 0.2)
 (define *test1-input1* 0.4)
@@ -80,5 +81,35 @@
 
 (define test1-result (test1-output 'run))
 (ok (good test1-result 0.672 0.001) (format #f "network returned correctly: ~A" test1-result))
+
+
+;;; Three-layer network testing (with learning)
+
+(define *test2-inputA* 0.35)
+(define *test2-inputB* 0.9)
+(define *test2-target* 0.5)
+
+(define test2-hidden0 (make-node '(weights (.1 .8)) `(input-nodes (,(lambda (op) *test2-inputA*)
+								   ,(lambda (op) *test2-inputB*)))))
+(define test2-hidden1 (make-node '(weights (.4 .6)) `(input-nodes (,(lambda (op) *test2-inputA*)
+								   ,(lambda (op) *test2-inputB*)))))
+
+(define test2-output (make-node '(weights (.3 .9)) `(input-nodes (,test2-hidden0 ,test2-hidden1))))
+
+;; (test2-hidden0 'init)
+;; (test2-hidden1 'init)
+(test2-output 'init)
+
+(define test2-result0 (test2-output 'run))
+(ok (good test2-result0 0.69 0.01) (format #f "network ran correctly: ~A" test2-result0))
+
+((test2-output 'calculate-error) *test2-target*)
+
+(ok (good ((test2-output 'error-delta) 'get) -0.0406 0.001)
+    (format #f "error for output node correct: ~A" ((test2-output 'error-delta) 'get)))
+
+(test2-output 'learn)
+
+
 
 (done-testing)
