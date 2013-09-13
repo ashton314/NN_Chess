@@ -27,6 +27,15 @@
 (define (activation value)
   (/ 1 (+ 1 (exp (- value)))))
 
+(define (make-constant-node value)
+  (let ((node (make-node '(weights (1)))))
+    ((node 'value) 'set! value)
+    (lambda (operation)
+      (case operation
+	((initilize-weights calculate-error learn back-prop reset) #f) ; forbidden actions
+	((run) ((node 'value) 'get))
+	(else (node operation))))))
+
 (define (make-node . data)
 
   (define-syntax do-it

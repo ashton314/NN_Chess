@@ -85,14 +85,14 @@
 
 ;;; Three-layer network testing (with learning)
 
-(define *test2-inputA* 0.35)
-(define *test2-inputB* 0.9)
+(define *test2-inputA* (make-constant-node 0.35))
+(define *test2-inputB* (make-constant-node 0.9))
 (define *test2-target* 0.5)
 
-(define test2-hidden0 (make-node '(weights (.1 .8)) `(input-nodes (,(lambda (op) *test2-inputA*)
-								   ,(lambda (op) *test2-inputB*)))))
-(define test2-hidden1 (make-node '(weights (.4 .6)) `(input-nodes (,(lambda (op) *test2-inputA*)
-								   ,(lambda (op) *test2-inputB*)))))
+(define test2-hidden0 (make-node '(weights (.1 .8)) `(input-nodes (,*test2-inputA*
+								   ,*test2-inputB*))))
+(define test2-hidden1 (make-node '(weights (.4 .6)) `(input-nodes (,*test2-inputA*
+								   ,*test2-inputB*))))
 
 (define test2-output (make-node '(weights (.3 .9)) `(input-nodes (,test2-hidden0 ,test2-hidden1))))
 
@@ -111,6 +111,7 @@
     (format #f "error for output node correct: ~A" ((test2-output 'error-delta) 'get)))
 
 (test2-output 'learn)
+(test2-output 'reset)
 
 (define test2-result1 (test2-output 'run))
 (ok (good (abs (- test2-result1 0.5)) 0.18205 0.001) (format #f "network learned correctly: ~A" test2-result1))
