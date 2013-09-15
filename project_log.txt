@@ -51,3 +51,12 @@ was easy to read.) The macros I'm writing for this are the largest
 I've written to date (in Scheme of course), but they are far from the
 most complex out there.
 .
+
+Start: Sat Sep 14 21:17:45 MDT 2013
+End:   Sat Sep 14 23:25:43 MDT 2013
+Subtractions: 0:10
+Total: ~2:00
+
+I got back propagation working with my macro tests!! For one day, I've
+done a lot. I'm going to go to bed now...
+.
