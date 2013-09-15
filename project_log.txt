@@ -8,9 +8,7 @@ to clutter up the git commit with these longer entries.
 Today I'm working on implementing the backprop algorithm. I'm using
 that PDF series I found. Once I get that working I'll write some tests
 using the examples in the PDF.
-
 .
-
 
 Start: Thu Sep 12 17:29:03 MDT 2013
 End:   Thu Sep 12 20:32:24 MDT 2013
@@ -32,5 +30,24 @@ Eventually, I'd like to write the network with closures that compile
 into some nice, fast code. I might wait to do this until after I've
 got other elements of this project working, such as the chess engine
 and the Negascout framework.
+.
 
+Start: Sat Sep 14 17:42:30 MDT 2013
+End:   Sat Sep 14 20:34:51 MDT 2013
+Total: ~3:00
+
+I didn't like how ugly the closure nodes looked, so I started working
+on a version that uses scheme macros. To do this, I picked a syntax
+for the networks that I liked better than the old syntax, and then
+basically wrote my own Domain Specific Language to implement the new
+syntax.
+
+I haven't ever done much work with Scheme's pattern matching
+macros. I've used Common Lisp's macros extensivly, and thanks to Paul
+Graham's book "On Lisp", I got to the point where I wrote an extremely
+complex macro system that allowed me to write a very concise natural
+language parser. (By concise I mean it had minimal boiler plate and
+was easy to read.) The macros I'm writing for this are the largest
+I've written to date (in Scheme of course), but they are far from the
+most complex out there.
 .
