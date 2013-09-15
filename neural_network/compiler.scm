@@ -36,26 +36,38 @@
 ;; Root learning call
 (test-net 'train target1 target2 ...)
 
-(define-syntax create-nodes
-  (syntax-rules ()
-    ((create-nodes ((node-name (input weight) ...) ...) logic)
-     (let ((node-name '((inputs input ...)
-			(weights weight ...)
-			(value #f))) ...)
-       logic))))
+;; TODO: Write a sort of backwards pass through the network to set all
+;; of the nodes "outputs" values
 
 (define-syntax define-net
   (syntax-rules ()
-    ((define-net net-name (input-nodes ...) (output-nodes ...) node-descriptors ...)
+    ((define-net net-name (input-nodes ...) (output-nodes ...) (node-name (input weight) ...) ...)
      (define (net-name op . inputs)
-       (create-nodes (node-descriptors ...)
-	  (case op
-	    ((run)			; inputs are in values
-	     (let ((input-nodes (pop! inputs)) ...)
-	       (map (lambda (node-name)
-		      
-		      ) output-nodes ...)
+       (let ((nodes '((input-nodes (inputs '())
+				   (outputs '())
+				   (weights '())
+				   (value (pop! inputs))) ...
+		      (node-name (inputs input)
+				 (outputs '())
+				 (weights weights)
+				 (value #f)) ...)))
+	 (case op
+	   ((run)			; inputs are in values
+	    (let ((input-nodes (pop! inputs)) ...)
 
-	    ((train)			; two lists: first are inputs, second are target values
+	      (define (get-value node)
+		(let ((this-node (cdr (assoc node nodes))))
+		  (let ((this-value (cadr (assoc 'value this-node))))
+		    (if this-value this-value
+			(let ((new-value (apply + (map * (map get-value (cadr (assoc 'inputs this-node)))
+						       (cadr (assoc 'weights this-node))))))
+			  (set-cdr! (assoc 'value this-node) new-value)
+			  new-value)))))
 
-	     )
+	      (map (lambda (node-name)
+		     
+		     ) '(output-nodes ...))
+	      
+	      ((train)			; two lists: first are inputs, second are target values
+	       
+	       )
