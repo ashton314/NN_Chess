@@ -58,7 +58,8 @@
 
 	 (case op
 	   ((run)			; inputs are in values
-	    (map (lambda (node) (set-car! (cdr (assoc 'value (cdr (assoc node nodes)))) (pop! input-values))) '(input-nodes ...))
+	    (for-each (lambda (node) (set-car! (cdr (assoc 'value (cdr node))) #f)) nodes)
+	    (for-each (lambda (node) (set-car! (cdr (assoc 'value (cdr (assoc node nodes)))) (pop! input-values))) '(input-nodes ...))
 	    (map get-value '(output-nodes ...)))
 
 	   ((debug-nodes)
@@ -69,21 +70,3 @@
 	    (error "to be implemented"))
 	   (else
 	    (error "bad operation on neural net"))))))))
-
-
-
-(define-net test-net
-  (input1 input2)
-  (out1)
-
-  ;; Hidden layers
-  (node-a (input1 0.1) (input2 0.8))
-  (node-b (input1 0.4) (input2 0.6))
-
-  ;; Output nodes
-  (out1 (node-a 0.3) (node-b 0.9))
-  (out2 (node-a 0.1) (node-b 0.5)))
-
-;; Root learning call
-;(test-net 'train target1 target2 ...)
-
