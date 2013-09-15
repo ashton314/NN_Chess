@@ -12,6 +12,7 @@
 (define-net test-net00
   (input1 input2)
   (out1)
+  1
 
   ;; Hidden layers
   (node-a (input1 0.1) (input2 0.8))
