@@ -31,19 +31,19 @@
     ((define-net net-name (input-nodes ...) (output-nodes ...) _learning-rate (node-name (input weight) ...) ...)
      (define (net-name op . input-values)
        (let ((learning-rate _learning-rate) ; prevent multiple evaluation (does this happen with Scheme's macros)
-	     (nodes `((input-nodes (inputs '())
-				   (outputs '())
-				   (weights '())
+	     (nodes `((input-nodes (inputs ())
+				   (outputs ())
+				   (weights ())
 				   (error-delta 'undef)
 				   (value #f)) ...
 		      (node-name (inputs (input ...))
- 				 (outputs '())
+ 				 (outputs ())
  				 (value #f)
 				 (error-delta #f)
 				 (weights (weight ...))) ...)))
 
 	 (for-each (lambda (node)	; initilize outputs
-		     (set-cdr! (assoc 'outputs (cdr node))
+		     (set-car! (cdr (assoc 'outputs (cdr node)))
 			       (map car (filter (lambda (other-node)
 						  (memq (car node) (cadr (assoc 'inputs (cdr other-node))))) nodes))))
 		   nodes)
@@ -61,29 +61,38 @@
 	   ;; `node' is the cdr of (assoc ,node-name nodes)
 
 	   (define (searcher nodes weights)
-	     (if (there-exists? null? (list nodes weights))
+	     (if (there-exists? (list nodes weights) null?)
 		 (error (format #f "could not find node ~A in inputs of an output node!" this-node))
 		 (if (eq? (car nodes) this-node)
 		     (car weights)
 		     (searcher (cdr nodes) (cdr weights)))))
 		 
 
-	   (if (cadr (assoc 'error-delta node))
-	       #t			; already computed
-	       (let ((delta (let ((val (cadr (assoc 'value node))))
-			      (* val (- 1 val)
-				 (apply + (map (lambda (output-node) (* (cadr (assoc 'error-delta output-node))
-									(searcher (cadr (assoc 'input-nodes output-node))
-										  (cadr (assoc 'weights output-node)))))
-					       (map (lambda (sym) (cdr (assoc sym nodes))) (cadr (assoc 'output-nodes node)))))))))
-		 (set-car! (cdr (assoc 'error-delta node)) delta)
-		 (set-car! (cdr (assoc 'weights node))
-			   (map (lambda (weight in-node)
-				  (+ weight (* learning-rate delta (cadr (assoc 'value in-node)))))
-				(map (lambda (sym) (cdr (assoc sym nodes))) (cadr (assoc 'input-nodes node)))))))
+	   (let ((bad-node (find-matching-item (map (lambda (sym) (assoc sym nodes)) (cadr (assoc 'outputs node)))
+					       (lambda (out-node)
+						 (not (cadr (assoc 'error-delta (cdr out-node))))))))
+	     (if bad-node
+		 (back-prop (car bad-node) (cdr bad-node))
+		 (begin
+		   (if (or (cadr (assoc 'error-delta node))
+			   (null? (assoc 'inputs node)))
+		       #t			; already computed or not needed to correct
+		       (let ((delta (let ((val (cadr (assoc 'value node))))
+				      (* val (- 1 val)
+					 (apply + (map (lambda (output-node)
+							 (* (cadr (assoc 'error-delta output-node))
+							    (searcher (cadr (assoc 'inputs output-node))
+								      (cadr (assoc 'weights output-node)))))
+						       (map (lambda (sym) (cdr (assoc sym nodes))) (cadr (assoc 'outputs node)))))))))
+			 (set-car! (cdr (assoc 'error-delta node)) delta)
+			 (set-car! (cdr (assoc 'weights node))
+				   (map (lambda (this-weight in-node)
+					  (+ this-weight (* learning-rate delta (cadr (assoc 'value in-node)))))
+					(cadr (assoc 'weights node))
+					(map (lambda (sym) (cdr (assoc sym nodes))) (cadr (assoc 'inputs node)))))))
 						 
-	   (for-each (lambda (input-node) (back-prop input-node (cdr (assoc input-node nodes)))) ; recurse to input nodes
-		     (cadr (assoc 'input-nodes node))))
+		   (for-each (lambda (input-node) (back-prop input-node (cdr (assoc input-node nodes)))) ; recurse to input nodes
+			     (cadr (assoc 'inputs node)))))))
 
 	 (case op
 	   ((run)			; inputs are in values
@@ -105,12 +114,12 @@
 			  (let ((self-node (cdr (assoc node nodes))))
 			    (set-car! (cdr (assoc 'error-delta self-node)) delta)
 			    (set-car! (cdr (assoc 'weights self-node))
-				      (map (lambda (weight in-node)
-					     (+ weight (* learning-rate delta (cadr (assoc value (cdr (assoc in-node nodes)))))))
-					   (cdr (assoc 'weights self-node))
-					   (cdr (assoc 'input-nodes self-node))))
+				      (map (lambda (this-weight in-node)
+					     (+ this-weight (* learning-rate delta (cadr (assoc 'value (cdr (assoc in-node nodes)))))))
+					   (cadr (assoc 'weights self-node))
+					   (cadr (assoc 'inputs self-node))))
 			    (for-each (lambda (input-node) (back-prop input-node (cdr (assoc input-node nodes))))
-				      (cadr (assoc 'input-nodes self-node)))))
+				      (cadr (assoc 'inputs self-node)))))
 			'(output-nodes ...) deltas)))
 	   (else
 	    (error "bad operation on neural net"))))))))
