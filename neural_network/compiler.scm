@@ -23,9 +23,6 @@
   ;; Sigmoid function
   (/ 1 (+ 1 (exp (- value)))))
 
-;; TODO: Write a sort of backwards pass through the network to set all
-;; of the nodes "outputs" values
-
 (define-syntax define-net
   (syntax-rules ()
     ((define-net net-name (input-nodes ...) (output-nodes ...) _learning-rate (node-name (input weight) ...) ...)
@@ -58,11 +55,16 @@
 		     new-value)))))
 
 	 (define (back-prop this-node node)
+;; 	   (format #t "##### BACKPROP: this-node: '~A' node: '~A'~%" this-node node)
 	   ;; `node' is the cdr of (assoc ,node-name nodes)
+
+;	   (debug)
 
 	   (define (searcher nodes weights)
 	     (if (there-exists? (list nodes weights) null?)
-		 (error (format #f "could not find node ~A in inputs of an output node!" this-node))
+		 (begin
+		   (debug)
+		   (error (format #f "could not find node ~A in inputs of an output node!" this-node)))
 		 (if (eq? (car nodes) this-node)
 		     (car weights)
 		     (searcher (cdr nodes) (cdr weights)))))
@@ -71,7 +73,7 @@
 	   (let ((bad-node (find-matching-item (map (lambda (sym) (assoc sym nodes)) (cadr (assoc 'outputs node)))
 					       (lambda (out-node)
 						 (not (cadr (assoc 'error-delta (cdr out-node))))))))
-	     (if bad-node
+	     (if bad-node ; one of this node's output nodes' error-delta has not been computed
 		 (back-prop (car bad-node) (cdr bad-node))
 		 (begin
 		   (if (or (cadr (assoc 'error-delta node))
@@ -88,7 +90,9 @@
 			 (set-car! (cdr (assoc 'weights node))
 				   (map (lambda (this-weight in-node)
 					  (+ this-weight (* learning-rate delta (cadr (assoc 'value in-node)))))
-					(cadr (assoc 'weights node))
+					(let ((lambda-val (cadr (assoc 'weights node))))
+;					  (debug)
+					  lambda-val)
 					(map (lambda (sym) (cdr (assoc sym nodes))) (cadr (assoc 'inputs node)))))))
 						 
 		   (for-each (lambda (input-node) (back-prop input-node (cdr (assoc input-node nodes)))) ; recurse to input nodes
@@ -104,6 +108,18 @@
 	    ;; For debugging purposes
 	    nodes)
 	      
+	   ((init)
+	    ;; Set node weights to random values
+	    (for-each (lambda (node)
+			(set-car! (cdr (assoc 'weights node))
+				  (map (lambda (nul) (random-real)) (cadr (assoc 'inputs node)))))
+		      (map cdr nodes)))
+
+;	    (map (lambda (o) (pretty-print o) (write-string "\n")) nodes))
+
+	   ((last-errors)
+	    (map (lambda (node) (cadr (assoc 'error-delta node))) (map (lambda (sym) (cdr (assoc sym nodes))) '(output-nodes ...))))
+
 	   ((train)			; two lists: first are inputs, second are target values
 	    (for-each (lambda (node) (set-car! (cdr (assoc 'error-delta (cdr node))) #f)) nodes) ; clear error deltas
 	    (let* ((inputs (car input-values))
