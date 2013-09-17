@@ -1,5 +1,5 @@
 Start: Wed Sep 11 08:00:02 MDT 2013
-End:   Wed Sep 11 08:20:49 MDT 2013
+Stop:  Wed Sep 11 08:20:49 MDT 2013
 Total: ~0:20
 
 This is to help me keep track of the project, and so that I don't have
@@ -11,7 +11,7 @@ using the examples in the PDF.
 .
 
 Start: Thu Sep 12 17:29:03 MDT 2013
-End:   Thu Sep 12 20:32:24 MDT 2013
+Stop:  Thu Sep 12 20:32:24 MDT 2013
 Subtractions: 1:00
 Total: ~2:00
 
@@ -33,7 +33,7 @@ and the Negascout framework.
 .
 
 Start: Sat Sep 14 17:42:30 MDT 2013
-End:   Sat Sep 14 20:34:51 MDT 2013
+Stop:  Sat Sep 14 20:34:51 MDT 2013
 Total: ~3:00
 
 I didn't like how ugly the closure nodes looked, so I started working
@@ -53,10 +53,19 @@ most complex out there.
 .
 
 Start: Sat Sep 14 21:17:45 MDT 2013
-End:   Sat Sep 14 23:25:43 MDT 2013
+Stop:  Sat Sep 14 23:25:43 MDT 2013
 Subtractions: 0:10
 Total: ~2:00
 
 I got back propagation working with my macro tests!! For one day, I've
 done a lot. I'm going to go to bed now...
+.
+
+Start: Mon Sep 16 20:55:00 MDT 2013
+Stop:  Mon Sep 16 22:00:47 MDT 2013
+Total: 1:05
+
+Working on doing character recognition. Not going so well... I don't
+know what's wrong. I need to debug this before I move onto my chess
+engines etc.
 .
