@@ -126,6 +126,7 @@
 		   (targets (cadr input-values))
 		   (first-pass (apply net-name `(run ,@inputs)))
 		   (deltas (map (lambda (output target) (* (- target output) (- 1 output) output)) first-pass targets)))
+;	      (format #t "Inputs:  ~A~%Targets: ~A~%" inputs targets)
 	      (for-each (lambda (node delta)
 			  (let ((self-node (cdr (assoc node nodes))))
 			    (set-car! (cdr (assoc 'error-delta self-node)) delta)
