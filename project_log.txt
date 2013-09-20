@@ -69,3 +69,35 @@ Working on doing character recognition. Not going so well... I don't
 know what's wrong. I need to debug this before I move onto my chess
 engines etc.
 .
+
+Start: Tue Sep 17 19:41:31 MDT 2013
+Stop:  Tue Sep 17 20:57:54 MDT 2013
+Subractions: 0:00
+Total: ~1:00
+
+Debugging the character recognition net. I wrote some simpler pattern
+learning networks, which worked. I'm going to get a server and train
+my character recognizer heavily.
+.
+
+Start: Wed Sep 18 08:08:18 MDT 2013
+Stop:  Wed Sep 18 08:21:49 MDT 2013
+Total: 0:13
+
+Worked on compiling the net into closures.
+.
+
+Start: Thu Sep 19 19:16:39 MDT 2013
+Stop:  Thu Sep 19 19:21:22 MDT 2013
+Start: Thu Sep 19 20:32:48 MDT 2013
+Stop:  Thu Sep 19 22:19:47 MDT 2013
+Total: ~1:45
+
+Worked on debugging the new system. I've fixed quite a few minor bugs,
+but I have no idea as to how many I've got left. Right now the values
+for nodes (at least the output nodes) are not being set
+correctly. Obviously, this is a problem as I query those nodes to get
+the output of the neural net. I'm suspecting the problem is where I
+have the logic for getting node values. (See the closure construction
+of the nodes.)
+.

@@ -49,32 +49,48 @@
 	 (define-syntax getter-setter
 	   (syntax-rules ()
 	     ((_ loc hash)
-	      (let ((data-slot (cadr assoc loc hash)))
+	      (let ((data-slot (cadr (assoc loc hash))))
 		(lambda (op . rest)
 		  (if (eq? op 'get)
 		      data-slot
 		      (if (eq? op 'set!)
 			  (set! data-slot (car rest))
-			  (error (format #f "Unknown option passed to node: ~A -- ~A" op 'loc)))))))))
+			  (error (format #f "Unknown option passed to node: ~A -- ~A" op loc)))))))))
 
-	 (for-each (lambda (node)	; compile pass
-		     (let ((values (cdr node)))
-		       (set-car! (cdr node)
-				 (lambda (op)
-				   (case op
-				     ((sym-name) (getter-setter 'sym-name values))
-				     ((inputs) (getter-setter 'inputs values))
-				     ((outputs) (getter-setter 'outputs values))
-				     ((weights) (getter-setter 'weights values))
-				     ((error-delta) (getter-setter 'error-delta values))
-				     ((value) (getter-setter 'value values))		
-				     (else (error (format #f "Unknown option to node: ~A" op))))))))
-		   nodes)
+	 (set! nodes (map (lambda (node) ; compile pass
+			    (let ((values (cdr node)))
+			      (list (car node)
+				    (letrec ((this-node
+					      (lambda (op)
+						(case op
+						  ((sym-name) (getter-setter 'sym-name values))
+						  ((inputs) (getter-setter 'inputs values))
+						  ((outputs) (getter-setter 'outputs values))
+						  ((weights) (getter-setter 'weights values))
+						  ((error-delta) (getter-setter 'error-delta values))
+						  ((value)
+						   (let ((data-slot (assoc 'value values)))
+						     (lambda (op . rest)
+						       (if (eq? op 'get)
+							   (if data-slot data-slot
+							       (let ((new-value (activation (apply + (map * (map (lambda (input-node)
+														   ((input-node 'value) 'get))
+														 ((this-node 'inputs) 'get))
+													  ((this-node 'weights) 'get))))))
+								 (set! data-slot new-value)
+								 new-value))
+							   (if (eq? op 'set!)
+							       (set! data-slot (car rest))
+							       (error (format #f "Unknown option passed to node: ~A -- value" op)))))))
+
+						  (else (error (format #f "Unknown option to node: ~A" op)))))))
+				      this-node))))
+			  nodes))
 
 	 (for-each (lambda (node)	; linker pass
-		     ((node 'inputs) 'set! (map (lambda (node) (cadr (assoc node nodes))) ((node 'inputs) 'get))))
+		     ((node 'inputs) 'set! (map (lambda (node) (cadr (assoc node nodes))) ((node 'inputs) 'get)))
 		     ((node 'outputs) 'set! (map (lambda (node) (cadr (assoc node nodes))) ((node 'outputs) 'get))))
-		   nodes)
+		   (map cadr nodes))
 
 	 (define (back-prop node)
 	   ;; node => closure-object
