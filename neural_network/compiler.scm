@@ -27,7 +27,7 @@
   (syntax-rules ()
     ((define-net net-name (input-nodes ...) (output-nodes ...) _learning-rate (node-name (input weight) ...) ...)
      (define (net-name op . input-values)
-       (let ((learning-rate _learning-rate) ; prevent multiple evaluation (does this happen with Scheme's macros)
+       (let ((learning-rate _learning-rate) ; prevent multiple evaluation (does this happen with Scheme's macros?)
 	     (nodes `((input-nodes (inputs ())
 				   (outputs ())
 				   (weights ())
@@ -118,14 +118,14 @@
 						     ((node 'weights) 'get)
 						     ((node 'inputs) 'get)))))
 						 
-		   (for-each (lambda (input-node) (back-prop input-node (cdr (assoc input-node nodes)))) ; recurse to input nodes
-			     (cadr (assoc 'inputs node)))))))
+		   (for-each back-prop ((node 'inputs) 'get))))))
 
 	 (case op
 	   ((run)			; inputs are in values
-	    (for-each (lambda (node) (set-car! (cdr (assoc 'value (cdr node))) #f)) nodes) ; clear memoized values
-	    (for-each (lambda (node) (set-car! (cdr (assoc 'value (cdr (assoc node nodes)))) (pop! input-values))) '(input-nodes ...))
-	    (map get-value '(output-nodes ...)))
+	    (for-each (lambda (node) ((node 'value) 'set! #f)) (map cadr nodes)) ; clear memoized values
+	    (for-each (lambda (node) ((node 'value) 'set! (pop! input-values))) (map (lambda (sym) (cadr (assoc sym nodes)))
+										     '(input-nodes ...)))
+	    (map (lambda (sym) (((cadr (assoc sym nodes)) 'value) 'get)) '(output-nodes ...)))
 
 	   ((debug-nodes)
 	    ;; For debugging purposes
@@ -134,29 +134,28 @@
 	   ((init)
 	    ;; Set node weights to random values
 	    (for-each (lambda (node)
-			(set-car! (cdr (assoc 'weights node))
-				  (map (lambda (nul) (random-real)) (cadr (assoc 'inputs node)))))
+			((node 'weights) 'set!
+			 (map (lambda (nul) (random-real)) ((node 'weights) 'get))))
 		      (map cdr nodes)))
 
 	   ((last-errors)
-	    (map (lambda (node) (cadr (assoc 'error-delta node))) (map (lambda (sym) (cdr (assoc sym nodes))) '(output-nodes ...))))
+	    (map (lambda (node) ((node 'error-delta) 'get)) (map (lambda (sym) (cadr (assoc sym nodes))) '(output-nodes ...))))
 
 	   ((train)			; two lists: first are inputs, second are target values
-	    (for-each (lambda (node) (set-car! (cdr (assoc 'error-delta (cdr node))) #f)) nodes) ; clear error deltas
+	    (for-each (lambda (node) ((node 'error-delta) 'set! #f)) (map cadr nodes)) ; clear error deltas
 	    (let* ((inputs (car input-values))
 		   (targets (cadr input-values))
 		   (first-pass (apply net-name `(run ,@inputs)))
 		   (deltas (map (lambda (output target) (* (- target output) (- 1 output) output)) first-pass targets)))
 	      (for-each (lambda (node delta)
-			  (let ((self-node (cdr (assoc node nodes))))
-			    (set-car! (cdr (assoc 'error-delta self-node)) delta)
-			    (set-car! (cdr (assoc 'weights self-node))
-				      (map (lambda (this-weight in-node)
-					     (+ this-weight (* learning-rate delta (cadr (assoc 'value (cdr (assoc in-node nodes)))))))
-					   (cadr (assoc 'weights self-node))
-					   (cadr (assoc 'inputs self-node))))
-			    (for-each (lambda (input-node) (back-prop input-node (cdr (assoc input-node nodes))))
-				      (cadr (assoc 'inputs self-node)))))
+			  (let ((self-node (cadr (assoc node nodes))))
+			    ((self-node 'error-delta) 'set! delta)
+			    ((self-node 'weights) 'set!
+			     (map (lambda (this-weight in-node)
+				    (+ this-weight (* learning-rate delta ((in-node 'value) 'get))))
+				  ((self-node 'weights) 'get)
+				  ((self-node 'inputs) 'get)))
+			    (for-each back-prop ((self-node 'inputs) 'get))))
 			'(output-nodes ...) deltas)))
 	   (else
 	    (error "bad operation on neural net"))))))))
