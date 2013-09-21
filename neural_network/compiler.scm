@@ -32,7 +32,7 @@
 				   (inputs ())
 				   (outputs ())
 				   (weights ())
-				   (error-delta 'undef)
+				   (error-delta undef)
 				   (value #f)) ...
 		      (node-name (sym-name node-name)
 				 (inputs (input ...))
@@ -51,14 +51,16 @@
 	   (syntax-rules ()
 	     ((_ place)
 	      (lambda (flag . rest)
-		(if (eq? flag 'get)
+		(if (or (eq? flag 'get-raw)
+			(eq? flag 'get))
 		    place
 		    (if (eq? flag 'set!)
 			(set! place (car rest))
-			(error (format #f "Unknown option passed to node: ~A -- ~A" flag loc))))))))
+			(error (format #f "Unknown option passed to node: ~A -- ~A" flag place))))))))
 
 	 (set! nodes (map (lambda (node) ; compile pass
 			    (let ((values (cdr node)))
+			      (format #t "Creating node '~A'~%" (cadr (assoc 'sym-name values)))
 			      (list (car node)
 				    (let ((slot-sym-name (cadr (assoc 'sym-name values)))
 					  (slot-inputs (cadr (assoc 'inputs values)))
@@ -75,22 +77,31 @@
 						    ((weights) (getter-setter slot-weights))
 						    ((error-delta) (getter-setter slot-error-delta))
 						    ((value)
-						     (let ((data-slot (cadr (assoc 'value values))))
-						       (lambda (op . rest)
-							 (if (eq? op 'get-raw)
-							     data-slot
-							     (if (eq? op 'get)
-								 (if data-slot data-slot
-								     (let ((new-value (activation (apply + (map * (map (lambda (input-node)
-															 ((input-node 'value) 'get))
-														       ((this-node 'inputs) 'get))
-														((this-node 'weights) 'get))))))
-								       (set! data-slot new-value)
-								       new-value))
-								 (if (eq? op 'set!)
-								     (set! data-slot (car rest))
-								     (error (format #f "Unknown option passed to node: ~A -- value" op))))))))
+						     (lambda (op . rest)
+						       (if (eq? op 'get-raw)
+							   slot-value
+							   (if (eq? op 'get)
+							       (begin
+;								 (format #t "Getting value for ~A: '~A'~%" ((this-node 'sym-name) 'get) slot-value)
+							       (if slot-value slot-value
+								   (let ((new-value (activation (apply + (map * (map (lambda (input-node)
+														       ((input-node 'value) 'get))
+														     ((this-node 'inputs) 'get))
+													      ((this-node 'weights) 'get))))))
+;								     (format #t "New computed value for ~A: '~A'~%" slot-sym-name new-value)
+;								     (if (equal? new-value 1/2) (error "Blow up!!!!!!"))
+								     (set! slot-value new-value)
+;								     (format #t "New value for ~A: '~A'~%" ((this-node 'sym-name) 'get) new-value)
+								     new-value)))
+							       (if (eq? op 'set!)
+								   (begin
+								     (if (equal? (car rest) 1/2) (error "Node getting set to 1/2!!!!"))
+;								     (format #t "Setting new value for ~A to '~A'~%" ((this-node 'sym-name) 'get) (car rest))
+								     (set! slot-value (car rest)))
+								   (error (format #f "Unknown option passed to node: ~A -- value" op)))))))
 						    (else (error (format #f "Unknown option to node: '~A'" op)))))))
+;					(format #t "Still creating node '~A' Value: '~A'~%" slot-sym-name slot-value)
+;					(if (equal? slot-value 1/2) (error "Wrong again!!"))
 					this-node)))))
 			  nodes))
 
@@ -107,11 +118,12 @@
 		     ((node 'outputs) 'set! (map (lambda (node) (cadr (assoc node nodes))) ((node 'outputs) 'get))))
 		   (map cadr nodes))
 
-;; 	 (map (lambda (node) (pretty-print (list ((node 'sym-name) 'get)
-;; 						 (map (lambda (slot) (list slot ((node slot) 'get)))
-;; 						      '(inputs outputs weights error-delta value))))
-;; 		      (newline))
-;; 	      (map cadr nodes))
+	 (define (pretty-print-self)
+	   (map (lambda (node) (pretty-print (list ((node 'sym-name) 'get)
+						   (map (lambda (slot) (list slot ((node slot) 'get-raw)))
+							'(inputs outputs weights error-delta value))))
+			(newline))
+		(map cadr nodes)))
 
 	 (define (back-prop node)
 	   ;; node => closure-object
@@ -160,16 +172,18 @@
 	 (case op
 	   ((run)			; inputs are in values
 	    (for-each (lambda (node) ((node 'value) 'set! #f)) (map cadr nodes)) ; clear memoized values
+	    (pretty-print-self)
+	    (format #t "Setting input nodes to: ~A~%" input-values)
 	    (for-each (lambda (node) ((node 'value) 'set! (pop! input-values))) (map (lambda (sym) (cadr (assoc sym nodes)))
 										     '(input-nodes ...)))
 	    (write-string "###########################################\n")
-	    (net-name 'debug-nodes-pretty)
+	    (pretty-print-self)
 	    (write-string "###########################################\n")
 	    (map (lambda (sym) (((cadr (assoc sym nodes)) 'value) 'get)) '(output-nodes ...)))
 
 	   ((debug-nodes-pretty)
 	    (map (lambda (node) (pretty-print (list ((node 'sym-name) 'get)
-						    (map (lambda (slot) (list slot ((node slot) 'get)))
+						    (map (lambda (slot) (list slot ((node slot) 'get-raw)))
 							 '(inputs outputs weights error-delta value))))
 			 (newline))
 		 (map cadr nodes)))
