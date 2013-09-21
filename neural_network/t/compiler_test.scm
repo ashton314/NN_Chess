@@ -22,10 +22,14 @@
   ;; Output nodes
   (out1 (node-a 0.3) (node-b 0.9)))
 
+(test-net00 'debug-nodes-pretty)
+
 (let ((result1 (car (test-net00 'run 0.35 0.9)))
       (result2 (car (test-net00 'run 0.9 0.35))))
   (ok (good result1 0.69 0.01) (format #f "test-net00 ran correctly: ~A" result1))
   (ok (not (= result1 result2)) (format #f "test-net00 returned different result: ~A" result2)))
+
+(test-net00 'debug-nodes-pretty)
 
 (let ((result1 (car (test-net00 'run 0.35 0.9)))
       (result2 0))
@@ -33,6 +37,9 @@
   (test-net00 'train '(0.35 0.9) '(0.5))
   (set! result2 (car (test-net00 'run 0.35 0.9)))
   (ok (good (abs (- result2 0.5)) 0.18205 0.001) (format #f "test-net00 trained correctly: ~A" result2)))
+
+(test-net00 'debug-nodes-pretty)
+
 
 (define-net test-net01
   (in1 in2)
@@ -110,8 +117,6 @@
 		(format #t "Warn! Error increasing (Error: ~A) after ~A iterations!~%" err (- training-times times)))
 	    (trainer (- times 1) next-pattern this-pattern last-error2 err)))))
   (trainer training-times *test02-pattern1* *test02-pattern2* error-pass1 error-pass2))
-
-
 
 (done-testing)
 

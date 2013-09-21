@@ -113,3 +113,12 @@ arround the place where I'm using `case'... I'm considering replacing
 my usage of `case' with a `cond' expression so I can poke around in
 the internals a bit more.
 .
+
+Start: Sat Sep 21 15:55:32 MDT 2013
+Stop:  Sat Sep 21 17:38:02 MDT 2013
+
+Got compiling into closures working. I need to do a speed trial, and
+try out my character recognition with the new system.
+
+That was one heck of a debug session!
+.

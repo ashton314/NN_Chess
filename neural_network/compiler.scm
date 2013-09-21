@@ -166,13 +166,8 @@
 	       (case op
 		 ((run)			; inputs are in values
 		  (for-each (lambda (node) ((node 'value) 'set! #f)) (map cadr nodes)) ; clear memoized values
-;; 		  (pretty-print-self)
-;; 		  (format #t "Setting input nodes to: ~A~%" input-values)
 		  (for-each (lambda (node) ((node 'value) 'set! (pop! input-values))) (map (lambda (sym) (cadr (assoc sym nodes)))
 											   '(input-nodes ...)))
-;; 		  (write-string "###########################################\n")
-;; 		  (pretty-print-self)
-;; 		  (write-string "###########################################\n")
 		  (map (lambda (sym) (((cadr (assoc sym nodes)) 'value) 'get)) '(output-nodes ...)))
 		 
 		 ((debug-nodes-pretty)
