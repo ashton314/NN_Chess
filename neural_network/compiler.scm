@@ -27,7 +27,6 @@
   (syntax-rules ()
     ((define-net net-name (input-nodes ...) (output-nodes ...) _learning-rate (node-name (input weight) ...) ...)
      (define (net-name op . input-values)
-       (write-line 'net-name)
        (let ((learning-rate _learning-rate) ; prevent multiple evaluation (does this happen with Scheme's macros?)
 	     (nodes `((input-nodes (sym-name input-nodes)
 				   (inputs ())
@@ -61,15 +60,14 @@
 	 (set! nodes (map (lambda (node) ; compile pass
 			    (let ((values (cdr node)))
 			      (list (car node)
-				    (letrec ((this-node
-					      (lambda (op)
-						(debug)
-						(let ((slot-sym-name (cadr (assoc 'sym-name values)))
-						      (slot-inputs (cadr (assoc 'inputs values)))
-						      (slot-outputs (cadr (assoc 'outputs values)))
-						      (slot-weights (cadr (assoc 'weights values)))
-						      (slot-error-delta (cadr (assoc 'error-delta values)))
-						      (slot-value (cadr (assoc 'value values))))
+				    (let ((slot-sym-name (cadr (assoc 'sym-name values)))
+					  (slot-inputs (cadr (assoc 'inputs values)))
+					  (slot-outputs (cadr (assoc 'outputs values)))
+					  (slot-weights (cadr (assoc 'weights values)))
+					  (slot-error-delta (cadr (assoc 'error-delta values)))
+					  (slot-value (cadr (assoc 'value values))))
+				      (letrec ((this-node
+						(lambda (op)
 						  (case op
 						    ((sym-name) (getter-setter slot-sym-name))
 						    ((inputs) (getter-setter slot-inputs))
@@ -91,18 +89,17 @@
 								       new-value))
 								 (if (eq? op 'set!)
 								     (set! data-slot (car rest))
-								     (error (format #f "Unknown option passed to node: ~A -- value" op)))))))))
-
-						  (else (error (format #f "Unknown option to node: '~A'" op)))))))
-				      this-node))))
+								     (error (format #f "Unknown option passed to node: ~A -- value" op))))))))
+						    (else (error (format #f "Unknown option to node: '~A'" op)))))))
+					this-node)))))
 			  nodes))
 
-	 (map (lambda (node) (pretty-print (list ((node 'sym-name) 'get)
-						 (list 'value ((node 'value) 'get-raw))
-						 (map (lambda (slot) (list slot ((node slot) 'get)))
-						      '(inputs outputs weights error-delta))))
-		      (newline))
-	      (map cadr nodes))
+;; 	 (map (lambda (node) (pretty-print (list ((node 'sym-name) 'get)
+;; 						 (list 'value ((node 'value) 'get-raw))
+;; 						 (map (lambda (slot) (list slot ((node slot) 'get)))
+;; 						      '(inputs outputs weights error-delta))))
+;; 		      (newline))
+;; 	      (map cadr nodes))
 
 
 	 (for-each (lambda (node)	; linker pass
@@ -110,11 +107,11 @@
 		     ((node 'outputs) 'set! (map (lambda (node) (cadr (assoc node nodes))) ((node 'outputs) 'get))))
 		   (map cadr nodes))
 
-	 (map (lambda (node) (pretty-print (list ((node 'sym-name) 'get)
-						 (map (lambda (slot) (list slot ((node slot) 'get)))
-						      '(inputs outputs weights error-delta value))))
-		      (newline))
-	      (map cadr nodes))
+;; 	 (map (lambda (node) (pretty-print (list ((node 'sym-name) 'get)
+;; 						 (map (lambda (slot) (list slot ((node slot) 'get)))
+;; 						      '(inputs outputs weights error-delta value))))
+;; 		      (newline))
+;; 	      (map cadr nodes))
 
 	 (define (back-prop node)
 	   ;; node => closure-object
@@ -165,6 +162,9 @@
 	    (for-each (lambda (node) ((node 'value) 'set! #f)) (map cadr nodes)) ; clear memoized values
 	    (for-each (lambda (node) ((node 'value) 'set! (pop! input-values))) (map (lambda (sym) (cadr (assoc sym nodes)))
 										     '(input-nodes ...)))
+	    (write-string "###########################################\n")
+	    (net-name 'debug-nodes-pretty)
+	    (write-string "###########################################\n")
 	    (map (lambda (sym) (((cadr (assoc sym nodes)) 'value) 'get)) '(output-nodes ...)))
 
 	   ((debug-nodes-pretty)
@@ -183,12 +183,15 @@
 	    (for-each (lambda (node)
 			((node 'weights) 'set!
 			 (map (lambda (nul) (random-real)) ((node 'weights) 'get))))
-		      (map cdr nodes)))
+		      (map cadr nodes)))
 
 	   ((last-errors)
+	    ;; Returns error deltas of output nodes
 	    (map (lambda (node) ((node 'error-delta) 'get)) (map (lambda (sym) (cadr (assoc sym nodes))) '(output-nodes ...))))
 
-	   ((train)			; two lists: first are inputs, second are target values
+	   ((train)
+	    ;; Run backprop algorithm on network
+	    ;; Inputs: (input1 input2 ...) (target1 target2 ...)
 	    (for-each (lambda (node) ((node 'error-delta) 'set! #f)) (map cadr nodes)) ; clear error deltas
 	    (let* ((inputs (car input-values))
 		   (targets (cadr input-values))
