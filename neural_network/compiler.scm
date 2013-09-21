@@ -27,8 +27,10 @@
   (syntax-rules ()
     ((define-net net-name (input-nodes ...) (output-nodes ...) _learning-rate (node-name (input weight) ...) ...)
      (define (net-name op . input-values)
+       (write-line 'net-name)
        (let ((learning-rate _learning-rate) ; prevent multiple evaluation (does this happen with Scheme's macros?)
-	     (nodes `((input-nodes (inputs ())
+	     (nodes `((input-nodes (sym-name input-nodes)
+				   (inputs ())
 				   (outputs ())
 				   (weights ())
 				   (error-delta 'undef)
@@ -48,49 +50,71 @@
 
 	 (define-syntax getter-setter
 	   (syntax-rules ()
-	     ((_ loc hash)
-	      (let ((data-slot (cadr (assoc loc hash))))
-		(lambda (op . rest)
-		  (if (eq? op 'get)
-		      data-slot
-		      (if (eq? op 'set!)
-			  (set! data-slot (car rest))
-			  (error (format #f "Unknown option passed to node: ~A -- ~A" op loc)))))))))
+	     ((_ place)
+	      (lambda (flag . rest)
+		(if (eq? flag 'get)
+		    place
+		    (if (eq? flag 'set!)
+			(set! place (car rest))
+			(error (format #f "Unknown option passed to node: ~A -- ~A" flag loc))))))))
 
 	 (set! nodes (map (lambda (node) ; compile pass
 			    (let ((values (cdr node)))
 			      (list (car node)
 				    (letrec ((this-node
 					      (lambda (op)
-						(case op
-						  ((sym-name) (getter-setter 'sym-name values))
-						  ((inputs) (getter-setter 'inputs values))
-						  ((outputs) (getter-setter 'outputs values))
-						  ((weights) (getter-setter 'weights values))
-						  ((error-delta) (getter-setter 'error-delta values))
-						  ((value)
-						   (let ((data-slot (assoc 'value values)))
-						     (lambda (op . rest)
-						       (if (eq? op 'get)
-							   (if data-slot data-slot
-							       (let ((new-value (activation (apply + (map * (map (lambda (input-node)
-														   ((input-node 'value) 'get))
-														 ((this-node 'inputs) 'get))
-													  ((this-node 'weights) 'get))))))
-								 (set! data-slot new-value)
-								 new-value))
-							   (if (eq? op 'set!)
-							       (set! data-slot (car rest))
-							       (error (format #f "Unknown option passed to node: ~A -- value" op)))))))
+						(debug)
+						(let ((slot-sym-name (cadr (assoc 'sym-name values)))
+						      (slot-inputs (cadr (assoc 'inputs values)))
+						      (slot-outputs (cadr (assoc 'outputs values)))
+						      (slot-weights (cadr (assoc 'weights values)))
+						      (slot-error-delta (cadr (assoc 'error-delta values)))
+						      (slot-value (cadr (assoc 'value values))))
+						  (case op
+						    ((sym-name) (getter-setter slot-sym-name))
+						    ((inputs) (getter-setter slot-inputs))
+						    ((outputs) (getter-setter slot-outputs))
+						    ((weights) (getter-setter slot-weights))
+						    ((error-delta) (getter-setter slot-error-delta))
+						    ((value)
+						     (let ((data-slot (cadr (assoc 'value values))))
+						       (lambda (op . rest)
+							 (if (eq? op 'get-raw)
+							     data-slot
+							     (if (eq? op 'get)
+								 (if data-slot data-slot
+								     (let ((new-value (activation (apply + (map * (map (lambda (input-node)
+															 ((input-node 'value) 'get))
+														       ((this-node 'inputs) 'get))
+														((this-node 'weights) 'get))))))
+								       (set! data-slot new-value)
+								       new-value))
+								 (if (eq? op 'set!)
+								     (set! data-slot (car rest))
+								     (error (format #f "Unknown option passed to node: ~A -- value" op)))))))))
 
-						  (else (error (format #f "Unknown option to node: ~A" op)))))))
+						  (else (error (format #f "Unknown option to node: '~A'" op)))))))
 				      this-node))))
 			  nodes))
+
+	 (map (lambda (node) (pretty-print (list ((node 'sym-name) 'get)
+						 (list 'value ((node 'value) 'get-raw))
+						 (map (lambda (slot) (list slot ((node slot) 'get)))
+						      '(inputs outputs weights error-delta))))
+		      (newline))
+	      (map cadr nodes))
+
 
 	 (for-each (lambda (node)	; linker pass
 		     ((node 'inputs) 'set! (map (lambda (node) (cadr (assoc node nodes))) ((node 'inputs) 'get)))
 		     ((node 'outputs) 'set! (map (lambda (node) (cadr (assoc node nodes))) ((node 'outputs) 'get))))
 		   (map cadr nodes))
+
+	 (map (lambda (node) (pretty-print (list ((node 'sym-name) 'get)
+						 (map (lambda (slot) (list slot ((node slot) 'get)))
+						      '(inputs outputs weights error-delta value))))
+		      (newline))
+	      (map cadr nodes))
 
 	 (define (back-prop node)
 	   ;; node => closure-object
@@ -142,6 +166,13 @@
 	    (for-each (lambda (node) ((node 'value) 'set! (pop! input-values))) (map (lambda (sym) (cadr (assoc sym nodes)))
 										     '(input-nodes ...)))
 	    (map (lambda (sym) (((cadr (assoc sym nodes)) 'value) 'get)) '(output-nodes ...)))
+
+	   ((debug-nodes-pretty)
+	    (map (lambda (node) (pretty-print (list ((node 'sym-name) 'get)
+						    (map (lambda (slot) (list slot ((node slot) 'get)))
+							 '(inputs outputs weights error-delta value))))
+			 (newline))
+		 (map cadr nodes)))
 
 	   ((debug-nodes)
 	    ;; For debugging purposes
