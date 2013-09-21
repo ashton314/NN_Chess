@@ -101,3 +101,15 @@ the output of the neural net. I'm suspecting the problem is where I
 have the logic for getting node values. (See the closure construction
 of the nodes.)
 .
+
+Start: Fri Sep 20 20:03:01 MDT 2013
+Stop:  Fri Sep 20 21:45:30 MDT 2013
+
+Major debug session. Still not working. I'm absolutly mystified with a
+particular problem: either I'm missing a very subtle bug with my usage
+of `case', or the `case' macro (or even worse, something even more
+low-level) has a bug in it. The bug appeared when I added a `let'
+arround the place where I'm using `case'... I'm considering replacing
+my usage of `case' with a `cond' expression so I can poke around in
+the internals a bit more.
+.
