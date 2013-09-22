@@ -61,7 +61,6 @@
 	 
 	 (set! nodes (map (lambda (node) ; compile pass
 			    (let ((values (cdr node)))
-			      (format #t "Creating node '~A'~%" (cadr (assoc 'sym-name values)))
 			      (list (car node)
 				    (let ((slot-sym-name (cadr (assoc 'sym-name values)))
 					  (slot-inputs (cadr (assoc 'inputs values)))
@@ -83,26 +82,17 @@
 							   slot-value
 							   (if (eq? op 'get)
 							       (begin
-;								 (format #t "Getting value for ~A: '~A'~%" ((this-node 'sym-name) 'get) slot-value)
 							       (if slot-value slot-value
 								   (let ((new-value (activation (apply + (map * (map (lambda (input-node)
 														       ((input-node 'value) 'get))
 														     ((this-node 'inputs) 'get))
 													      ((this-node 'weights) 'get))))))
-;								     (format #t "New computed value for ~A: '~A'~%" slot-sym-name new-value)
-;								     (if (equal? new-value 1/2) (error "Blow up!!!!!!"))
 								     (set! slot-value new-value)
-;								     (format #t "New value for ~A: '~A'~%" ((this-node 'sym-name) 'get) new-value)
 								     new-value)))
 							       (if (eq? op 'set!)
-								   (begin
-								     (if (equal? (car rest) 1/2) (error "Node getting set to 1/2!!!!"))
-;								     (format #t "Setting new value for ~A to '~A'~%" ((this-node 'sym-name) 'get) (car rest))
-								     (set! slot-value (car rest)))
+								   (set! slot-value (car rest))
 								   (error (format #f "Unknown option passed to node: ~A -- value" op)))))))
 						    (else (error (format #f "Unknown option to node: '~A'" op)))))))
-;					(format #t "Still creating node '~A' Value: '~A'~%" slot-sym-name slot-value)
-;					(if (equal? slot-value 1/2) (error "Wrong again!!"))
 					this-node)))))
 			  nodes))
 
