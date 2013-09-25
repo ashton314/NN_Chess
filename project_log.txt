@@ -122,3 +122,30 @@ try out my character recognition with the new system.
 
 That was one heck of a debug session!
 .
+
+Start: Sat Sep 21 20:51:32 MDT 2013
+Stop:  Sat Sep 21 21:40:02 MDT 2013
+
+Going to do some profiling.
+
+...
+
+I am absolutely mystified as to why on earth the new compiled macros
+are running slower than the old ones. ?!! I need a profiler. Bad.
+.
+
+Start: Tue Sep 24 17:57:57 MDT 2013
+Stop:  Tue Sep 24 19:10:03 MDT 2013
+
+I'm going to try writing my feed-forward networks with matricies. This
+should be pretty dang fast if I can code it right.
+.
+
+Start: Wed Sep 25 07:40:15 MDT 2013
+Stop:  Wed Sep 25 08:20:56 MDT 2013
+
+More work on ff-networks with matricies. There are no native matricies
+for MIT Scheme, so I have to implement them myself with the native
+vectors.
+
+.
