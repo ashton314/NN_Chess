@@ -147,5 +147,10 @@ Stop:  Wed Sep 25 08:20:56 MDT 2013
 More work on ff-networks with matricies. There are no native matricies
 for MIT Scheme, so I have to implement them myself with the native
 vectors.
+.
 
+Start: Thu Sep 26 18:33:58 MDT 2013
+Stop:  Thu Sep 26 20:02:00 MDT 2013
+
+Working on implementing the backprop algorithm with matricies.
 .
