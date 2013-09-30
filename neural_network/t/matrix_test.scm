@@ -20,7 +20,7 @@
   (ok (good result1 0.69 0.01) (format #f "test-net00 ran correctly: ~A" result1))
   (ok (not (= result1 result2)) (format #f "test-net00 returned different result correctly: ~A" result2)))
 
-(let ((result1 (vector-ref (test-net00 'run 0.35 0.9) 0))
+(let ((result1 (vector-ref (test-net00 'run '(0.35 0.9)) 0))
       (result2 0))
   (ok (good result1 0.69 0.01) (format #f "test-net00 ran correctly (again): ~A" result1))
   (test-net00 'train '(0.35 0.9) '(0.5))
