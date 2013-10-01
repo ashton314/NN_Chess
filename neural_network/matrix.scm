@@ -83,10 +83,20 @@ Syntax description:
 					(range 0 (- (vector-length (vector-ref matrix 0)) 1))))))
 
 	 (define (back-prop weights errors values forward-errors)
-	   (vector-clobber! (car errors) (vector-zip (lambda (val from-next-node)
-						       (* val (- 1 val) from-next-node))
-						     values forward-errors))
-	   
+	   (if (null? (cddr weights))
+	       #t			; hit the input layer
+	       (begin
+		 (vector-clobber! (car errors) (vector-zip (lambda (val from-next-node)
+							     (* val (- 1 val) from-next-node))
+							   values forward-errors))
+		 (vector-clobber! (car weights) (vector-zip (lambda (current-node-in-layer this-nodes-error)
+							      (vector-zip (lambda (old-weight input-nodes-value)
+									    (+ old-weight (* old-weight learning-rate this-nodes-error
+											     input-nodes-value)))
+									  current-node-in-layer (cadr values)))
+							    (car weights)
+							    (car errors)))
+		 (back-prop (cdr weights) (cdr errors) (cdr values) (matrix-* (car weights) (car errors))))))
 	   
 
 	 (set! net-name
