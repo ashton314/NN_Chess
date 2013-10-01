@@ -154,3 +154,17 @@ Stop:  Thu Sep 26 20:02:00 MDT 2013
 
 Working on implementing the backprop algorithm with matricies.
 .
+
+Start: Mon Sep 30 16:12:20 MDT 2013
+Stop:  Mon Sep 30 19:17:13 MDT 2013
+
+Ditto.
+
+I'm still getting some errors. My calculation of the value
+"forward-errors" on line 152 does not match the correct
+algorithm. Compare with (δαWAα + δβWAβ) and friends on page 19 of
+chapter 3 of the neural net tutorial PDFs.
+
+I'm too tired right now to figure out the correct matrix
+computations.
+.
