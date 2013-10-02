@@ -180,3 +180,13 @@ IT'S WORKING!!! I think...
 
 Nope. Something is still wrong.
 .
+
+Start: Wed Oct  2 07:42:59 MDT 2013
+Stop:  Wed Oct  2 08:22:21 MDT 2013
+
+It /looks/ like the mathematics are correct, but for some reason the
+numbers are off after about 3 decimal places. Still not learning.
+
+I think the decimal place bug is due to I'm working at a much higher
+precision.
+.

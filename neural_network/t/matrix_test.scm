@@ -40,14 +40,18 @@
 (define *test01-pattern0* '(1 0 0 1))
 (define *test01-pattern1* '(0 1 1 0))
 
-(define (trainer times this-pattern next-pattern)
+(define (trainer times this-pattern next-pattern greatest-error)
   (if (= times 0)
       #t
       (begin
-	(test-net01 'train this-pattern this-pattern)
-	(trainer (- times 1) next-pattern this-pattern))))
+	(let ((err (max greatest-error
+			(apply + (map abs (vector->list (test-net01 'last-errors)))))))
+	  (if (not (= err greatest-error))
+	      (format #t "Warning: ~A Error increasing! ~A~%" times err))
+	  (test-net01 'train this-pattern this-pattern)
+	  (trainer (- times 1) next-pattern this-pattern err)))))
 
 (define (train-01 times)
-  (trainer times *test01-pattern0* *test01-pattern1*))
+  (trainer times *test01-pattern0* *test01-pattern1* 0))
 
 (done-testing)

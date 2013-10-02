@@ -72,7 +72,6 @@ Syntax description:
 	    ((null? input)  (error "No input given for neural network!"))
 	    (else
 	     (let ((result (vector-map activation (matrix-* (car layers) input))))
-;	       (format #t "RESULT: '~A'~%" result)
 	       (vector-clobber! (car values) result)
 	       (if (null? (cdr layers))
 		   result
@@ -82,43 +81,23 @@ Syntax description:
 	   (list->vector (reverse! (map (lambda (n) (vector-map (lambda (row) (vector-ref row n)) matrix))
 					(range 0 (- (vector-length (vector-ref matrix 0)) 1))))))
 
-	 (define (back-prop weights errors values forward-errors) ; TODO: clean up this function
-;	   (format #t "FORWARD ERRORS: '~A'~%" forward-errors)
-	   (if (null? (cdr weights))	; next is the input layer
-	       (begin
-;		 (format #t "Old errors: ~A~%" (car errors))
-
-		 (vector-clobber! (car errors) (vector-zip (lambda (val from-next-node)
-							     (* val (- 1 val) from-next-node))
-							   (car values) forward-errors))
-
-;		 (format #t "New errors: ~A~%" (car errors))
-
-		 (vector-clobber! (car weights) (vector-zip (lambda (current-node-in-layer this-nodes-error)
-							      (vector-zip (lambda (old-weight input-nodes-value)
-									    (+ old-weight (* old-weight learning-rate this-nodes-error
-											     input-nodes-value)))
-									  current-node-in-layer input-values))
-							    (car weights)
-							    (car errors)))
-		 #t)
-	       (begin
-;		 (format #t "Old errors: ~A~%" (car errors))
-
-		 (vector-clobber! (car errors) (vector-zip (lambda (val from-next-node)
-							     (* val (- 1 val) from-next-node))
-							   values forward-errors))
-
-;		 (format #t "New errors: ~A~%" (car errors))
-
-		 (vector-clobber! (car weights) (vector-zip (lambda (current-node-in-layer this-nodes-error)
-							      (vector-zip (lambda (old-weight input-nodes-value)
-									    (+ old-weight (* old-weight learning-rate this-nodes-error
-											     input-nodes-value)))
-									  current-node-in-layer (cadr values)))
-							    (car weights)
-							    (car errors)))
-		 (back-prop (cdr weights) (cdr errors) (cdr values) (matrix-* (car weights) (car errors))))))
+	 (define (back-prop weights errors values forward-errors)
+;	   (format #t "Before back-prop:~%  Weights: '~A'~%  Errors: '~A'~%  Values: '~A'~%  Forward-errors: '~A'~%" weights errors values forward-errors)
+	   (vector-clobber! (car errors) (vector-zip (lambda (val from-next-node)
+						       (* val (- 1 val) from-next-node))
+						     (car values) forward-errors))
+	   
+	   (vector-clobber! (car weights) (vector-zip (lambda (current-node-in-layer this-nodes-error)
+							(vector-zip (lambda (old-weight input-nodes-value)
+								      (+ old-weight (* old-weight learning-rate this-nodes-error
+										       input-nodes-value)))
+								    current-node-in-layer input-values))
+						      (car weights)
+						      (car errors)))
+;	   (format #t "After back-prop:~%  Weights: '~A'~%  Errors: '~A'~%  Values: '~A'~%  Forward-errors: '~A'~%" weights errors values forward-errors)
+	   (if (null? (cdr weights))
+	       #t
+	       (back-prop (cdr weights) (cdr errors) (cdr values) (matrix-* (car weights) (car errors)))))
 
 
 	 (set! net-name
@@ -139,6 +118,7 @@ Syntax description:
 		      (set! input-values inputs)
 
 		      ; update output deltas
+;		      (format #t "Before backprop (output):~%  Weights: '~A'~%  Values: '~A'~%  Errors: '~A'~%" output-layer output-values output-errors)
 		      (set! output-values (feed-forward input-values `(,@hidden-layers ,output-layer) `(,@hidden-values ,output-values)))
 		      (set! output-errors (vector-zip (lambda (output target) ; vector
 							(* (- target output) (- 1 output) output)) output-values targets))
@@ -147,15 +127,20 @@ Syntax description:
 										      node (car hidden-values-r)))
 						     output-layer output-errors))
 
+;		      (format #t "After backprop (output):~%  Weights: '~A'~%  Values: '~A'~%  Errors: '~A'~%" output-layer output-values output-errors)
+
+;		      (format #t "Last errors: ~A~%" output-errors)
+
 		      ; backpropogate
 		      (let ((forward-errors (apply vector-mapn (cons (lambda (#!rest weights)
 								       (vector-reduce + (vector-mapn * (list->vector weights) output-errors)))
 								     (vector->list output-layer)))))
-;; 			(format #t "CHECK forward-errors, output-layer, output-errors (forward errors should have 2 elements)~%")
-;; 			(debug)
 			(back-prop hidden-layers-r hidden-errors-r hidden-values-r
 				   forward-errors))))
 
+
+		   ((last-errors)
+		    output-errors)
 
 		   ;; Debugging methods
 		   ((debug-hidden-layers)
@@ -164,7 +149,8 @@ Syntax description:
 
 		   ((debug-layers)
 		    (map (lambda (layer) (vector-map (lambda (node) (pretty-print node)) layer) (newline)) hidden-layers)
-		    (pretty-print output-layer))
+		    (pretty-print output-layer)
+		    (newline))
 		   
 		   (else
 		    (error (format #f "Unknown option to neural net: '~A'~%" op)))))))))))
