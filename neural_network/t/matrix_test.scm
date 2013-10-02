@@ -25,4 +25,29 @@
   (ok (good result1 0.69 0.01) (format #f "test-net00 ran correctly (again): ~A" result1))
   (test-net00 'train '(0.35 0.9) '(0.5))
   (set! result2 (vector-ref (test-net00 'run '(0.35 0.9)) 0))
-  (ok (good (abs (- result2 0.5)) 0.18205 0.001) (format #f "test-net00 trained correctly: ~A" result2)))
+  (ok (good (abs (- result2 0.5)) 0.18205 0.001) (format #f "test-net00 trained correctly: ~A" result2))
+  (test-net00 'debug-layers))
+
+
+;; test-net01
+
+(define-feed-forward-net test-net01
+  1
+  4
+  ((.1 .1 .1 .1 .1)(.1 .1 .1 .1 .1)(.1 .1 .1 .1 .1)(.1 .1 .1 .1 .1))
+  ((.1 .1 .1 .1)(.1 .1 .1 .1)(.1 .1 .1 .1)(.1 .1 .1 .1)(.1 .1 .1 .1)))
+
+(define *test01-pattern0* '(1 0 0 1))
+(define *test01-pattern1* '(0 1 1 0))
+
+(define (trainer times this-pattern next-pattern)
+  (if (= times 0)
+      #t
+      (begin
+	(test-net01 'train this-pattern this-pattern)
+	(trainer (- times 1) next-pattern this-pattern))))
+
+(define (train-01 times)
+  (trainer times *test01-pattern0* *test01-pattern1*))
+
+(done-testing)

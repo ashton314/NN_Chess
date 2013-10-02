@@ -72,7 +72,7 @@ Syntax description:
 	    ((null? input)  (error "No input given for neural network!"))
 	    (else
 	     (let ((result (vector-map activation (matrix-* (car layers) input))))
-	       (format #t "RESULT: '~A'~%" result)
+;	       (format #t "RESULT: '~A'~%" result)
 	       (vector-clobber! (car values) result)
 	       (if (null? (cdr layers))
 		   result
@@ -83,16 +83,16 @@ Syntax description:
 					(range 0 (- (vector-length (vector-ref matrix 0)) 1))))))
 
 	 (define (back-prop weights errors values forward-errors) ; TODO: clean up this function
-	   (format #t "FORWARD ERRORS: '~A'~%" forward-errors)
+;	   (format #t "FORWARD ERRORS: '~A'~%" forward-errors)
 	   (if (null? (cdr weights))	; next is the input layer
 	       (begin
-		 (format #t "Old errors: ~A~%" (car errors))
+;		 (format #t "Old errors: ~A~%" (car errors))
 
 		 (vector-clobber! (car errors) (vector-zip (lambda (val from-next-node)
 							     (* val (- 1 val) from-next-node))
 							   (car values) forward-errors))
 
-		 (format #t "New errors: ~A~%" (car errors))
+;		 (format #t "New errors: ~A~%" (car errors))
 
 		 (vector-clobber! (car weights) (vector-zip (lambda (current-node-in-layer this-nodes-error)
 							      (vector-zip (lambda (old-weight input-nodes-value)
@@ -103,13 +103,13 @@ Syntax description:
 							    (car errors)))
 		 #t)
 	       (begin
-		 (format #t "Old errors: ~A~%" (car errors))
+;		 (format #t "Old errors: ~A~%" (car errors))
 
 		 (vector-clobber! (car errors) (vector-zip (lambda (val from-next-node)
 							     (* val (- 1 val) from-next-node))
 							   values forward-errors))
 
-		 (format #t "New errors: ~A~%" (car errors))
+;		 (format #t "New errors: ~A~%" (car errors))
 
 		 (vector-clobber! (car weights) (vector-zip (lambda (current-node-in-layer this-nodes-error)
 							      (vector-zip (lambda (old-weight input-nodes-value)
@@ -133,7 +133,6 @@ Syntax description:
 		   
 		   ((train)
 		    ;; Runs the backprop algorithm: (net 'train (list input1 input2 ...) (list target1 target2 ...))
-		    (format #t "OUTPUT LAYER: '~A'~%" output-layer)
 
 		    (let ((inputs (list->vector (car args)))
 			  (targets (list->vector (cadr args))))
@@ -152,8 +151,8 @@ Syntax description:
 		      (let ((forward-errors (apply vector-mapn (cons (lambda (#!rest weights)
 								       (vector-reduce + (vector-mapn * (list->vector weights) output-errors)))
 								     (vector->list output-layer)))))
-			(format #t "CHECK forward-errors, output-layer, output-errors (forward errors should have 2 elements)~%")
-			(debug)
+;; 			(format #t "CHECK forward-errors, output-layer, output-errors (forward errors should have 2 elements)~%")
+;; 			(debug)
 			(back-prop hidden-layers-r hidden-errors-r hidden-values-r
 				   forward-errors))))
 

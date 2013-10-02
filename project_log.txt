@@ -168,3 +168,15 @@ chapter 3 of the neural net tutorial PDFs.
 I'm too tired right now to figure out the correct matrix
 computations.
 .
+
+Start: Tue Oct  1 20:28:32 MDT 2013
+Stop:  Tue Oct  1 21:08:36 MDT 2013
+Start: Tue Oct  1 21:19:18 MDT 2013
+Stop:  Tue Oct  1 21:24:52 MDT 2013
+
+Still working on backprop algorithm.
+
+IT'S WORKING!!! I think...
+
+Nope. Something is still wrong.
+.
