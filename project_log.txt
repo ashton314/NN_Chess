@@ -183,6 +183,8 @@ Nope. Something is still wrong.
 
 Start: Wed Oct  2 07:42:59 MDT 2013
 Stop:  Wed Oct  2 08:22:21 MDT 2013
+Start: Wed Oct  2 09:26:32 MDT 2013
+Stop:  Wed Oct  2 10:07:28 MDT 2013
 
 It /looks/ like the mathematics are correct, but for some reason the
 numbers are off after about 3 decimal places. Still not learning.

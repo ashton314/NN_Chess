@@ -72,9 +72,16 @@ Syntax description:
 	    ((null? input)  (error "No input given for neural network!"))
 	    (else
 	     (let ((result (vector-map activation (matrix-* (car layers) input))))
+	       (format #t "Layer: ~A~%" result)
 	       (vector-clobber! (car values) result)
 	       (if (null? (cdr layers))
-		   result
+		   (begin
+;; 		     (write-string "Nodes after feed-forward:<<__END__\n")
+;; 		     (map (lambda (layer) (vector-map (lambda (node) (pretty-print node)) layer) (newline)) hidden-layers)
+;; 		     (pretty-print output-layer)
+;; 		     (newline)
+;; 		     (write-string "__END__\n")
+		     result)
 		   (feed-forward result (cdr layers) (cdr values)))))))
 
 	 (define (transpose matrix)	; working
@@ -82,8 +89,9 @@ Syntax description:
 					(range 0 (- (vector-length (vector-ref matrix 0)) 1))))))
 
 	 (define (back-prop weights errors values forward-errors)
-;	   (format #t "Before back-prop:~%  Weights: '~A'~%  Errors: '~A'~%  Values: '~A'~%  Forward-errors: '~A'~%" weights errors values forward-errors)
+	   (format #t "Before back-prop:~%  Weights: '~A'~%  Errors: '~A'~%  Values: '~A'~%  Forward-errors: '~A'~%" weights errors values forward-errors)
 	   (vector-clobber! (car errors) (vector-zip (lambda (val from-next-node)
+;						       (format #t "ZIPING: val: '~A' from-next-node: '~A'~%" val from-next-node)
 						       (* val (- 1 val) from-next-node))
 						     (car values) forward-errors))
 	   
@@ -94,7 +102,7 @@ Syntax description:
 								    current-node-in-layer input-values))
 						      (car weights)
 						      (car errors)))
-;	   (format #t "After back-prop:~%  Weights: '~A'~%  Errors: '~A'~%  Values: '~A'~%  Forward-errors: '~A'~%" weights errors values forward-errors)
+;	   (format #t "After back-prop:~%  Weights: '~A'~%  Errors: '~A'~%~%" weights errors)
 	   (if (null? (cdr weights))
 	       #t
 	       (back-prop (cdr weights) (cdr errors) (cdr values) (matrix-* (car weights) (car errors)))))
@@ -129,7 +137,8 @@ Syntax description:
 
 ;		      (format #t "After backprop (output):~%  Weights: '~A'~%  Values: '~A'~%  Errors: '~A'~%" output-layer output-values output-errors)
 
-;		      (format #t "Last errors: ~A~%" output-errors)
+;; 		      (format #t "Hidden Values: ~A~%" hidden-values)
+;; 		      (format #t "Last errors: ~A~%" output-errors)
 
 		      ; backpropogate
 		      (let ((forward-errors (apply vector-mapn (cons (lambda (#!rest weights)
