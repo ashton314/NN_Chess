@@ -24,5 +24,5 @@
       (result2 0))
   (ok (good result1 0.69 0.01) (format #f "test-net00 ran correctly (again): ~A" result1))
   (test-net00 'train '(0.35 0.9) '(0.5))
-  (set! result2 (vector-ref (test-net00 'run 0.35 0.9) 0))
+  (set! result2 (vector-ref (test-net00 'run '(0.35 0.9)) 0))
   (ok (good (abs (- result2 0.5)) 0.18205 0.001) (format #f "test-net00 trained correctly: ~A" result2)))

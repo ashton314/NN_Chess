@@ -149,8 +149,10 @@ Syntax description:
 						     output-layer output-errors))
 
 		      ; backpropogate
-		      (let ((forward-errors (matrix-* output-layer output-errors)))
-			(format #t "CHECK forward-errors, output-layer, output-errors~%")
+		      (let ((forward-errors (apply vector-mapn (cons (lambda (#!rest weights)
+								       (vector-reduce + (vector-mapn * (list->vector weights) output-errors)))
+								     (vector->list output-layer)))))
+			(format #t "CHECK forward-errors, output-layer, output-errors (forward errors should have 2 elements)~%")
 			(debug)
 			(back-prop hidden-layers-r hidden-errors-r hidden-values-r
 				   forward-errors))))
@@ -171,7 +173,7 @@ Syntax description:
 (define (vector-reduce func vec)
   (let ((leng (vector-length vec)))
     (define (loop counter acc)
-      (if (= counter leng)
+      (if (= (+ counter 1) leng)
 	  acc
 	  (loop (+ counter 1) (func acc (vector-ref vec (+ counter 1))))))
     (loop 0 (vector-ref vec 0))))
@@ -183,6 +185,13 @@ Syntax description:
 	  (list->vector (reverse! acc))
 	  (zipper (+ i 1) (cons (func (vector-ref vec1 i) (vector-ref vec2 i)) acc))))
     (zipper 0 '())))
+
+(define (vector-mapn func . vects)
+  (let* ((end-val (apply min (map vector-length vects)))
+	 (acc (make-vector end-val)))
+    (do ((i 0 (+ i 1)))
+	((>= i end-val) acc)
+      (vector-set! acc i (apply func (map (lambda (vec) (vector-ref vec i)) vects))))))
 
 (define (vector-clobber! target vals)
   (let ((leng (vector-length target)))
