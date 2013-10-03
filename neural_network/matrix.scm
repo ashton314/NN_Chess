@@ -88,25 +88,30 @@ Syntax description:
 	   (list->vector (reverse! (map (lambda (n) (vector-map (lambda (row) (vector-ref row n)) matrix))
 					(range 0 (- (vector-length (vector-ref matrix 0)) 1))))))
 
-	 (define (back-prop weights errors values forward-errors)
-	   (format #t "Before back-prop:~%  Weights: '~A'~%  Errors: '~A'~%  Values: '~A'~%  Forward-errors: '~A'~%" weights errors values forward-errors)
-	   (vector-clobber! (car errors) (vector-zip (lambda (val from-next-node)
-;						       (format #t "ZIPING: val: '~A' from-next-node: '~A'~%" val from-next-node)
-						       (* val (- 1 val) from-next-node))
-						     (car values) forward-errors))
-	   
-	   (vector-clobber! (car weights) (vector-zip (lambda (current-node-in-layer this-nodes-error)
-							(vector-zip (lambda (old-weight input-nodes-value)
-								      (+ old-weight (* old-weight learning-rate this-nodes-error
-										       input-nodes-value)))
-								    current-node-in-layer input-values))
-						      (car weights)
-						      (car errors)))
-;	   (format #t "After back-prop:~%  Weights: '~A'~%  Errors: '~A'~%~%" weights errors)
-	   (if (null? (cdr weights))
-	       #t
-	       (back-prop (cdr weights) (cdr errors) (cdr values) (matrix-* (car weights) (car errors)))))
+	 (define (back-prop weights values errors previous-weights previous-errors next-values)
+	   ;; backpropogation algorithm
+	   ;; `weights', `values', and `errors' are lists of layers
+	   (vector-clobber! (car errors)
+			    (vector-mapn (lambda (this-val prev-whts)
+					   (* this-val (- 1 this-val) (vector-reduce + (vector-zip * prev-whts previous-errors))))
+					 (car values) (transpose previous-weights)))
 
+
+	   ;; BUG: I'm not iterating over (car weights) correctly...
+	   (vector-clobber! (car weights)
+			    (vector-map (lambda (delta)
+					  (vector-mapn (lambda (old-weight value)
+							 (+ old-weight (* learning-rate delta value)))
+						       (car weights) next-values))
+					(car errors)))
+
+	   (if (null? (cdr weights))
+	       #t			; algorithm finished
+	       (back-prop (cdr weights) (cdr values) (cdr errors) (car weights) (car errors)
+			  (let ((nxt-vals (cdr values)))
+			    (if (null? nxt-vals)
+				input-values
+				(car nxt-vals))))))
 
 	 (set! net-name
 	       (lambda (op . args)
@@ -141,11 +146,11 @@ Syntax description:
 ;; 		      (format #t "Last errors: ~A~%" output-errors)
 
 		      ; backpropogate
-		      (let ((forward-errors (apply vector-mapn (cons (lambda (#!rest weights)
-								       (vector-reduce + (vector-mapn * (list->vector weights) output-errors)))
-								     (vector->list output-layer)))))
-			(back-prop hidden-layers-r hidden-errors-r hidden-values-r
-				   forward-errors))))
+		      (back-prop hidden-layers hidden-values hidden-errors output-layer output-errors
+				 (let ((next-values (cdr hidden-values)))
+				   (if (null? next-values)
+				       input-values
+				       (car next-values))))))
 
 
 		   ((last-errors)
