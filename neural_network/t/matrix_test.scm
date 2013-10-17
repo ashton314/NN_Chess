@@ -68,14 +68,14 @@
   (format #t "Training...")
   (train-01 1000)
   (format #t "Done.~%")
-  (format #t "With 1 0 0 1: ~A~%With 0 1 1 0: ~A~%" (test-net01 'run '(1 0 0 1)) (test-net01 'run '(0 1 1 0)))
-  (format #t "Alone: ~A~%" (test-net01 'run '(0 1 1 0)))
+  (format #t "With 1 0 0 1: ~A~%" (test-net01 'run '(1 0 0 1)))
+  (format #t "With 0 1 1 0: ~A~%" (test-net01 'run '(0 1 1 0)))
 
-  (format #t "Training again...")
-  (train-01-1 1000)
-  (format #t "Done.~%")
-  (format #t "With 1 0 0 1: ~A~%With 0 1 1 0: ~A~%" (test-net01 'run '(1 0 0 1)) (test-net01 'run '(0 1 1 0)))
-  (format #t "Alone: ~A~%" (test-net01 'run '(0 1 1 0)))
+;;   (format #t "Training again...")
+;;   (train-01-1 1000)
+;;   (format #t "Done.~%")
+;;   (format #t "With 1 0 0 1: ~A~%With 0 1 1 0: ~A~%" (test-net01 'run '(1 0 0 1)) (test-net01 'run '(0 1 1 0)))
+;;   (format #t "Alone: ~A~%" (test-net01 'run '(0 1 1 0)))
 
   )
 
