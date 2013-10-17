@@ -72,7 +72,7 @@ Syntax description:
 	    ((null? input)  (error "No input given for neural network!"))
 	    (else
 	     (let ((result (vector-map activation (matrix-* (car layers) input))))
-	       (format #t "Layer: ~A~%" result)
+;	       (format #t "Layer: ~A~%" result)
 	       (vector-clobber! (car values) result)
 	       (if (null? (cdr layers))
 		   (begin
