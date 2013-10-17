@@ -158,6 +158,31 @@ Syntax description:
 		    output-errors)
 
 		   ;; Debugging methods
+		   ((x-ray)
+		    ;; Full dump
+		    (format #t "-------------- FULL DUMP FOR: '~A' --------------~%" 'net-name)
+
+		    (format #t "LAYER DUMP:~%")
+		    (map (lambda (layer) (vector-map (lambda (node) (pretty-print node)) layer) (newline)) hidden-layers)
+		    (pretty-print output-layer)
+		    (newline)
+
+		    (format #t "ERROR DUMP:~%")
+		    (map (lambda (layer) (vector-map (lambda (node) (pretty-print node)) layer) (newline)) hidden-errors)
+		    (pretty-print output-errors)
+		    (newline)
+
+		    (format #t "VALUE DUMP:~%")
+		    (map (lambda (layer) (vector-map (lambda (node) (pretty-print node)) layer) (newline)) hidden-values)
+		    (pretty-print output-values)
+		    (newline)
+
+		    (if (and (equal? hidden-layers-r (reverse hidden-layers))
+			     (equal? hidden-errors-r (reverse hidden-errors))
+			     (equal? hidden-values-r (reverse hidden-values)))
+			(format #t "Reverse lists are up-to-date.~%")
+			(format #t "ERROR!! Reverse lists have lost linkage to originals!~%")))
+
 		   ((debug-hidden-layers)
 		    (pretty-print hidden-layers)
 		    (newline))
