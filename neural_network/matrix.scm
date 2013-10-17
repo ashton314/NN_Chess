@@ -91,19 +91,20 @@ Syntax description:
 	 (define (back-prop weights values errors previous-weights previous-errors next-values)
 	   ;; backpropogation algorithm
 	   ;; `weights', `values', and `errors' are lists of layers
-	   (vector-clobber! (car errors)
+	   (vector-clobber! (car errors) ; calculate errors for this layer
 			    (vector-mapn (lambda (this-val prev-whts)
 					   (* this-val (- 1 this-val) (vector-reduce + (vector-zip * prev-whts previous-errors))))
 					 (car values) (transpose previous-weights)))
 
 
-	   ;; BUG: I'm not iterating over (car weights) correctly...
-	   (vector-clobber! (car weights)
-			    (vector-map (lambda (delta)
-					  (vector-mapn (lambda (old-weight value)
-							 (+ old-weight (* learning-rate delta value)))
-						       (car weights) next-values))
-					(car errors)))
+	   ;; NOTE: (car weights) looks something like #(#(.1 .2) #(.3 .4) ...)
+
+	   (vector-clobber! (car weights) ; update weights for this layer
+			    (vector-mapn (lambda (node delta)
+					   (vector-mapn (lambda (old-weight value)
+							  (+ old-weight (* learning-rate delta value)))
+							node next-values))
+					 (car weights) (car errors)))
 
 	   (if (null? (cdr weights))
 	       #t			; algorithm finished
