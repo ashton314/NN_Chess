@@ -9,6 +9,8 @@
 (define (good val1 val2 tol)
   (< (abs (- val1 val2)) tol))
 
+#|
+
 (define-feed-forward-net test-net00
   1					; learning rate
   2					; num inputs
@@ -27,15 +29,15 @@
   (set! result2 (vector-ref (test-net00 'run '(0.35 0.9)) 0))
   (ok (good (abs (- result2 0.5)) 0.18205 0.001) (format #f "test-net00 trained correctly: ~A" result2))
   (test-net00 'debug-layers))
-
+|#
 
 ;; test-net01
 
 (define-feed-forward-net test-net01
   1
   4
-  ((.1 .1 .1 .1 .1)(.1 .1 .1 .1 .1)(.1 .1 .1 .1 .1)(.1 .1 .1 .1 .1))
-  ((.1 .1 .1 .1)(.1 .1 .1 .1)(.1 .1 .1 .1)(.1 .1 .1 .1)(.1 .1 .1 .1)))
+  ((0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0))
+  ((0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0)))
 
 (define *test01-pattern0* '(1 0 0 1))
 (define *test01-pattern1* '(0 1 1 0))
@@ -55,5 +57,28 @@
   (trainer times *test01-pattern0* *test01-pattern0*))
 (define (train-01-1 times)
   (trainer times *test01-pattern1* *test01-pattern1*))
+
+(define (t-train)
+  (test-net01 'x-ray)
+  (train-01-0 1)
+  (test-net01 'x-ray)
+  (train-01-1 1)
+  (test-net01 'x-ray)
+
+  (format #t "Training...")
+  (train-01 1000)
+  (format #t "Done.~%")
+  (format #t "With 1 0 0 1: ~A~%With 0 1 1 0: ~A~%" (test-net01 'run '(1 0 0 1)) (test-net01 'run '(0 1 1 0)))
+  (format #t "Alone: ~A~%" (test-net01 'run '(0 1 1 0)))
+
+  (format #t "Training again...")
+  (train-01-1 1000)
+  (format #t "Done.~%")
+  (format #t "With 1 0 0 1: ~A~%With 0 1 1 0: ~A~%" (test-net01 'run '(1 0 0 1)) (test-net01 'run '(0 1 1 0)))
+  (format #t "Alone: ~A~%" (test-net01 'run '(0 1 1 0)))
+
+  )
+
+(t-train)
 
 (done-testing)

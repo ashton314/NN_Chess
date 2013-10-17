@@ -21,6 +21,18 @@
   ;; Sigmoid function
   (/ 1 (+ 1 (exp (- value)))))
 
+(define (matrix-* matrix vect)
+  ;; Assumes multiplying n-m matrix by m-1 matrix, which I'll call a vector here
+;  (format #t "MATRIX-*:~%  MATRIX: '~A'~%  VECT: '~A'~%" matrix vect)
+  (vector-map (lambda (node-row) ; NOTE: There's probably room for some optimization here (e.g. eliminate calls to vector->list)
+		(apply + (map * (vector->list node-row) (vector->list vect))))
+	      matrix))
+
+(define (randomize lst)
+  (map (lambda (n)
+	 (if (= n 0)
+	     (- (random 2.0) 1) n)) lst))
+
 #|
 Syntax description:
 (define-feed-forward-net test
@@ -29,7 +41,6 @@ Syntax description:
   ((.3 .1 .4) (.7 .2 .6))		; two outputs (weights from hidden layer)
   ((.1 .2) (.4 .3) (.8 .2)))		; hidden nodes
 |#
-
 
 (define-syntax define-feed-forward-net
   (syntax-rules ()
@@ -42,29 +53,23 @@ Syntax description:
 
 	     ;; These are lists of 2D vectors
 	     ;; ( #(#(a1 a2 a3) #(b1 b2 b3) ...) #( ... ))  ( layer layer ... ) layer => ((weights ...) (weights ...))
-	     (hidden-layers (map (lambda (layer) (list->vector (map list->vector layer))) '(hidden-layer-definition ...)))
+	     (hidden-layers (map (lambda (layer) (list->vector (map list->vector (map randomize layer)))) '(hidden-layer-definition ...)))
 	     (hidden-layers-r '())
 	     (hidden-errors (map (lambda (layer) (list->vector (map (lambda (node) (list->vector (map (lambda (nul) 0) node))) layer)))
 				 '(hidden-layer-definition ...)))
 	     (hidden-errors-r '())
-	     (hidden-values (map (lambda (layer) (list->vector (map (lambda (node) (list->vector (map (lambda (nul) 0) node))) layer)))
+	     (hidden-values (map (lambda (layer) (list->vector (map (lambda (node) 0) layer)))
 				 '(hidden-layer-definition ...)))
 	     (hidden-values-r '())
 
 	     ;; This is a 2D vector
-	     (output-layer (list->vector (map list->vector 'output-definition)))
+	     (output-layer (list->vector (map list->vector (map randomize 'output-definition))))
 	     (output-errors (list->vector (map (lambda (nul) 0) 'output-definition)))
-	     (output-values (list->vector (map (lambda (node) (list->vector (map (lambda (nul) 0) node))) 'output-definition))))
+	     (output-values (list->vector (map (lambda (nul) 0) 'output-definition))))
 
 	 (set! hidden-layers-r (reverse hidden-layers))
 	 (set! hidden-errors-r (reverse hidden-errors))
 	 (set! hidden-values-r (reverse hidden-values))
-
-	 (define (matrix-* matrix vect)
-	   ;; Assumes multiplying n-m matrix by m-1 matrix, which I'll call a vector here
-	   (vector-map (lambda (node-row) ; NOTE: There's probably room for some optimization here (e.g. eliminate calls to vector->list)
-			 (apply + (map * (vector->list node-row) (vector->list vect))))
-		       matrix))
 
 	 (define (feed-forward input layers values)
 	   (cond
@@ -72,6 +77,7 @@ Syntax description:
 	    ((null? input)  (error "No input given for neural network!"))
 	    (else
 	     (let ((result (vector-map activation (matrix-* (car layers) input))))
+;	       (format #t "car values: '~A'~%" (car values))
 ;	       (format #t "Layer: ~A~%" result)
 	       (vector-clobber! (car values) result)
 	       (if (null? (cdr layers))
@@ -98,7 +104,6 @@ Syntax description:
 
 
 	   ;; NOTE: (car weights) looks something like #(#(.1 .2) #(.3 .4) ...)
-
 	   (vector-clobber! (car weights) ; update weights for this layer
 			    (vector-mapn (lambda (node delta)
 					   (vector-mapn (lambda (old-weight value)
@@ -132,7 +137,6 @@ Syntax description:
 		      (set! input-values inputs)
 
 		      ; update output deltas
-;		      (format #t "Before backprop (output):~%  Weights: '~A'~%  Values: '~A'~%  Errors: '~A'~%" output-layer output-values output-errors)
 		      (set! output-values (feed-forward input-values `(,@hidden-layers ,output-layer) `(,@hidden-values ,output-values)))
 		      (set! output-errors (vector-zip (lambda (output target) ; vector
 							(* (- target output) (- 1 output) output)) output-values targets))
@@ -141,10 +145,6 @@ Syntax description:
 										      node (car hidden-values-r)))
 						     output-layer output-errors))
 
-;		      (format #t "After backprop (output):~%  Weights: '~A'~%  Values: '~A'~%  Errors: '~A'~%" output-layer output-values output-errors)
-
-;; 		      (format #t "Hidden Values: ~A~%" hidden-values)
-;; 		      (format #t "Last errors: ~A~%" output-errors)
 
 		      ; backpropogate
 		      (back-prop hidden-layers hidden-values hidden-errors output-layer output-errors
@@ -163,17 +163,18 @@ Syntax description:
 		    (format #t "-------------- FULL DUMP FOR: '~A' --------------~%" 'net-name)
 
 		    (format #t "LAYER DUMP:~%")
-		    (map (lambda (layer) (vector-map (lambda (node) (pretty-print node)) layer) (newline)) hidden-layers)
-		    (pretty-print output-layer)
+		    (map (lambda (layer) (vector-map (lambda (node) (pretty-print node) (write-string " ")) layer) (display "\n---\n")) hidden-layers)
+		    (vector-map (lambda (node) (pretty-print node) (write-string " ")) output-layer)
 		    (newline)
 
 		    (format #t "ERROR DUMP:~%")
-		    (map (lambda (layer) (vector-map (lambda (node) (pretty-print node)) layer) (newline)) hidden-errors)
+		    		    (map (lambda (layer) (vector-map (lambda (node) (pretty-print node) (write-string " ")) layer) (newline)) hidden-errors)
 		    (pretty-print output-errors)
 		    (newline)
 
 		    (format #t "VALUE DUMP:~%")
-		    (map (lambda (layer) (vector-map (lambda (node) (pretty-print node)) layer) (newline)) hidden-values)
+		    (format #t "Inputs: '~A'~%" input-values)
+		    (map (lambda (layer) (vector-map (lambda (node) (pretty-print node) (write-string " ")) layer) (newline)) hidden-values)
 		    (pretty-print output-values)
 		    (newline)
 
