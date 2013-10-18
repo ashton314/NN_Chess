@@ -306,3 +306,26 @@ Layer: #(.568886012495078 .49268919231028063 .49268919231028063 .568886012495078
 It's learning. The bug is... in my format command. How, what?!!
 
 .
+
+Start: Thu Oct 17 22:11:47 MDT 2013
+Stop:  Thu Oct 17 22:22:55 MDT 2013
+
+Going to quickly try to do a time trial with my new network...
+
+Oooohhhhh baby... this is /beautiful/. I think the only more beautiful
+performance comparison was the syntactic analyzer vs. the metacircular
+scheme interpreter Alex and I wrote last year. Results:
+
+   Compiler
+Run time : 42470
+GC Time  : 300
+Real Time: 42961
+
+    Matrix
+Run time : 2810
+GC Time  : 30
+Real Time: 2846
+
+An order of magnitude. Dag, yo. Win.
+
+.
