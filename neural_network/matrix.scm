@@ -175,7 +175,7 @@ Syntax description:
 		    (format #t "VALUE DUMP:~%")
 		    (format #t "Inputs: '~A'~%" input-values)
 		    (map (lambda (layer) (vector-map (lambda (node) (pretty-print node) (write-string " ")) layer) (newline)) hidden-values)
-		    (pretty-print output-values)
+		    (format #t "Outputs: '~A'~%" output-values)
 		    (newline)
 
 		    (if (and (equal? hidden-layers-r (reverse hidden-layers))

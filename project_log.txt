@@ -329,3 +329,11 @@ Real Time: 2846
 An order of magnitude. Dag, yo. Win.
 
 .
+
+Start: Fri Oct 18 13:17:03 MDT 2013
+Stop:  Fri Oct 18 13:50:53 MDT 2013
+
+Character recognition works!! 1000 training cycles on the first for
+letter bitmaps. Woot!!
+
+.
