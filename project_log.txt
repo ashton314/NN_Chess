@@ -304,7 +304,6 @@ Layer: #(.568886012495078 .49268919231028063 .49268919231028063 .568886012495078
 ...
 
 It's learning. The bug is... in my format command. How, what?!!
-
 .
 
 Start: Thu Oct 17 22:11:47 MDT 2013
@@ -327,7 +326,6 @@ GC Time  : 30
 Real Time: 2846
 
 An order of magnitude. Dag, yo. Win.
-
 .
 
 Start: Fri Oct 18 13:17:03 MDT 2013
@@ -335,7 +333,6 @@ Stop:  Fri Oct 18 13:50:53 MDT 2013
 
 Character recognition works!! 1000 training cycles on the first for
 letter bitmaps. Woot!!
-
 .
 
 Start: Tue Oct 22 08:00:11 MDT 2013
@@ -344,7 +341,6 @@ Stop:  Tue Oct 22 08:20:20 MDT 2013
 Started work on board engine.
 Notes: 0 means no piece. 1 means pawn. 2 means king.
 Using bitmaps for white and black.
-
 .
 
 Start: Tue Oct 22 18:54:25 MDT 2013
@@ -357,5 +353,10 @@ Revised design: one bitmap, negative values represent black.
 Still working on board printing.
 
 Board prints correctly. (At least with non-kinged pieces)
+.
 
+Start: Wed Oct 23 07:44:49 MDT 2013
+Stop:  Wed Oct 23 08:21:06 MDT 2013
+
+Worked on asserting that a move is legal.
 .
