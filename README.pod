@@ -1,14 +1,24 @@
 =head1 NAME
 
-Capstone Project -- Neural-network enhancements to a Negascout chess framework
+Capstone Project -- Neural-network enhancements to a Negascout game framework
 
 =head1 SYNOPSIS
 
-## WORKING HERE
+Play game:
+  make run
 
 =head1 DESCRIPTION
 
+This project is written using MIT-Scheme.
+
+=head1 HISTORICAL NOTES
+
+Several months into this project, I realized that implementing a chess
+engine would be a far to complex project to complete within the course
+of a semester. I applied to my teacher, and he approved a modification
+from writing a chess engine to a checkers engine.
+
 =head1 AUTHOR
 
-Ashton Wiersdorf
+Ashton Wiersdorf <ashton.wiersdorf@mailblock.net>
 
