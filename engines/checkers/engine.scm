@@ -114,6 +114,11 @@
 				(car moves))
 		 (there-exists? odd? (car moves)))
 	    (format #f "Square '~A' is not a legal square!" (car moves)))
+
+    ;; NOT FINISHED HERE
+    )
+  (make-move ;; NOT FINISHED HERE
+   ))
     
     
 
