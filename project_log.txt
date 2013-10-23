@@ -346,3 +346,16 @@ Notes: 0 means no piece. 1 means pawn. 2 means king.
 Using bitmaps for white and black.
 
 .
+
+Start: Tue Oct 22 18:54:25 MDT 2013
+Stop:  Tue Oct 22 19:14:11 MDT 2013
+Start: Tue Oct 22 19:55:21 MDT 2013
+Stop:  Tue Oct 22 20:31:30 MDT 2013
+
+Continuing work on checkers engine.
+Revised design: one bitmap, negative values represent black.
+Still working on board printing.
+
+Board prints correctly. (At least with non-kinged pieces)
+
+.
