@@ -74,22 +74,32 @@
       (case op
 	((turn) (getter-setter turn))
 	((toggle-turn) (set! turn (case turn ('white 'black) ('black 'white))))
-	((print) (write-string (format-board white black)))))))
+	((print) (write-string (format-board board)))))))
 
 
 ;; Board utilities
 (define (format-board board)
-  (reduce string-append
-	  (format #f "
+  (string-append
+   (format #f "
      1   2   3   4   5   6   7   8
    +---+---+---+---+---+---+---+---+~%")
-	  (vector-mapn (lambda (row idx)
-			 (format #f (if (even? idx)
-					" ~A | ~A |   | ~A |   | ~A |   | ~A |   |~%"
-					" ~A |   | ~A |   | ~A |   | ~A |   | ~A |~%")
-				 ;;;; STILL WORKING HERE
-
-		board #(1 2 3 4 5 6 7 8))))
+   (reduce string-append
+	   ""
+	   (reverse!
+	    (vector->list
+	     (vector-mapn (lambda (row idx)
+			    (string-append
+			     (apply format 
+				    `(#f ,(if (even? idx)
+					      " ~A | ~A |   | ~A |   | ~A |   | ~A |   |~%"
+					      " ~A |   | ~A |   | ~A |   | ~A |   | ~A |~%")
+					 ,idx
+					 ,@(map (lambda (square)
+						  (case square
+						    ((0) " ") ((1) *white-pawn*) ((2) *white-king*) ((-1) *black-pawn*) ((-2) *black-king*)))
+						(vector->list row))))
+			     (format #f "   +---+---+---+---+---+---+---+---+~%")))
+			  board #(1 2 3 4 5 6 7 8)))))))
 
 
 ;; Helper functions
