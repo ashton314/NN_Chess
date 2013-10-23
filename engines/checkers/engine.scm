@@ -68,16 +68,59 @@
 		 #(-1 -1 -1 -1)
 		 #(-1 -1 -1 -1)
 		 #(-1 -1 -1 -1)))
+	(board-stack '())
 	(turn 'white))
 
     (lambda (op . args)
       (case op
 	((turn) (getter-setter turn))
 	((toggle-turn) (set! turn (case turn ('white 'black) ('black 'white))))
-	((print) (write-string (format-board board)))))))
+	((print) (write-string (format-board board)))
+	((move) (do-move (car args) board turn))
+	((move-print) (format-board (do-move (car args) board turn)))
+	((move!) (set! board (do-move (car args) board turn)))))))
 
 
 ;; Board utilities
+(define (do-move moves board turn)
+  ;; Takes a list of moves. Returns new 8x4 vector.
+
+  ;; TODO: (set! moves (map split-num moves)), subtract 1 for each
+  ;; square (to set 0 indexing)
+
+  (define (make-move current-square moves brd history)
+    ;; Tail recursive procedure to modify the board
+
+    ; Make sure the move is legal
+    (assert (right-turn (sqr-get current-square brd) turn)
+	    "It is not your turn to move!")
+    (assert (= 0 (sqr-get (car moves) brd))
+	    (format #f "Target square ~A is not empty!" (car moves)))
+    (assert (for-all? (lambda (num) (and (>= 0 num)
+					 (integer? num)
+					 (< 8 num)))
+		      current-square)
+	    (format #f "Square '~A' is not on the board!" current-square))
+    (assert (for-all? (lambda (num) (and (>= 0 num)
+					 (integer? num)
+					 (< 8 num)))
+		      (car moves))
+	    (format #f "Square '~A' is not on the board!" (car moves)))
+    (assert (and (there-exists? (lambda (n) (or (= n 0) (even? n)))
+				current-square)
+		 (there-exists? odd? current-square))
+	    (format #f "Square '~A' is not a legal square!" current-square))
+    (assert (and (there-exists? (lambda (n) (or (= n 0) (even? n)))
+				(car moves))
+		 (there-exists? odd? (car moves)))
+	    (format #f "Square '~A' is not a legal square!" (car moves)))
+    
+    
+
+
+(define (right-turn sqr turn)
+  (eq? turn (case sqr ((1 2) 'white) ((-1 -2) 'black))))
+
 (define (format-board board)
   (string-append
    (format #f "
@@ -103,12 +146,20 @@
 
 
 ;; Helper functions
+(define (assert condition if-err)
+  (if condition
+      #t
+      (error if-err)))
+
+(define (sqr-get sqr board)
+  ;; Takes a square from `split-num'
+  (vector-ref (vector-ref board (car sqr)) (cdr sqr)))
 
 (define (split-num num)
   ;; Takes something like 12 and returns (1 2)
   (if (< num 0)
-      (list 0 num)
-      (list (truncate (/ num 10))
+      (cons 0 num)
+      (cons (truncate (/ num 10))
 	    (remainder num 10))))
 
 (define (vector-reduce func vec)
