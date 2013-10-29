@@ -35,8 +35,25 @@
        temp1))))
 
 
-;; Constructer function
+;; NOTES
+#|
 
+When a square is in raw-format, it means that the numbers are as the
+player would input. Converted-format is 0-index, adjusted for columns.
+
+Board description:
+  8x4 game board
+  Sides: 2, white and black
+  Squares:
+    0  => empty
+    1  => white pawn
+    2  => white king
+    -1 => black pawn
+    -2 => black king
+
+|#
+
+;; Constructer function
 (define (make-board)
   ;; Returns a new checkers board
 
@@ -48,16 +65,6 @@
 	 (cond ((eq? op 'set!) (set! var (car args)))
 	       ((eq? op 'get) var)
 	       (else (error (format #f "Bad option to getter-setter: ~A" 'var))))))))
-
-  ;; Board description:
-  ;;   8x4 game board
-  ;;   Sides: 2, white and black
-  ;;   Squares:
-  ;;     0  => empty
-  ;;     1  => white pawn
-  ;;     2  => white king
-  ;;     -1 => black pawn
-  ;;     -2 => black king
 
   ; Private values
   (let ((board #(#(1 1 1 1)
@@ -85,20 +92,25 @@
 (define (do-move moves board turn)
   ;; Takes a list of moves. Returns new 8x4 vector.
 
-  ;; TODO: (set! moves (map split-num moves)), subtract 1 for each
-  ;; square (to set 0 indexing)
-
   (define (make-move current-square moves brd history)
     ;; Tail recursive procedure to modify the board
 
-    ; Make sure the move is legal
+    ;; NOTE: current-square and moves are in raw entry-format,
+    ;; split-num'd The numbers will be converted for 0-indexing by the
+    ;; procedures that access the board directly
+
+    ; right turn to move
     (assert (right-turn (sqr-get current-square brd) turn)
 	    "It is not your turn to move!")
+
+    ; target square blank
     (assert (= 0 (sqr-get (car moves) brd))
 	    (format #f "Target square ~A is not empty!" (car moves)))
-    (assert (for-all? (lambda (num) (and (>= 0 num)
+
+    ; square is on board
+    (assert (for-all? (lambda (num) (and (> 0 num)
 					 (integer? num)
-					 (< 8 num)))
+					 (<= 8 num)))
 		      current-square)
 	    (format #f "Square '~A' is not on the board!" current-square))
     (assert (for-all? (lambda (num) (and (>= 0 num)
@@ -106,6 +118,8 @@
 					 (< 8 num)))
 		      (car moves))
 	    (format #f "Square '~A' is not on the board!" (car moves)))
+
+    ; square is non-null
     (assert (and (there-exists? (lambda (n) (or (= n 0) (even? n)))
 				current-square)
 		 (there-exists? odd? current-square))
@@ -115,16 +129,30 @@
 		 (there-exists? odd? (car moves)))
 	    (format #f "Square '~A' is not a legal square!" (car moves)))
 
-    ;; NOT FINISHED HERE
+    ; direction good
+    (if (= (abs (sqr-get current-square)) 1)
+	(assert ((if (white-piece? (sqr-get current-square)) > <) ; functional programming, for the win
+		 (car current-square) (caar moves))
+		"That piece may not move backwards."))
+
+    ; range good
     )
-  (make-move ;; NOT FINISHED HERE
-   ))
+
+  (let ((mvs (map split-num moves)))
+    (make-move (car mvs) (cdr mvs) board '())))
+
     
     
 
 
 (define (right-turn sqr turn)
   (eq? turn (case sqr ((1 2) 'white) ((-1 -2) 'black))))
+
+(define (white-piece? piece)
+  (case piece ((1 2) #t) (else #f)))
+
+(define (black-piece? piece)
+  (case piece ((-1 -2) #t) (else #f)))
 
 (define (format-board board)
   (string-append
@@ -156,12 +184,21 @@
       #t
       (error if-err)))
 
+(define (convert-coord sqr)
+  ;; Converts a board coordinate into 0-index form
+  (cons (- (car sqr) 1)
+	(floor (remainder (cdr sqr) 2))))
+
 (define (sqr-get sqr board)
   ;; Takes a square from `split-num'
+  ;; sqr is in raw form
+
+  ;; TODO: Convert from raw form
+
   (vector-ref (vector-ref board (car sqr)) (cdr sqr)))
 
 (define (split-num num)
-  ;; Takes something like 12 and returns (1 2)
+  ;; Takes something like 12 and returns (1 . 2)
   (if (< num 0)
       (cons 0 num)
       (cons (truncate (/ num 10))
