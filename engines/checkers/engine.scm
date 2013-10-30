@@ -99,49 +99,58 @@ Board description:
     ;; split-num'd The numbers will be converted for 0-indexing by the
     ;; procedures that access the board directly
 
-    ; right turn to move
-    (assert (right-turn (sqr-get current-square brd) turn)
-	    "It is not your turn to move!")
+    (assert-legal current-square (car moves) brd turn)
 
-    ; target square blank
-    (assert (= 0 (sqr-get (car moves) brd))
-	    (format #f "Target square ~A is not empty!" (car moves)))
-
-    ; square is on board
-    (assert (for-all? (lambda (num) (and (> 0 num)
-					 (integer? num)
-					 (<= 8 num)))
-		      current-square)
-	    (format #f "Square '~A' is not on the board!" current-square))
-    (assert (for-all? (lambda (num) (and (>= 0 num)
-					 (integer? num)
-					 (< 8 num)))
-		      (car moves))
-	    (format #f "Square '~A' is not on the board!" (car moves)))
-
-    ; square is non-null
-    (assert (and (there-exists? (lambda (n) (or (= n 0) (even? n)))
-				current-square)
-		 (there-exists? odd? current-square))
-	    (format #f "Square '~A' is not a legal square!" current-square))
-    (assert (and (there-exists? (lambda (n) (or (= n 0) (even? n)))
-				(car moves))
-		 (there-exists? odd? (car moves)))
-	    (format #f "Square '~A' is not a legal square!" (car moves)))
-
-    ; direction good
-    (if (= (abs (sqr-get current-square)) 1)
-	(assert ((if (white-piece? (sqr-get current-square)) > <) ; functional programming, for the win
-		 (car current-square) (caar moves))
-		"That piece may not move backwards."))
-
-    ; range good
-    )
+    (let ((new-board 'FIXME)
+	  (new-history 'FIXME))
+      (if (null? (cdr moves))
+	  brd
+	  (make-move (car moves) (cdr moves) new-board new-history))))
 
   (let ((mvs (map split-num moves)))
     (make-move (car mvs) (cdr mvs) board '())))
 
-    
+(define (assert-legal? current-square target-square board turn)
+  ;; NOTE: current-square and target-square are in raw format
+
+  ; right turn to move
+  (assert (right-turn (sqr-get current-square board) turn)
+	  "It is not your turn to move!")
+
+    ; target square blank
+  (assert (= 0 (sqr-get target-square board))
+	  (format #f "Target square ~A is not empty!" target-square))
+
+    ; square is on board
+  (assert (for-all? (lambda (num) (and (> 0 num)
+				       (integer? num)
+				       (<= 8 num)))
+		    current-square)
+	  (format #f "Square '~A' is not on the board!" current-square))
+  (assert (for-all? (lambda (num) (and (>= 0 num)
+				       (integer? num)
+				       (< 8 num)))
+		    target-square)
+	  (format #f "Square '~A' is not on the board!" target-square))
+
+    ; square is non-null
+  (assert (and (there-exists? (lambda (n) (or (= n 0) (even? n)))
+			      current-square)
+	       (there-exists? odd? current-square))
+	  (format #f "Square '~A' is not a legal square!" current-square))
+  (assert (and (there-exists? (lambda (n) (or (= n 0) (even? n)))
+			      target-square)
+	       (there-exists? odd? target-square))
+	  (format #f "Square '~A' is not a legal square!" target-square))
+
+    ; direction good
+  (if (= (abs (sqr-get current-square board)) 1)
+      (assert ((if (white-piece? (sqr-get current-square board)) > <) ; functional programming, for the win
+	       (car current-square) (caar moves))
+	      "That piece may not move backwards."))
+
+    ; range good
+  )
     
 
 
