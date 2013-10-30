@@ -108,9 +108,9 @@ Board description:
     ;; split-num'd The numbers will be converted for 0-indexing by the
     ;; procedures that access the board directly
 
-    (assert-legal (split-num current-square) (split-num (car moves)) brd turn)
+    (assert-legal current-square (car moves) brd turn)
 
-    (let ((new-data (copy-board-with-modifications (split-num current-square) (split-num (car moves)) brd)))
+    (let ((new-data (copy-board-with-modifications current-square (car moves) brd)))
       (let ((new-board (car new-data))		; FIXME: Unfinished here
 	    (new-history (cdr new-data)))
 	(if (null? (cdr moves))
@@ -121,16 +121,17 @@ Board description:
     (make-move (car mvs) (cdr mvs) board '())))
 
 (define (copy-board-with-modifications current-square target-square board)
-  (let ((new-board (apply vector (vector-map vector-copy board)))
+  (let ((new-board (vector-copy (vector-map vector-copy board)))
 	(ret (list current-square target-square)))
     (sqr-set! target-square (sqr-get current-square board) new-board)
     (sqr-set! current-square 0 new-board)
     (if (= (num-diff (car current-square) (car target-square)) 2)
-	(set! ret (cons (sqr-get (midpoint current-square target-square) board) ret))
-	(sqr-set! (midpoint current-square target-square) 0 board))
+	(begin
+	  (set! ret (cons (sqr-get (midpoint current-square target-square) board) ret))
+	  (sqr-set! (midpoint current-square target-square) 0 board)))
     (cons new-board (reverse! ret))))
 
-(define (assert-legal? current-square target-square board turn)
+(define (assert-legal current-square target-square board turn)
   ;; NOTE: current-square and target-square are in split-raw format
 
   ; right turn to move
@@ -142,38 +143,39 @@ Board description:
 	  (format #f "Target square ~A is not empty!" target-square))
 
     ; square is on board
-  (assert (for-all? (lambda (num) (and (> 0 num)
-				       (integer? num)
-				       (<= 8 num)))
-		    current-square)
+  (assert (for-all? (list (car current-square) (cdr current-square))
+		    (lambda (num)
+		      (and (< 0 num)
+			   (integer? num)
+			   (>= 8 num))))
 	  (format #f "Square '~A' is not on the board!" current-square))
-  (assert (for-all? (lambda (num) (and (>= 0 num)
+  (assert (for-all? (list (car target-square) (cdr target-square))
+		    (lambda (num) (and (< 0 num)
 				       (integer? num)
-				       (< 8 num)))
-		    target-square)
+				       (>= 8 num))))
 	  (format #f "Square '~A' is not on the board!" target-square))
 
     ; square is non-null
-  (assert (and (there-exists? (lambda (n) (or (= n 0) (even? n)))
-			      current-square)
-	       (there-exists? odd? current-square))
+  (assert (and (there-exists? (list (car current-square) (cdr current-square))
+			      (lambda (n) (or (= n 0) (even? n))))
+	       (there-exists? (list (car current-square) (cdr current-square)) odd?))
 	  (format #f "Square '~A' is not a legal square!" current-square))
-  (assert (and (there-exists? (lambda (n) (or (= n 0) (even? n)))
-			      target-square)
-	       (there-exists? odd? target-square))
+  (assert (and (there-exists? (list (car target-square) (cdr target-square))
+			      (lambda (n) (or (= n 0) (even? n))))
+	       (there-exists? (list (car target-square) (cdr target-square)) odd?))
 	  (format #f "Square '~A' is not a legal square!" target-square))
 
     ; direction good
   (if (= (abs (sqr-get current-square board)) 1)
-      (assert ((if (white-piece? (sqr-get current-square board)) > <) ; functional programming, for the win
+      (assert ((if (white-piece? (sqr-get current-square board)) < >) ; functional programming, for the win
 	       (car current-square) (car target-square))
-	      "That piece may not move backwards."))
+	      (format #f "Piece at ~A may not move backwards." current-square)))
 
     ; range good
   (assert (= (num-diff (car current-square) (car target-square))
 	     (num-diff (cdr current-square) (cdr target-square)))
 	  "Non-diagnal motion")
-  (case (= (num-diff (car current-square) (car target-square)) 1)
+  (case (num-diff (car current-square) (car target-square))
     ((1) #t)				; no jump
     ((2) ((if (white-piece? (sqr-get current-square board)) black-piece? white-piece?) ; again, functional programming
 	  (sqr-get (midpoint current-square target-square))))
