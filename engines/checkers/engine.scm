@@ -85,7 +85,10 @@ Board description:
 	((print) (write-string (format-board board)))
 	((move) (do-move (car args) board turn))
 	((move-print) (format-board (do-move (car args) board turn)))
-	((move!) (set! board (do-move (car args) board turn)))))))
+	((move!) (begin
+		   (set! board (do-move (car args) board turn))
+		   (set! turn (case turn ('white 'black) ('black 'white)))))))))
+	         
 
 
 ;; Board utilities
@@ -99,9 +102,9 @@ Board description:
     ;; split-num'd The numbers will be converted for 0-indexing by the
     ;; procedures that access the board directly
 
-    (assert-legal current-square (car moves) brd turn)
+    (assert-legal (split-num current-square) (split-num (car moves)) brd turn)
 
-    (let ((new-board 'FIXME)
+    (let ((new-board 'FIXME)		; FIXME: Unfinished here
 	  (new-history 'FIXME))
       (if (null? (cdr moves))
 	  brd
@@ -111,7 +114,7 @@ Board description:
     (make-move (car mvs) (cdr mvs) board '())))
 
 (define (assert-legal? current-square target-square board turn)
-  ;; NOTE: current-square and target-square are in raw format
+  ;; NOTE: current-square and target-square are in split-raw format
 
   ; right turn to move
   (assert (right-turn (sqr-get current-square board) turn)
@@ -150,9 +153,15 @@ Board description:
 	      "That piece may not move backwards."))
 
     ; range good
-  )
+  (assert (= (num-diff (car current-square) (car target-square))
+	     (num-diff (cdr current-square) (cdr target-square)))
+	  "Non-diagnal motion")
+  (case (= (num-diff (car current-square) (car target-square)) 1)
+    ((1) #t)				; no jump
+    ((2) ((if (white-piece? (sqr-get current-square board)) black-piece? white-piece?) ; again, functional programming
+	  (sqr-get (midpoint current-square target-square))))
+    (else (error "You cannot move that far!"))))
     
-
 
 (define (right-turn sqr turn)
   (eq? turn (case sqr ((1 2) 'white) ((-1 -2) 'black))))
@@ -188,6 +197,9 @@ Board description:
 
 
 ;; Helper functions
+(define (num-diff a b)
+  (abs (- a b)))
+
 (define (assert condition if-err)
   (if condition
       #t
@@ -198,13 +210,20 @@ Board description:
   (cons (- (car sqr) 1)
 	(floor (remainder (cdr sqr) 2))))
 
+(define (midpoint current target)
+  ;; Given two squares on the same diagnal with one square between
+  ;; them, returns that in-between square
+  ;; Works on split-num'd raw squares
+
+  ;; WORKING
+  (cons (+ (car current) (/ (- (car target) (car current)) 2))
+	(+ (cdr current) (/ (- (cdr target) (cdr current)) 2))))
+
 (define (sqr-get sqr board)
   ;; Takes a square from `split-num'
   ;; sqr is in raw form
 
-  ;; TODO: Convert from raw form
-
-  (vector-ref (vector-ref board (car sqr)) (cdr sqr)))
+  (vector-ref (vector-ref board (- (car sqr) 1)) (truncate (/ (- (cdr sqr) 1) 2))))
 
 (define (split-num num)
   ;; Takes something like 12 and returns (1 . 2)
