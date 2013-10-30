@@ -389,3 +389,13 @@ This is what the board will look like:
  8 | b |   | b |   | b |   | b |   |
    +---+---+---+---+---+---+---+---+
 .
+
+Start: Tue Oct 29 20:05:03 MDT 2013
+Stop:  Tue Oct 29 21:33:32 MDT 2013
+
+I finished the first draft of the move making routines. Writing some
+tests for that now...
+
+Very basic tests in place. The last one is failing; I'm not sure
+why. See the error message when engine_test.t is run.
+.
