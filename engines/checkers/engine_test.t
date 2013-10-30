@@ -11,7 +11,11 @@
     (board 'print)
     (ok (prompt-for-confirmation "Does this look right?") "board printing works")))
 
+(define (move-making)
+  #t)
+
 ;; High-level chunks
 (board-displays)
+(move-making)
 
 (done-testing)

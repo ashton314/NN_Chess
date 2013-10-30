@@ -104,14 +104,22 @@ Board description:
 
     (assert-legal (split-num current-square) (split-num (car moves)) brd turn)
 
-    (let ((new-board 'FIXME)		; FIXME: Unfinished here
-	  (new-history 'FIXME))
-      (if (null? (cdr moves))
-	  brd
-	  (make-move (car moves) (cdr moves) new-board new-history))))
+    (let ((new-data (copy-board-with-modifications (split-num current-square) (split-num (car moves)) brd)))
+      (let ((new-board (car new-data))		; FIXME: Unfinished here
+	    (new-history (cdr new-data)))
+	(if (null? (cdr moves))
+	    brd
+	    (make-move (car moves) (cdr moves) new-board (cons new-history history)))))
 
   (let ((mvs (map split-num moves)))
     (make-move (car mvs) (cdr mvs) board '())))
+
+(define (copy-board-with-modifications current-square target-square board)
+  (let ((new-board (apply vector (vector-map vector-copy board))))
+    (sqr-set! target-square (sqr-get current-square board) new-board)
+    (sqr-set! current-square 0 new-board)
+    (if (= (num-diff (car current-square) (car target-square)) 2)
+	(sqr-set! (midpoint current-square target-square) 0 board))))
 
 (define (assert-legal? current-square target-square board turn)
   ;; NOTE: current-square and target-square are in split-raw format
@@ -222,8 +230,10 @@ Board description:
 (define (sqr-get sqr board)
   ;; Takes a square from `split-num'
   ;; sqr is in raw form
-
   (vector-ref (vector-ref board (- (car sqr) 1)) (truncate (/ (- (cdr sqr) 1) 2))))
+
+(define (sqr-set! sqr obj board)
+  (vector-set! (vector-ref board (- (car sqr) 1)) (truncate (/ (- (cdr sqr) 1) 2)) obj))
 
 (define (split-num num)
   ;; Takes something like 12 and returns (1 . 2)
