@@ -75,20 +75,26 @@ Board description:
 		 #(-1 -1 -1 -1)
 		 #(-1 -1 -1 -1)
 		 #(-1 -1 -1 -1)))
+	(history '())
 	(board-stack '())
 	(turn 'white))
 
     (lambda (op . args)
       (case op
+	;; Movement
 	((turn) (getter-setter turn))
-	((toggle-turn) (set! turn (case turn ('white 'black) ('black 'white))))
-	((print) (write-string (format-board board)))
+	((toggle-turn) (set! turn (case turn ('white 'black) ('black 'white) (else (error "something wicked happend to the turn")))))
 	((move) (do-move (car args) board turn))
 	((move-print) (format-board (do-move (car args) board turn)))
 	((move!) (begin
 		   (set! board (do-move (car args) board turn))
-		   (set! turn (case turn ('white 'black) ('black 'white)))))))))
-	         
+		   (set! turn (case turn ('white 'black) ('black 'white)))))
+
+	;; Display/Debugging
+	((print) (write-string (format-board board)))
+	((dump-board) board)
+
+	(else (error (format #f "Bad option to board: ~A" op)))))))
 
 
 ;; Board utilities
@@ -109,17 +115,20 @@ Board description:
 	    (new-history (cdr new-data)))
 	(if (null? (cdr moves))
 	    brd
-	    (make-move (car moves) (cdr moves) new-board (cons new-history history)))))
+	    (make-move (car moves) (cdr moves) new-board (cons new-history history))))))
 
   (let ((mvs (map split-num moves)))
     (make-move (car mvs) (cdr mvs) board '())))
 
 (define (copy-board-with-modifications current-square target-square board)
-  (let ((new-board (apply vector (vector-map vector-copy board))))
+  (let ((new-board (apply vector (vector-map vector-copy board)))
+	(ret (list current-square target-square)))
     (sqr-set! target-square (sqr-get current-square board) new-board)
     (sqr-set! current-square 0 new-board)
     (if (= (num-diff (car current-square) (car target-square)) 2)
-	(sqr-set! (midpoint current-square target-square) 0 board))))
+	(set! ret (cons (sqr-get (midpoint current-square target-square) board) ret))
+	(sqr-set! (midpoint current-square target-square) 0 board))
+    (cons new-board (reverse! ret))))
 
 (define (assert-legal? current-square target-square board turn)
   ;; NOTE: current-square and target-square are in split-raw format
@@ -157,7 +166,7 @@ Board description:
     ; direction good
   (if (= (abs (sqr-get current-square board)) 1)
       (assert ((if (white-piece? (sqr-get current-square board)) > <) ; functional programming, for the win
-	       (car current-square) (caar moves))
+	       (car current-square) (car target-square))
 	      "That piece may not move backwards."))
 
     ; range good

@@ -11,11 +11,30 @@
     (board 'print)
     (ok (prompt-for-confirmation "Does this look right?") "board printing works")))
 
+(define (board-routines)
+  (let ((board (make-board)))
+
+    ;; turns
+    (is ((board 'turn) 'get) 'white "correct initial turn")
+    (board 'toggle-turn)
+    (is ((board 'turn) 'get) 'black "toggle-turn works once")
+    (board 'toggle-turn)
+    (is ((board 'turn) 'get) 'white "toggle-turn works again")
+    ((board 'turn) 'set! 'black)
+    (is ((board 'turn) 'get) 'black "turn setting! works")))
+    
+
+
 (define (move-making)
-  #t)
+  (let ((board (make-board)))
+    (is (board 'dump-board) #(#(1 1 1 1) #(1 1 1 1) #(1 1 1 1) #(0 0 0 0) #(0 0 0 0) #(-1 -1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1))
+	"correct initial board")
+    (is (board 'move '(32 41)) #(#(1 1 1 1) #(1 1 1 1) #(0 1 1 1) #(1 0 0 0) #(0 0 0 0) #(-1 -1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1))
+	"moved for white")))
 
 ;; High-level chunks
 (board-displays)
+(board-routines)
 (move-making)
 
 (done-testing)
