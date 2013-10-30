@@ -86,8 +86,8 @@ Board description:
 	((toggle-turn) (set! turn (case turn ('white 'black) ('black 'white) (else (error "something wicked happend to the turn")))))
 	((move) (do-move (car args) board turn))
 	((move-print) (format-board (do-move (car args) board turn)))
-	((move!) (begin
-		   (set! board (do-move (car args) board turn))
+	((move!) (let ((data (do-move (car args) board turn)))
+		   (set! board (car data))
 		   (set! turn (case turn ('white 'black) ('black 'white)))))
 
 	;; Display/Debugging
@@ -111,10 +111,10 @@ Board description:
     (assert-legal current-square (car moves) brd turn)
 
     (let ((new-data (copy-board-with-modifications current-square (car moves) brd)))
-      (let ((new-board (car new-data))		; FIXME: Unfinished here
+      (let ((new-board (car new-data))
 	    (new-history (cdr new-data)))
 	(if (null? (cdr moves))
-	    brd
+	    (cons new-board (cons new-history history))
 	    (make-move (car moves) (cdr moves) new-board (cons new-history history))))))
 
   (let ((mvs (map split-num moves)))
