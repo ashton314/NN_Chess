@@ -30,7 +30,22 @@
     (is (board 'dump-board) #(#(1 1 1 1) #(1 1 1 1) #(1 1 1 1) #(0 0 0 0) #(0 0 0 0) #(-1 -1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1))
 	"correct initial board")
     (is (car (board 'move '(32 41))) #(#(1 1 1 1) #(1 1 1 1) #(0 1 1 1) #(1 0 0 0) #(0 0 0 0) #(-1 -1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1))
-	"moved for white")))
+	"moved for white")
+    (is (board 'dump-board) #(#(1 1 1 1) #(1 1 1 1) #(1 1 1 1) #(0 0 0 0) #(0 0 0 0) #(-1 -1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1))
+	"non-destructive modification")
+    (board 'move! '(32 41))
+    (is (board 'dump-board) #(#(1 1 1 1) #(1 1 1 1) #(0 1 1 1) #(1 0 0 0) #(0 0 0 0) #(-1 -1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1))
+	"destructively moved for white")
+    (is ((board 'turn) 'get) 'black "turn toggled correctly after move (to black)")
+    (board 'move! '(63 52))
+    (is (board 'dump-board) #(#(1 1 1 1) #(1 1 1 1) #(0 1 1 1) #(1 0 0 0) #(-1 0 0 0) #(-1 0 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1))
+	"destructively moved for black")
+    (is ((board 'turn) 'get) 'white "turn toggled correctly after move (to white)")
+    (board 'move! '(41 63))
+    (is (board 'dump-board) #(#(1 1 1 1) #(1 1 1 1) #(0 1 1 1) #(0 0 0 0) #(0 0 0 0) #(-1 1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1))
+	"white captures black pawn")))
+
+    
 
 ;; High-level chunks
 (board-displays)

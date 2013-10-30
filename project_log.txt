@@ -399,3 +399,12 @@ tests for that now...
 Very basic tests in place. The last one is failing; I'm not sure
 why. See the error message when engine_test.t is run.
 .
+
+Start: Wed Oct 30 07:45:43 MDT 2013
+Stop:  Wed Oct 30 08:22:42 MDT 2013
+
+Much movement seems to be working. See bug in engine_test.t: piece not
+being removed from the board after being jumped.
+Also todo: implement kinging, make sure that kings move properly, and
+chained move legality checking (chains only legal if consecutive jumps.)
+.

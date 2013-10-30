@@ -178,7 +178,7 @@ Board description:
   (case (num-diff (car current-square) (car target-square))
     ((1) #t)				; no jump
     ((2) ((if (white-piece? (sqr-get current-square board)) black-piece? white-piece?) ; again, functional programming
-	  (sqr-get (midpoint current-square target-square))))
+	  (sqr-get (midpoint current-square target-square) board)))
     (else (error "You cannot move that far!"))))
     
 
