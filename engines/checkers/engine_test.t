@@ -43,7 +43,15 @@
     (is ((board 'turn) 'get) 'white "turn toggled correctly after move (to white)")
     (board 'move! '(41 63))
     (is (board 'dump-board) #(#(1 1 1 1) #(1 1 1 1) #(0 1 1 1) #(0 0 0 0) #(0 0 0 0) #(-1 1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1))
-	"white captures black pawn")))
+	"white captures black pawn")
+
+    (board 'set-board! #(#(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 1 0) #(0 0 0 0)))
+    (is (board 'dump-board) #(#(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 1 0) #(0 0 0 0))
+	"set-board! works correctly")
+    ((board 'turn) 'set! 'white)
+    (board 'move! '(76 87))
+    (is (board 'dump-board) #(#(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 2))
+	"white piece kinged correctly")))
 
     
 

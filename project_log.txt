@@ -408,3 +408,11 @@ being removed from the board after being jumped.
 Also todo: implement kinging, make sure that kings move properly, and
 chained move legality checking (chains only legal if consecutive jumps.)
 .
+
+Start: Wed Oct 30 21:05:31 MDT 2013
+Stop:  Wed Oct 30 21:12:23 MDT 2013
+Start: Wed Oct 30 21:28:17 MDT 2013
+Stop:  Wed Oct 30 21:45:16 MDT 2013
+
+Pieces get kinged, fixed bug with captured piece not being removed.
+.

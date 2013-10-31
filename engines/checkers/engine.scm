@@ -92,6 +92,7 @@ Board description:
 
 	;; Display/Debugging
 	((print) (write-string (format-board board)))
+	((set-board!) (set! board (car args)))
 	((dump-board) board)
 
 	(else (error (format #f "Bad option to board: ~A" op)))))))
@@ -123,12 +124,17 @@ Board description:
 (define (copy-board-with-modifications current-square target-square board)
   (let ((new-board (vector-copy (vector-map vector-copy board)))
 	(ret (list current-square target-square)))
-    (sqr-set! target-square (sqr-get current-square board) new-board)
+    (sqr-set! target-square
+	      (let ((piece (sqr-get current-square board)))
+		(if (= (car target-square) (if (white-piece? piece) 8 1)) ; King me!
+		    (if (white-piece? piece) 2 -2)
+		    piece))
+	      new-board)
     (sqr-set! current-square 0 new-board)
     (if (= (num-diff (car current-square) (car target-square)) 2)
 	(begin
-	  (set! ret (cons (sqr-get (midpoint current-square target-square) board) ret))
-	  (sqr-set! (midpoint current-square target-square) 0 board)))
+	  (set! ret (cons (sqr-get (midpoint current-square target-square) new-board) ret))
+	  (sqr-set! (midpoint current-square target-square) 0 new-board)))
     (cons new-board (reverse! ret))))
 
 (define (assert-legal current-square target-square board turn)
