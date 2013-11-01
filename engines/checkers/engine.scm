@@ -99,6 +99,7 @@ Board description:
 		   (set! turn (case turn ('white 'black) ('black 'white)))))
 
 	;; AI
+	((possible-moves) (possible-moves board turn))
 	((compute-move-dumb) (best-move-dumb board turn)) ; no NN
 	((compute-move-smart) (best-move-smart board turn neural-net))
 	((make-move-dumb!) (let ((data (do-move (best-move-dumb board turn) board turn)))
@@ -159,6 +160,30 @@ Board description:
 	  (sqr-set! (midpoint current-square target-square) 0 new-board)))
     (cons new-board (reverse! ret))))
 
+(define (possible-moves board turn)
+  (reduce append '() 
+	  (map (lambda (coord) (generate-possible-moves board coord #f turn)) (collect-coordinates board turn))))
+
+(define (generate-possible-moves board coordinate must-jump? turn)
+  ;; if must-jump? is #t, then this must return legal jumps
+  (let ((jumps (filter (lambda (move) (not (condition? (assert-legal coordinate move board turn))))
+		       (collect-diagnal-squares 2)))
+	(single-moves (filter (lambda (move) (not (condition? (assert-legal coordinate move board turn))))
+			      (collect-diagnal-squares 1)))
+  
+
+(define (collect-coordinates board turn)
+  (define (loop row col acc)
+    (if (and (= row 8) (= col 8))
+	acc
+	(loop (if (= col 8) (+ row 1) row)
+	      (if (= col 8) 1 (+ col 1))
+	      (if ((if (eq? turn 'white) white-piece? black-piece?) (sqr-get (cons row col) board))
+		  (cons (cons row col) acc)
+		  acc))))
+  (loop 1 1 '()))
+
+
 (define (assert-legal current-square target-square board turn)
   ;; NOTE: current-square and target-square are in split-raw format
 
@@ -213,6 +238,9 @@ Board description:
 
 (define (right-turn sqr turn)
   (eq? turn (case sqr ((1 2) 'white) ((-1 -2) 'black))))
+
+(define (king? piece)
+  (= (abs piece) 2))
 
 (define (white-piece? piece)
   (case piece ((1 2) #t) (else #f)))
