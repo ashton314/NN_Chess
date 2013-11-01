@@ -34,6 +34,20 @@
        (set! place (cdr place))
        temp1))))
 
+(define-syntax this-and-next
+  ;; Iterates over a list, binding the current value and the next to
+  ;; the two supplied arguments
+  (syntax-rules ()
+    ((_ (var1 var2 src-list) body ...)
+     (begin
+       (define (loop var1 var2 the-rest)
+	 (begin body ...)
+	 (if (null? (cdr the-rest))
+	     #f
+	     (loop (car the-rest) (cadr the-rest) (cdr the-rest))))
+       (let ((source src-list))
+	 (loop (car source) (cadr source) (cdr source)))))))
+
 
 ;; NOTES
 #|
@@ -101,6 +115,16 @@ Board description:
 ;; Board utilities
 (define (do-move moves board turn)
   ;; Takes a list of moves. Returns new 8x4 vector.
+
+  (if (> (length moves) 2)
+      (let ((null #f))
+	(define (loop m1 m2 the-rest)
+	  (if (not (= (num-diff (car m1) (car m2)) 2))
+	      (error "non-jump move in multi-square chain"))
+	  (if (null? (cdr the-rest))
+	      #f
+	      (loop m2 (cadr the-rest (cdr the-rest)))))
+	(loop (car moves) (cadr moves) (cdr moves))))
 
   (define (make-move current-square moves brd history)
     ;; Tail recursive procedure to modify the board
