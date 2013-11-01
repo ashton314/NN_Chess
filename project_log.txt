@@ -426,5 +426,21 @@ I've only worked with Negamax. I might want to start with that...
 
 Also, it's kind of late, so I'm wondering if I should start something
 like this. I think I'll go play the piano for a bit...
+.
 
+Start: Fri Nov  1 14:32:52 MDT 2013
+Stop:  Fri Nov  1 14:42:02 MDT 2013
+Start: Fri Nov  1 15:06:28 MDT 2013
+Stop:  Fri Nov  1 16:37:44 MDT 2013
+
+Going to start working on the negamax algorithm.
+
+Working on move generation. I haven't tested any of the functions I've
+written today (possible-moves, generate-possible-moves, and
+collect-coordinates.) I'll need to write `collect-diagnal-squares',
+which returns the 4 diagonal squares to the square given. I could (and
+probably should) make this function efficient: have it do some /very/ basic
+error checking: the direction is correct, and maybe if the square is
+within bounds. This can't duplicate too much of the work of
+assert-legal, otherwise I loose efficency.
 .

@@ -167,9 +167,13 @@ Board description:
 (define (generate-possible-moves board coordinate must-jump? turn)
   ;; if must-jump? is #t, then this must return legal jumps
   (let ((jumps (filter (lambda (move) (not (condition? (assert-legal coordinate move board turn))))
-		       (collect-diagnal-squares 2)))
+		       (collect-diagnal-squares coordinate 2)))
 	(single-moves (filter (lambda (move) (not (condition? (assert-legal coordinate move board turn))))
-			      (collect-diagnal-squares 1)))
+			      (collect-diagnal-squares coordinate 1))))
+
+	;; TODO: only calculate single-moves if must-jump? is #f
+    #f
+    ))
   
 
 (define (collect-coordinates board turn)
