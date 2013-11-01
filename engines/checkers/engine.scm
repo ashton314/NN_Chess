@@ -4,6 +4,8 @@
 
 (load-option 'format)
 
+(load "../../lib/macros.scm")
+(load "../../lib/utils.scm")
 (load "negamax.scm")
 (load "../../neural_network/matrix.scm")
 
@@ -12,45 +14,6 @@
 (define *white-king* "W")
 (define *black-pawn* "b")
 (define *black-king* "B")
-
-;; Macros
-(define-syntax dotimes
-  (syntax-rules ()
-    ((_ (var times) body ...)
-     (do ((var 0 (+ var 1)))
-	 ((= var times) #t)
-       body ...))))
-
-(define-syntax inc!
-  (syntax-rules ()
-    ((_ var) (begin (set! var (+ var 1)) var))))
-
-(define-syntax push!
-  (syntax-rules ()
-    ((push! datum place)
-     (set! place (cons datum place)))))
-
-(define-syntax pop!
-  (syntax-rules ()
-    ((pop! place)
-     (let ((temp1 (car place)))
-       (set! place (cdr place))
-       temp1))))
-
-(define-syntax this-and-next
-  ;; Iterates over a list, binding the current value and the next to
-  ;; the two supplied arguments
-  (syntax-rules ()
-    ((_ (var1 var2 src-list) body ...)
-     (let ((null #f))
-       (define (loop var1 var2 the-rest)
-	 (begin body ...)
-	 (if (null? (cdr the-rest))
-	     #f
-	     (loop (car the-rest) (cadr the-rest) (cdr the-rest))))
-       (let ((source src-list))
-	 (loop (car source) (cadr source) (cdr source)))))))
-
 
 ;; NOTES
 #|
@@ -318,39 +281,3 @@ Board description:
       (cons 0 num)
       (cons (truncate (/ num 10))
 	    (remainder num 10))))
-
-(define (vector-reduce func vec)
-  (let ((leng (vector-length vec)))
-    (define (loop counter acc)
-      (if (= (+ counter 1) leng)
-	  acc
-	  (loop (+ counter 1) (func acc (vector-ref vec (+ counter 1))))))
-    (loop 0 (vector-ref vec 0))))
-
-(define (vector-zip func vec1 vec2)
-  (let ((end-val (apply min (map vector-length (list vec1 vec2)))))
-    (define (zipper i acc)
-      (if (> (+ i 1) end-val)
-	  (list->vector (reverse! acc))
-	  (zipper (+ i 1) (cons (func (vector-ref vec1 i) (vector-ref vec2 i)) acc))))
-    (zipper 0 '())))
-
-(define (vector-mapn func . vects)
-  (let* ((end-val (apply min (map vector-length vects)))
-	 (acc (make-vector end-val)))
-    (do ((i 0 (+ i 1)))
-	((>= i end-val) acc)
-      (vector-set! acc i (apply func (map (lambda (vec) (vector-ref vec i)) vects))))))
-
-(define (vector-clobber! target vals)
-  (let ((leng (vector-length target)))
-    (do ((i 0 (+ i 1)))
-	((= i leng) target)
-      (vector-set! target i (vector-ref vals i)))))
-
-(define (range lower upper)
-  (define (loop i acc)
-    (if (< i lower)
-	(reverse! acc)
-	(loop (- i 1) (cons i acc))))
-  (loop upper '()))
