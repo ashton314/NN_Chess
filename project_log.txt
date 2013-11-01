@@ -416,3 +416,15 @@ Stop:  Wed Oct 30 21:45:16 MDT 2013
 
 Pieces get kinged, fixed bug with captured piece not being removed.
 .
+
+Start: Thu Oct 31 18:58:07 MDT 2013
+Stop:  Thu Oct 31 20:20:31 MDT 2013
+
+Fixed some bugs with legal moves in my chess engine. I'm considering
+starting on the search algorithm. I said I would use NegaScout, but
+I've only worked with Negamax. I might want to start with that...
+
+Also, it's kind of late, so I'm wondering if I should start something
+like this. I think I'll go play the piano for a bit...
+
+.
