@@ -58,14 +58,17 @@
 
 (define (bad-moves)
   (let ((board (make-board)))
+
     (define-syntax move-checker
       ;; Checks the legality of a given move using my TAP framework
       (syntax-rules ()
 	((_ motion error-message)
-	 (begin
-	   (ok (condition? (ignore-errors (lambda () (board 'move! motion))))
-	       error-message)
+	 (let ((condit (ignore-errors (lambda () (board 'move! motion)))))
+;	   (if (condition? condit) (format #t "Error string: '~A'~%" (condition/report-string condit)))
+	   (ok (condition? condit) error-message)
+	   ((board 'turn) 'set! 'white)
 	   (board 'set-board! #(#(1 1 1 1) #(1 1 1 1) #(1 1 1 1) #(0 0 0 0) #(0 0 0 0) #(-1 -1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1)))))))
+
     (move-checker '(38 48) "bad square not allowed")
     (move-checker '(38 47 58) "chained non-jump moves not allowed")
     (move-checker '(38 56) "jumping over nothing not allowed")
@@ -76,7 +79,7 @@
 
 ;; High-level chunks
 
-;(board-displays)
+;; (board-displays)
 (board-routines)
 (move-making)
 (bad-moves)

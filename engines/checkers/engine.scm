@@ -39,7 +39,7 @@
   ;; the two supplied arguments
   (syntax-rules ()
     ((_ (var1 var2 src-list) body ...)
-     (begin
+     (let ((null #f))
        (define (loop var1 var2 the-rest)
 	 (begin body ...)
 	 (if (null? (cdr the-rest))
@@ -116,16 +116,6 @@ Board description:
 (define (do-move moves board turn)
   ;; Takes a list of moves. Returns new 8x4 vector.
 
-  (if (> (length moves) 2)
-      (let ((null #f))
-	(define (loop m1 m2 the-rest)
-	  (if (not (= (num-diff (car m1) (car m2)) 2))
-	      (error "non-jump move in multi-square chain"))
-	  (if (null? (cdr the-rest))
-	      #f
-	      (loop m2 (cadr the-rest (cdr the-rest)))))
-	(loop (car moves) (cadr moves) (cdr moves))))
-
   (define (make-move current-square moves brd history)
     ;; Tail recursive procedure to modify the board
 
@@ -143,6 +133,10 @@ Board description:
 	    (make-move (car moves) (cdr moves) new-board (cons new-history history))))))
 
   (let ((mvs (map split-num moves)))
+    (if (> (length mvs) 2)
+	(this-and-next (m1 m2 mvs)
+		       (if (not (= (num-diff (car m1) (car m2)) 2))
+			   (error "non-jump move in multi-square chain"))))
     (make-move (car mvs) (cdr mvs) board '())))
 
 (define (copy-board-with-modifications current-square target-square board)
@@ -199,16 +193,17 @@ Board description:
   (if (= (abs (sqr-get current-square board)) 1)
       (assert ((if (white-piece? (sqr-get current-square board)) < >) ; functional programming, for the win
 	       (car current-square) (car target-square))
-	      (format #f "Piece at ~A may not move backwards." current-square)))
+	      (format #f "Piece at ~A may not move backwards!" current-square)))
 
     ; range good
   (assert (= (num-diff (car current-square) (car target-square))
 	     (num-diff (cdr current-square) (cdr target-square)))
-	  "Non-diagnal motion")
+	  "Non-diagnal motion!")
   (case (num-diff (car current-square) (car target-square))
     ((1) #t)				; no jump
-    ((2) ((if (white-piece? (sqr-get current-square board)) black-piece? white-piece?) ; again, functional programming
-	  (sqr-get (midpoint current-square target-square) board)))
+    ((2) (assert ((if (white-piece? (sqr-get current-square board)) black-piece? white-piece?) ; again, functional programming
+		  (sqr-get (midpoint current-square target-square) board))
+		 "You can only jump over a piece of the opposite color!"))
     (else (error "You cannot move that far!"))))
     
 
