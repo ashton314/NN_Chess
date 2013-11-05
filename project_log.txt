@@ -446,7 +446,7 @@ assert-legal, otherwise I loose efficency.
 .
 
 Start: Mon Nov  4 20:44:27 MST 2013
-Stop:
+Stop:  Mon Nov  4 21:56:26 MST 2013
 
 Continuing work on move generators. It's late, so I'm not going to
 spend too much time working on it.
