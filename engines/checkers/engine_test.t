@@ -64,7 +64,6 @@
       (syntax-rules ()
 	((_ motion error-message)
 	 (let ((condit (ignore-errors (lambda () (board 'move! motion)))))
-;	   (if (condition? condit) (format #t "Error string: '~A'~%" (condition/report-string condit)))
 	   (ok (condition? condit) error-message)
 	   ((board 'turn) 'set! 'white)
 	   (board 'set-board! #(#(1 1 1 1) #(1 1 1 1) #(1 1 1 1) #(0 0 0 0) #(0 0 0 0) #(-1 -1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1)))))))

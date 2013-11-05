@@ -162,19 +162,30 @@ Board description:
 
 (define (possible-moves board turn)
   (reduce append '() 
-	  (map (lambda (coord) (generate-possible-moves board coord #f turn)) (collect-coordinates board turn))))
+	  (map (lambda (coord) (map (lambda (chain) (list coord chain))
+				    (generate-possible-moves board coord #f turn))) (collect-coordinates board turn))))
 
 (define (generate-possible-moves board coordinate must-jump? turn)
   ;; if must-jump? is #t, then this must return legal jumps
-  (let ((jumps (filter (lambda (move) (not (condition? (assert-legal coordinate move board turn))))
+  (let ((jumps (filter (lambda (move) (not (condition? (ignore-errors (lambda () (assert-legal coordinate move board turn))))))
 		       (collect-diagnal-squares coordinate 2)))
-	(single-moves (filter (lambda (move) (not (condition? (assert-legal coordinate move board turn))))
-			      (collect-diagnal-squares coordinate 1))))
-
-	;; TODO: only calculate single-moves if must-jump? is #f
-    #f
-    ))
+	(single-moves (if must-jump? '()
+			  (filter (lambda (move) (not (condition? (ignore-errors (lambda () (assert-legal coordinate move board turn))))))
+				  (collect-diagnal-squares coordinate 1)))))
+    (append (if (null? jumps) '()
+		(apply append (map (lambda (jump)
+				     (generate-possible-moves (copy-board-with-modifications coordinate jump board) jump #t turn))
+				   jumps)))
+	    single-moves)))
   
+(define (collect-diagnal-squares square distance)
+  (filter (lambda (sqr)
+	    (and (< 0 (car sqr)) (< 0 (cdr sqr))
+		 (> 9 (car sqr)) (> 9 (cdr sqr))))
+	  (map (lambda (x y) (cons (+ (car square) (* distance x))
+				   (+ (cdr square) (* distance y))))
+	       '(1 1 -1 -1)
+	       '(1 -1 1 -1))))
 
 (define (collect-coordinates board turn)
   (define (loop row col acc)
