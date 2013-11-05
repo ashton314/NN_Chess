@@ -444,3 +444,17 @@ error checking: the direction is correct, and maybe if the square is
 within bounds. This can't duplicate too much of the work of
 assert-legal, otherwise I loose efficency.
 .
+
+Start: Mon Nov  4 20:44:27 MST 2013
+Stop:
+
+Continuing work on move generators. It's late, so I'm not going to
+spend too much time working on it.
+
+I fixed a bug in collect-coordinates, which I'm sure improved the
+efficenty of my program.
+
+I'll need to profile this code at some point... First, I have to get
+the thing working. That is the most important part: finish this
+project!!
+.
