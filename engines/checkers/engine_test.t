@@ -75,6 +75,12 @@
     (move-checker '(21 32) "moving onto non-empty square not allowed")
     (move-checker '(32 52) "non-diagnal motion not allowed")))
     
+(define foo (make-board))		; test board
+(define (misc)
+  (foo 'move! '(34 43))
+  (foo 'move! '(65 54))
+  (foo 'print))
+
 
 ;; High-level chunks
 
@@ -82,5 +88,7 @@
 (board-routines)
 (move-making)
 (bad-moves)
+(misc)
+
 
 (done-testing)

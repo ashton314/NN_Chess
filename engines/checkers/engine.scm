@@ -167,6 +167,7 @@ Board description:
 
 (define (generate-possible-moves board coordinate must-jump? turn)
   ;; if must-jump? is #t, then this must return legal jumps
+  (format #t "Coordinate: '~A'~%" coordinate)
   (let ((jumps (filter (lambda (move) (not (condition? (ignore-errors (lambda () (assert-legal coordinate move board turn))))))
 		       (collect-diagnal-squares coordinate 2)))
 	(single-moves (if must-jump? '()
@@ -179,13 +180,16 @@ Board description:
 	    single-moves)))
   
 (define (collect-diagnal-squares square distance)
-  (filter (lambda (sqr)
-	    (and (< 0 (car sqr)) (< 0 (cdr sqr))
-		 (> 9 (car sqr)) (> 9 (cdr sqr))))
-	  (map (lambda (x y) (cons (+ (car square) (* distance x))
-				   (+ (cdr square) (* distance y))))
-	       '(1 1 -1 -1)
-	       '(1 -1 1 -1))))
+  (let ((sqrs
+	 (filter (lambda (sqr)
+		   (and (< 0 (car sqr)) (< 0 (cdr sqr))
+			(> 9 (car sqr)) (> 9 (cdr sqr))))
+		 (map (lambda (x y) (cons (+ (car square) (* distance x))
+					  (+ (cdr square) (* distance y))))
+		      '(1 1 -1 -1)
+		      '(1 -1 1 -1)))))
+;    (format #t "Orig: '~A' Dist: '~A' Squares: '~A'~%" square distance sqrs)
+    sqrs))
 
 (define (collect-coordinates board turn)
   (define (loop row col acc)
@@ -193,10 +197,15 @@ Board description:
 	acc
 	(loop (if (= col 8) (+ row 1) row)
 	      (if (= col 8) 1 (+ col 1))
-	      (if ((if (eq? turn 'white) white-piece? black-piece?) (sqr-get (cons row col) board))
-		  (cons (cons row col) acc)
-		  acc))))
-  (loop 1 1 '()))
+	      (if (or (and (even? col) (even? row))
+		      (and (odd? col) (odd? row)))
+		  acc
+		  (if ((if (eq? turn 'white) white-piece? black-piece?) (sqr-get (cons row col) board))
+		      (cons (cons row col) acc)
+		      acc)))))
+  (let ((squares (loop 1 1 '())))
+;    (format #t "Coordinates for ~A: '~A'~%" turn squares)
+    squares))
 
 
 (define (assert-legal current-square target-square board turn)
