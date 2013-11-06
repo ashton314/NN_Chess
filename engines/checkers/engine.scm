@@ -167,7 +167,6 @@ Board description:
 
 (define (generate-possible-moves board coordinate must-jump? turn)
   ;; if must-jump? is #t, then this must return legal jumps
-  (format #t "Coordinate: '~A'~%" coordinate)
   (let ((jumps (filter (lambda (move) (not (condition? (ignore-errors (lambda () (assert-legal coordinate move board turn))))))
 		       (collect-diagnal-squares coordinate 2)))
 	(single-moves (if must-jump? '()
@@ -175,7 +174,10 @@ Board description:
 				  (collect-diagnal-squares coordinate 1)))))
     (append (if (null? jumps) '()
 		(apply append (map (lambda (jump)
-				     (generate-possible-moves (copy-board-with-modifications coordinate jump board) jump #t turn))
+				     (let ((chains (generate-possible-moves (copy-board-with-modifications coordinate jump board) jump #t turn)))
+				       (if (null? chains)
+					   (list jump)
+					   (map (lambda (chain) (cons jump chain)) chains))))
 				   jumps)))
 	    single-moves)))
   

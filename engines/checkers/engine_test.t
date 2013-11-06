@@ -79,7 +79,9 @@
 (define (misc)
   (foo 'move! '(34 43))
   (foo 'move! '(65 54))
-  (foo 'print))
+  (foo 'print)
+  (newline)
+  (write-line (foo 'possible-moves)))
 
 
 ;; High-level chunks
