@@ -458,3 +458,12 @@ I'll need to profile this code at some point... First, I have to get
 the thing working. That is the most important part: finish this
 project!!
 .
+
+Start: Wed Nov  6 07:39:56 MST 2013
+Stop:  Wed Nov  6 08:20:11 MST 2013
+
+Worked on implementing jump trees. It's close, but not quite
+there. The move generator is following the jump trees correctly, but
+it's not returning the possibilities in the right format. I'll have to
+go back and check all my CONSes, APPENDs, and LISTs.
+.
