@@ -163,8 +163,12 @@ Board description:
 (define (possible-moves board turn)
   (reduce append '() 
 	  (map (lambda (coord)
-		 (map (lambda (chain) (cons coord chain))
-		      (generate-possible-moves board coord #f turn)))
+		 (delete-duplicates!
+		  (reduce append '() 
+			  (map sub-jumps
+			       (map (lambda (chain) (cons coord chain))
+				    (generate-possible-moves board coord #f turn)))
+			  )))
 	       (collect-coordinates board turn))))
 
 (define (generate-possible-moves board coordinate must-jump? turn)
