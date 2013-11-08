@@ -476,3 +476,10 @@ I need to find a way to generate sub-jump chains. I could call my
 sub-jumps function, and then call something like remove-duplicates...
 I don't know how efficient that would be though.
 .
+
+Start: Fri Nov  8 14:52:50 MST 2013
+Stop:  
+
+I've got sub jump chains returning now. I'm collecting the sub-chains
+by calling sub-jumps and then passing the data to delete-duplicates.
+.
