@@ -162,7 +162,7 @@ Board description:
 
 (define (possible-moves board turn)
   (reduce append '() 
-	  (map (lambda (coord) (map (lambda (chain) (list coord chain))
+	  (map (lambda (coord) (map (lambda (chain) (cons coord chain))
 				    (generate-possible-moves board coord #f turn))) (collect-coordinates board turn))))
 
 (define (generate-possible-moves board coordinate must-jump? turn)
@@ -181,10 +181,10 @@ Board description:
 					 (format #t "Jump: ~A~%" jump)
 					 (format #t "chains: ~A~%" chains)
 					 (if (null? chains)
-					     (list jump)
+					     (list (list jump))
 					     (map (lambda (chain) (cons jump chain)) chains)))))
 				   jumps)))
-	    single-moves)))
+	    (map list single-moves))))
   
 (define (collect-diagnal-squares square distance)
   (let ((sqrs
