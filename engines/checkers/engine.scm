@@ -175,11 +175,7 @@ Board description:
     (append (if (null? jumps) '()
 		(apply append (map (lambda (jump)
 				     (let ((new-board (car (copy-board-with-modifications coordinate jump board))))
-;; 				       (write-string "New board:\n")
-;; 				       (display (format-board new-board))
 				       (let ((chains (generate-possible-moves new-board jump #t turn)))
-					 (format #t "Jump: ~A~%" jump)
-					 (format #t "chains: ~A~%" chains)
 					 (if (null? chains)
 					     (list (list jump))
 					     (map (lambda (chain) (cons jump chain)) chains)))))
@@ -195,7 +191,6 @@ Board description:
 					  (+ (cdr square) (* distance y))))
 		      '(1 1 -1 -1)
 		      '(1 -1 1 -1)))))
-;    (format #t "Orig: '~A' Dist: '~A' Squares: '~A'~%" square distance sqrs)
     sqrs))
 
 (define (collect-coordinates board turn)
@@ -210,10 +205,7 @@ Board description:
 		  (if ((if (eq? turn 'white) white-piece? black-piece?) (sqr-get (cons row col) board))
 		      (cons (cons row col) acc)
 		      acc)))))
-  (let ((squares (loop 1 1 '())))
-;    (format #t "Coordinates for ~A: '~A'~%" turn squares)
-    squares))
-
+  (loop 1 1 '()))
 
 (define (assert-legal current-square target-square board turn)
   ;; NOTE: current-square and target-square are in split-raw format
