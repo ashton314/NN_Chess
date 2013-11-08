@@ -467,3 +467,12 @@ there. The move generator is following the jump trees correctly, but
 it's not returning the possibilities in the right format. I'll have to
 go back and check all my CONSes, APPENDs, and LISTs.
 .
+
+Start: Thu Nov  7 20:54:03 MST 2013
+Stop:  Thu Nov  7 21:23:20 MST 2013
+
+Fixed broken jump chains. I'm only getting the maximum jump distance.
+I need to find a way to generate sub-jump chains. I could call my
+sub-jumps function, and then call something like remove-duplicates...
+I don't know how efficient that would be though.
+.
