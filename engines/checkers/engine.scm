@@ -162,8 +162,10 @@ Board description:
 
 (define (possible-moves board turn)
   (reduce append '() 
-	  (map (lambda (coord) (map (lambda (chain) (cons coord chain))
-				    (generate-possible-moves board coord #f turn))) (collect-coordinates board turn))))
+	  (map (lambda (coord)
+		 (map (lambda (chain) (cons coord chain))
+		      (generate-possible-moves board coord #f turn)))
+	       (collect-coordinates board turn))))
 
 (define (generate-possible-moves board coordinate must-jump? turn)
   ;; if must-jump? is #t, then this must return legal jumps
@@ -181,6 +183,18 @@ Board description:
 					     (map (lambda (chain) (cons jump chain)) chains)))))
 				   jumps)))
 	    (map list single-moves))))
+
+(define (sub-jumps chain)
+  ;; All this does is return successive reversed CDRs of a reversed list
+  (define (loop lst acc)
+    (if (= (length lst) 1)
+	acc
+	(loop (cdr lst) (cons lst acc))))
+  (define (post-process this-list acc)
+    (if (null? this-list)
+	acc
+	(post-process (cdr this-list) (cons (reverse (car this-list)) acc))))
+  (post-process (loop (reverse chain) '()) '()))
   
 (define (collect-diagnal-squares square distance)
   (let ((sqrs
