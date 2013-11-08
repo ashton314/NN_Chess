@@ -79,13 +79,11 @@
   (let ((board (make-board)))
 
     (is (board 'possible-moves)
-	'(((3 . 2) (4 . 3)) ((3 . 2) (4 . 1)) ((3 . 4) (4 . 5)) ((3 . 4) (4 . 3)) ((3 . 6) (4 . 7)) ((3 . 6) (4 . 5)) ((3 . 8) (4 . 7)))
+	'(((3 . 2) (4 . 1)) ((3 . 2) (4 . 3)) ((3 . 4) (4 . 3)) ((3 . 4) (4 . 5)) ((3 . 6) (4 . 5)) ((3 . 6) (4 . 7)) ((3 . 8) (4 . 7)))
 	"moves generated for white")
     ;;                   1          2          3          4          5           6          7             8
     (board 'set-board! #(#(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 1 0) #(0 -1 0 0) #(0 0 0 0) #(-1 -1 -1 0) #(0 0 0 0)))
-    (ok (= (length (board 'possible-moves)) 5) "5 possible moves")
-    (board 'print)
-    (write-line (board 'possible-moves))))
+    (is (length (board 'possible-moves)) 5 "5 possible moves")))
 
     
 (define foo (make-board))		; test board
