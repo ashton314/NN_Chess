@@ -11,26 +11,37 @@
   #f)
 
 (define (score board)
-  ;; Returns a score for the current board, relative to white
-  0)
+  (let ((scr 0))
+    (vector-map (lambda (row)
+		  (vector-map (lambda (cell) (inc! scr cell)) row)) board)
+    scr))
 
-;; (define (negamax board turn)
-;;   (define (negamax-primary brd alpha beta depth-remaining)
-;;     (if (= 0 depth-remaining)
-;; 	(score brd)
-;; 	(let ((moves 
-
+(define (negamax board turn depth)
+  (define (negamax-primary brd trn alpha beta depth-remaining)
+    (if (= 0 depth-remaining)
+	(score brd)
+	(let ((moves (possible-moves brd trn)))
+	  (define (loop mvs best-alpha)
+	    (if (null? mvs)
+		best-alpha
+		(let ((this-score (- (negamax-primary (do-move (car mvs) brd trn) (other-side trn) (- beta) (- alpha) (- depth-remaining 1)))))
+		  (if (>= this-score beta)
+		      beta
+		      (if (> this-score best-alpha)
+			  (loop (cdr mvs) this-score)
+			  (loop (cdr mvs) best-alpha))))))
+	  (loop moves alpha))))
+  (negamax-primary board turn -1000000 1000000 depth))
 
 
 ;; Move generation
-
 (define (possible-moves board turn)
   (reduce append '() 
 	  (map (lambda (coord)
 		 (delete-duplicates!
 		  (reduce append '() 
 			  (map sub-jumps
-			       (map (lambda (chain) (cons coord chain))
+			       (map (lambda (chain) (cons (collapse-num coord) (map collapse-num chain)))
 				    (generate-possible-moves board coord #f turn)))
 			  )))
 	       (collect-coordinates board turn))))
@@ -88,3 +99,13 @@
 		      (cons (cons row col) acc)
 		      acc)))))
   (loop 1 1 '()))
+
+;; Utilities
+(define (collapse-num pair)
+  (+ (* (car pair) 10) (cdr pair)))
+
+(define (other-side side)
+  (case side
+    ('white 'black)
+    ('black 'white)
+    (else (error (format #f "Unknown turn passed to other-side: '~A'" side)))))
