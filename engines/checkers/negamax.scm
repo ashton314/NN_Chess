@@ -5,13 +5,13 @@
 (load-option 'format)
 
 (define (best-move-dumb board turn)
-  (define (lowest-car best lst)
+  (define (best-car best lst)
     (if (null? lst)
 	best
-	(lowest-car (if (< (car best) (caar lst)) best (car lst)) (cdr lst))))
+	(best-car (if (< (car best) (caar lst)) best (car lst)) (cdr lst))))
 
   (let ((moves (possible-moves board turn)))
-    (lowest-car '(1000000) (map (lambda (move) (list (negamax (car (do-move move board turn)) turn 3 #t) move)) moves))))
+    (best-car '(1000000) (map (lambda (move) (list (negamax (car (do-move move board turn)) turn 5 #t) move)) moves))))
 
 (define (best-move-smart board turn net)
   #f)
@@ -31,7 +31,7 @@
 (define (negamax board turn depth loudp)
   (define (negamax-primary brd trn alpha beta depth-remaining history)
     (if (= 0 depth-remaining)
-	(- (score brd))
+	(* (score brd) (if (eq? trn 'white) 1 -1)) ; negate score if black's turn
 	(let ((moves (possible-moves brd trn)))
 
 	  (define (loop mvs best-alpha)
