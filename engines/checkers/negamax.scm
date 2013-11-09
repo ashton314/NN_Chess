@@ -16,23 +16,30 @@
 		  (vector-map (lambda (cell) (inc! scr cell)) row)) board)
     scr))
 
-(define (negamax board turn depth)
-  (define (negamax-primary brd trn alpha beta depth-remaining)
+(define (negamax board turn depth loudp)
+  (define (negamax-primary brd trn alpha beta depth-remaining history)
     (if (= 0 depth-remaining)
 	(score brd)
 	(let ((moves (possible-moves brd trn)))
 	  (define (loop mvs best-alpha)
+	    (if (and loudp (not (null? mvs)))
+		(negamax-status (car mvs) history best-alpha beta))
 	    (if (null? mvs)
 		best-alpha
-		(let ((this-score (- (negamax-primary (do-move (car mvs) brd trn) (other-side trn) (- beta) (- alpha) (- depth-remaining 1)))))
+		(let ((this-score (- (negamax-primary (car (do-move (car mvs) brd trn)) (other-side trn)
+						      (- beta) (- alpha) (- depth-remaining 1) (if loudp (cons (car mvs) history) '())))))
 		  (if (>= this-score beta)
 		      beta
 		      (if (> this-score best-alpha)
 			  (loop (cdr mvs) this-score)
 			  (loop (cdr mvs) best-alpha))))))
 	  (loop moves alpha))))
-  (negamax-primary board turn -1000000 1000000 depth))
+  (negamax-primary board turn -1000000 1000000 depth '()))
 
+(define (negamax-status currently-considering history alpha beta)
+  (write-string "\rConsidering: ")
+  (map (lambda (choice) (format #t "~A " choice)) (reverse history))
+  (format #t "~A  ### Alpha: ~A Beta: ~A               " currently-considering alpha beta))
 
 ;; Move generation
 (define (possible-moves board turn)

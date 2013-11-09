@@ -85,15 +85,19 @@
     (board 'set-board! #(#(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 1 0) #(0 -1 0 0) #(0 0 0 0) #(-1 -1 -1 0) #(0 0 0 0)))
     (is (length (board 'possible-moves)) 5 "5 possible moves")))
 
+(define (negamax-tests)
+  (let ((board (make-board)))
+    ;; Check `score'
+    (is (score (board 'dump-board)) 0 "start board has score of 0")
+    (is (score #(#(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 1 0) #(0 -1 0 0) #(0 0 0 0) #(-1 -1 -1 0) #(0 0 0 0))) -3 "score calulated correctly")
+
+    ;; Here we go, time to test out Negamax!!
+    (format #t "Testing negamax:\n")
+    (format #t "\nScore: '~A'\n"
+	    (negamax #(#(0 0 0 0) #(1 0 0 0) #(1 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 -1 0) #(0 0 0 0) #(0 0 0 0)) 'white 3 #t))
+    ))
     
 (define foo (make-board))		; test board
-(define (misc)
-  (foo 'move! '(34 43))
-  (foo 'move! '(65 54))
-  (foo 'print)
-  (newline)
-  (write-line (foo 'possible-moves)))
-
 
 ;; High-level chunks
 
@@ -102,7 +106,7 @@
 (move-making)
 (bad-moves)
 (generation)
-;(misc)
+(negamax-tests)
 
 
 (done-testing)

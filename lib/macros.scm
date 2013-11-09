@@ -11,6 +11,7 @@
 
 (define-syntax inc!
   (syntax-rules ()
+    ((_ var val) (begin (set! var (+ var val)) var))
     ((_ var) (begin (set! var (+ var 1)) var))))
 
 (define-syntax push!
