@@ -478,8 +478,44 @@ I don't know how efficient that would be though.
 .
 
 Start: Fri Nov  8 14:52:50 MST 2013
-Stop:  
+Stop:  Fri Nov  8 15:14:37 MST 2013
 
 I've got sub jump chains returning now. I'm collecting the sub-chains
 by calling sub-jumps and then passing the data to delete-duplicates.
+.
+
+Start: Fri Nov  8 19:17:28 MST 2013
+Stop:  Fri Nov  8 22:26:45 MST 2013
+Start: Fri Nov  8 22:50:52 MST 2013
+Stop:  Fri Nov  8 23:33:36 MST 2013
+
+This has been a fantastic session. I finished the first draft of my
+Negamax algorithm. I've got it printing out diagnostics. D'Arvit that
+thing is /fast/. 7 moves ahead in a 5-piece endgame in ~15 seconds.
+Really good. I'm still trying to figure out if it is searching
+correctly. I'm not sure how I'll test beta-cutoffs... that's going to
+be hard.
+
+I finished doing a 3-deep minimax algorithm by hand for testing
+purposes. That wasn't fun. I'm glad I'm done now.
+
+I'm working on debugging Negamax. This is kinda tricky...
+
+Negamax is hard to debug because the game tree is so huge, and it's
+difficult to insert any sort of debug hook into the search routine.
+
+Something is not right with this algorithm. The worst part is that you
+have to get negamax /exactly/ right or the entire thing blows up. No
+error.
+
+I'm thinking that given the bitmap:
+  #(#(0 0 0 0) #(1 0 0 0) #(1 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 -1 0) #(0 0 0 0) #(0 0 0 0))
+
+Negamax should choose (32 43) (white to move) with a search depth of
+3. I've worked out this game tree by hand, and I think it should
+return a score of 2.
+
+I need to go back through and make sure all my signs are right. In
+particular, do I need to negate the score I get back from the static
+evaluation?
 .
