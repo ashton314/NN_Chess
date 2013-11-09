@@ -5,41 +5,57 @@
 (load-option 'format)
 
 (define (best-move-dumb board turn)
-  #f)
+  (define (lowest-car best lst)
+    (if (null? lst)
+	best
+	(lowest-car (if (< (car best) (caar lst)) best (car lst)) (cdr lst))))
+
+  (let ((moves (possible-moves board turn)))
+    (lowest-car '(1000000) (map (lambda (move) (list (negamax (car (do-move move board turn)) turn 3 #t) move)) moves))))
 
 (define (best-move-smart board turn net)
   #f)
 
 (define (score board)
-  (let ((scr 0))
+  (let ((scr 0)
+	(white 0)
+	(black 0))
     (vector-map (lambda (row)
-		  (vector-map (lambda (cell) (inc! scr cell)) row)) board)
-    scr))
+		  (vector-map (lambda (cell)
+				(if (white-piece? cell) (inc! white) (if (black-piece? cell) (inc! black)))
+				(inc! scr cell)) row)) board)
+    (cond ((= 0 white) -1000)
+	  ((= 0 black) 1000)
+	  (else scr))))
 
 (define (negamax board turn depth loudp)
   (define (negamax-primary brd trn alpha beta depth-remaining history)
     (if (= 0 depth-remaining)
-	(score brd)
+	(- (score brd))
 	(let ((moves (possible-moves brd trn)))
+
 	  (define (loop mvs best-alpha)
 	    (if (and loudp (not (null? mvs)))
-		(negamax-status (car mvs) history best-alpha beta))
+		(negamax-status (car mvs) history best-alpha alpha beta))
 	    (if (null? mvs)
 		best-alpha
 		(let ((this-score (- (negamax-primary (car (do-move (car mvs) brd trn)) (other-side trn)
-						      (- beta) (- alpha) (- depth-remaining 1) (if loudp (cons (car mvs) history) '())))))
+						      (- beta) (- best-alpha) (- depth-remaining 1) (if loudp (cons (car mvs) history) '())))))
 		  (if (>= this-score beta)
 		      beta
 		      (if (> this-score best-alpha)
 			  (loop (cdr mvs) this-score)
 			  (loop (cdr mvs) best-alpha))))))
+
 	  (loop moves alpha))))
   (negamax-primary board turn -1000000 1000000 depth '()))
 
-(define (negamax-status currently-considering history alpha beta)
+(define (negamax-status currently-considering history best-alpha alpha beta)
   (write-string "\rConsidering: ")
-  (map (lambda (choice) (format #t "~A " choice)) (reverse history))
-  (format #t "~A  ### Alpha: ~A Beta: ~A               " currently-considering alpha beta))
+  (format #t "~35A" (apply string-append (map (lambda (choice) (format #f "~A " choice)) (reverse history))))
+  (format #t "~15A  ### Best-Alpha: ~@8A Alpha: ~@8A Beta: ~@8A" currently-considering best-alpha alpha beta)
+)
+;  (read-line))
 
 ;; Move generation
 (define (possible-moves board turn)

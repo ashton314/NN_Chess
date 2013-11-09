@@ -93,8 +93,10 @@
 
     ;; Here we go, time to test out Negamax!!
     (format #t "Testing negamax:\n")
+    (format #t "~%Best move: ~A~%" (best-move-dumb
+				    #(#(0 0 0 0) #(1 0 0 0) #(1 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 -1 0) #(0 0 0 0) #(0 0 0 0)) 'white))
     (format #t "\nScore: '~A'\n"
-	    (negamax #(#(0 0 0 0) #(1 0 0 0) #(1 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 -1 0) #(0 0 0 0) #(0 0 0 0)) 'white 3 #t))
+	    (negamax #(#(0 0 0 0) #(1 0 0 0) #(1 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 -1 0) #(0 0 0 0) #(0 0 0 0)) 'white 4 #t))
     ))
     
 (define foo (make-board))		; test board
