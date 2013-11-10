@@ -521,7 +521,7 @@ evaluation?
 .
 
 Start: Sat Nov  9 19:59:39 MST 2013
-Stop:
+Stop:  Sat Nov  9 22:17:30 MST 2013
 
 This is desperately hard to debug. I've got negamax printing out a
 nice tree-structure to help me visualize what it's doing. It looks
@@ -540,4 +540,16 @@ IT WORKS!! ATTENTION: NEGAMAX IS WORKING!!
 
 OK. Now for a full game against me...
 (aside: I've made the diagnostics look nicer now for game play)
+
+TODO: Trap errors from engine for bad moves.
+TODO: Make opening book or something.
+
+I didn't get around to a full game... it took too long considering
+its move at 7 search piles. I need to run a profiler on this thing to
+see if I can up the performance any more.
+
+IDEA: Maybe I can adjust the search piles throughout the course of the
+game. I'll start out with a shallow search (3 to 5 piles) and then
+gradually deepen the search. Also, I might need to make optimizations
+that make it more agressive.
 .
