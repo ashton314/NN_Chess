@@ -11,8 +11,8 @@
 	(best-car (if (< (car best) (caar lst)) best (car lst)) (cdr lst))))
 
   (let ((moves (possible-moves board turn)))
-    (best-car '(1000000) (map (lambda (move) ; (format #t "~%~%~A" move)
-				      (list (negamax (car (do-move move board turn)) turn depth #t) move)) moves))))
+    (best-car '(1000000) (map (lambda (move) (format #t "~%~%~A" move)
+				      (list (negamax (car (do-move move board turn)) (other-side turn) depth #t) move)) moves))))
 
 (define (best-move-smart board turn net)
   #f)
