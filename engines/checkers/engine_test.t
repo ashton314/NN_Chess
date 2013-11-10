@@ -90,13 +90,16 @@
     ;; Check `score'
     (is (score (board 'dump-board)) 0 "start board has score of 0")
     (is (score #(#(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 1 0) #(0 -1 0 0) #(0 0 0 0) #(-1 -1 -1 0) #(0 0 0 0))) -3 "score calulated correctly")
+    (is (score #(#(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(1 0 0 0))) 1000 "white wins scored correctly")
+    (is (score #(#(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(-1 0 0 0))) -1000 "black wins scored correctly")
 
     ;; Here we go, time to test out Negamax!!
     (format #t "Testing negamax:\n")
-    (format #t "~%Best move: ~A~%" (best-move-dumb
-				    #(#(0 0 0 0) #(1 0 0 0) #(1 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 -1 0) #(0 0 0 0) #(0 0 0 0)) 'white))
+;;     (format #t "~%Best move: ~A~%" (best-move-dumb
+;; 				    #(#(0 0 0 0) #(1 0 0 0) #(1 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 -1 0) #(0 0 0 0) #(0 0 0 0)) 'white 2))
     (format #t "\nScore: '~A'\n"
 	    (negamax #(#(0 0 0 0) #(1 0 0 0) #(1 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 -1 0) #(0 0 0 0) #(0 0 0 0)) 'white 3 #t))
+;; 	    (negamax #(#(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 0 0) #(0 0 0 0) #(0 0 0 0)) 'white 3 #t))
     ))
     
 (define foo (make-board))		; test board
