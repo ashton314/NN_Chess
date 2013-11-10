@@ -535,4 +535,9 @@ fluke. Now let's see how well it handles a game...
 
 OK. It looks like I'm not returning the right value for a terminal
 game state. Let's try debugging and tweaking that...
+
+IT WORKS!! ATTENTION: NEGAMAX IS WORKING!!
+
+OK. Now for a full game against me...
+(aside: I've made the diagnostics look nicer now for game play)
 .
