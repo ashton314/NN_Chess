@@ -14,7 +14,7 @@
       (format #t "~%> ")
       (let ((comm (read)))
 	(cond ((list? comm) (board 'move! comm) (loop))
-	      ((eq? comm 'go) (board 'move! (cadr (best-move-dumb (board 'dump-board) ((board 'turn) 'get)))) (loop))
+	      ((eq? comm 'go) (board 'move! (cadr (best-move-dumb (board 'dump-board) ((board 'turn) 'get) 3))) (loop))
 	      ((eq? comm 'quit) 'bye)
 	      ((eq? comm 'term) (exit))
 	      (else (format #t "I don't know that command.~%") (loop)))))

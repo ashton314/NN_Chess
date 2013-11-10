@@ -519,3 +519,20 @@ I need to go back through and make sure all my signs are right. In
 particular, do I need to negate the score I get back from the static
 evaluation?
 .
+
+Start: Sat Nov  9 19:59:39 MST 2013
+Stop:
+
+This is desperately hard to debug. I've got negamax printing out a
+nice tree-structure to help me visualize what it's doing. It looks
+like it's evaluating a static position's score correctly... Wait!!!...
+
+I'm not changing who's move it is when I call negamax from
+best-moves-dumb. Let's see what that does...
+
+IT GAVE ME THE RIGHT MOVE!! OK. I'm not quite sure if this is a
+fluke. Now let's see how well it handles a game...
+
+OK. It looks like I'm not returning the right value for a terminal
+game state. Let's try debugging and tweaking that...
+.
