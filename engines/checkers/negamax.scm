@@ -67,6 +67,8 @@
 ;;   (newline)
 ;;   (map (lambda (nul) (write-string "|  ")) history)
 ;;   (format #t "/--  ~A --> Alpha: ~A Beta: ~A" currently-considering best-alpha beta)
+  (write-string
+   "\r                                                                                                                                                    ")
   (write-string "\rConsidering: ")
   (format #t "~A" (apply string-append (map (lambda (choice) (format #f "~A " choice)) (reverse history))))
   (format #t "~A ### Alpha: ~A Beta: ~A" currently-considering best-alpha beta)
