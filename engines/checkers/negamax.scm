@@ -34,7 +34,7 @@
     (if (= 0 depth-remaining)
 	(let ((scr (* (score brd) (if (eq? trn 'white) 1 -1)))) ; negate score if black's turn
 ;;	(let ((scr (- (score brd))))
-;	  (format #t " SCORE: ~A" (- scr))
+;;	  (format #t " SCORE: ~A" (- scr))
 	  scr)
 	(let ((moves (possible-moves brd trn)))
 
@@ -55,7 +55,9 @@
 			  (loop (cdr mvs) best-alpha))))))
 
 	  (if (null? moves)
-	      (score brd)
+	      (let ((final (* (score brd) (if (eq? trn 'white) 1 -1))))
+		(format #t "~%TERMINAL NODE! SCORE: ~A ~%" final)
+		final)
 	      (loop moves alpha)))))
   (negamax-primary board turn -1000000 1000000 depth '()))
 
