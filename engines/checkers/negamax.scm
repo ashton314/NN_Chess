@@ -11,7 +11,7 @@
 	(best-car (if (< (car best) (caar lst)) best (car lst)) (cdr lst))))
 
   (let ((moves (possible-moves board turn)))
-    (best-car '(1000000) (map (lambda (move); (format #t "~%~%~A" move)
+    (best-car '(1000000) (map (lambda (move)
 				(let ((ret (list (negamax (car (do-move move board turn)) (other-side turn) depth #t) move)))
 				  (newline)
 				  ret)) moves))))
@@ -68,8 +68,10 @@
 ;;   (map (lambda (nul) (write-string "|  ")) history)
 ;;   (format #t "/--  ~A --> Alpha: ~A Beta: ~A" currently-considering best-alpha beta)
   (write-string "\rConsidering: ")
-  (format #t "~27A" (apply string-append (map (lambda (choice) (format #f "~A " choice)) (reverse history))))
-  (format #t "~15A  ### Best-Alpha: ~@8A Alpha: ~@8A Beta: ~@8A" currently-considering best-alpha alpha beta)
+  (format #t "~A" (apply string-append (map (lambda (choice) (format #f "~A " choice)) (reverse history))))
+  (format #t "~A ### Alpha: ~A Beta: ~A" currently-considering best-alpha beta)
+;  (format #t "~27A" (apply string-append (map (lambda (choice) (format #f "~A " choice)) (reverse history))))
+;  (format #t "~15A  ### Best-Alpha: ~@8A Alpha: ~@8A Beta: ~@8A" currently-considering best-alpha alpha beta)
 )
 ;  (read-line))
 
