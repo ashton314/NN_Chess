@@ -94,9 +94,13 @@
     (is (score #(#(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(-1 0 0 0))) -1000 "black wins scored correctly")
 
     ;; Here we go, time to test out Negamax!!
-    (format #t "Testing negamax:\n")
-    (format #t "~%Best move: ~A~%" (best-move-dumb
-				    #(#(0 0 0 0) #(1 0 0 0) #(1 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 -1 0) #(0 0 0 0) #(0 0 0 0)) 'white 2))
+;;     (format #t "Testing negamax:\n")
+;;     (format #t "~%Best move: ~A~%" (best-move-dumb
+;; 				    #(#(0 0 0 0) #(1 0 0 0) #(1 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 -1 0) #(0 0 0 0) #(0 0 0 0)) 'white 2))
+    (is (best-move-dumb
+	 #(#(0 0 0 0) #(1 0 0 0) #(0 0 0 0) #(0 0 1 0) #(0 -1 0 0) #(0 0 1 0) #(0 0 0 0) #(0 0 0 0)) 'white 2)
+	'(-1000 (45 63))
+	"white finishes the game")
 ;;     (format #t "\nScore: '~A'\n"
 ;; 	    (negamax #(#(0 0 0 0) #(1 0 0 0) #(1 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 -1 0) #(0 0 0 0) #(0 0 0 0)) 'white 3 #t))
 
