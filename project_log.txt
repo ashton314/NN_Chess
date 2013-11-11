@@ -553,3 +553,10 @@ game. I'll start out with a shallow search (3 to 5 piles) and then
 gradually deepen the search. Also, I might need to make optimizations
 that make it more agressive.
 .
+
+Start: Mon Nov 11 12:05:41 MST 2013
+Stop: Mon Nov 11 12:09:04 MST 2013
+
+Game tree search will pick move to end game, but other things (like
+the player engine) do not work.
+.
