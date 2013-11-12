@@ -560,3 +560,9 @@ Stop: Mon Nov 11 12:09:04 MST 2013
 Game tree search will pick move to end game, but other things (like
 the player engine) do not work.
 .
+
+Start: Mon Nov 11 20:29:27 MST 2013
+Stop:  Mon Nov 11 20:34:20 MST 2013
+
+I did a little bit of clean up.
+.

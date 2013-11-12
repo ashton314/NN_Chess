@@ -34,10 +34,7 @@
 (define (negamax board turn depth loudp)
   (define (negamax-primary brd trn alpha beta depth-remaining history)
     (if (= 0 depth-remaining)
-	(let ((scr (* (score brd) (if (eq? trn 'white) 1 -1)))) ; negate score if black's turn
-;;	(let ((scr (- (score brd))))
-;;	  (format #t " SCORE: ~A" (- scr))
-	  scr)
+	(* (score brd) (if (eq? trn 'white) 1 -1))
 	(let ((moves (possible-moves brd trn)))
 
 	  (define (loop mvs best-alpha)
@@ -47,11 +44,9 @@
 		best-alpha
 		(let ((this-score (- (negamax-primary (car (do-move (car mvs) brd trn)) (other-side trn)
 						      (- beta) (- best-alpha) (- depth-remaining 1) (if loudp (cons (car mvs) history) '())))))
-		  (negamax-finish (car mvs) history this-score)
+;		  (negamax-finish (car mvs) history this-score)
 		  (if (>= this-score beta)
-		      (begin
-;			(format #t "~%## PRUNE!!")
-			beta)
+		      beta
 		      (if (> this-score best-alpha)
 			  (loop (cdr mvs) this-score)
 			  (loop (cdr mvs) best-alpha))))))
