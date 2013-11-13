@@ -566,3 +566,23 @@ Stop:  Mon Nov 11 20:34:20 MST 2013
 
 I did a little bit of clean up.
 .
+
+Start: Wed Nov 13 07:42:46 MST 2013
+Stop:  Wed Nov 13 08:21:13 MST 2013
+
+I've cleaned up the statistics that negamax shows as it walks the game
+tree. I'd like to make sure that negamax is pruning branches correctly
+(which I think it is) and I'd also like it to say something like "ten
+moves to victory" like crafty. That'd be really fun.
+
+Now I need to start training a neural network to do the work of
+negamax. I'll replace the `score' function with a call to this neural
+net. Hopefully, the net will give me something like 5 more search
+piles.
+
+I don't know how many hidden layers I will need. I guess I could talk
+to Fred about that... I think I'll do that. I think I'll need two
+layers.
+
+TODO: Very important: make benchmarks.
+.
