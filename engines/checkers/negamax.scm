@@ -12,7 +12,7 @@
 
   (let ((moves (possible-moves board turn)))
     (best-car '(1000000) (map (lambda (move)
-				(let ((ret (list (negamax (car (do-move move board turn)) (other-side turn) depth #t) move)))
+				(let ((ret (list (negamax (car (do-move move board turn)) (other-side turn) depth #t (list move)) move)))
 				  (newline)
 				  ret)) moves))))
 
@@ -31,20 +31,20 @@
 	  ((= 0 black) 1000)
 	  (else scr))))
 
-(define (negamax board turn depth loudp)
-  (define (negamax-primary brd trn alpha beta depth-remaining history)
+(define (negamax board turn depth loudp history)
+  (define (negamax-primary brd trn alpha beta depth-remaining hist)
     (if (= 0 depth-remaining)
 	(* (score brd) (if (eq? trn 'white) 1 -1))
 	(let ((moves (possible-moves brd trn)))
 
 	  (define (loop mvs best-alpha)
 	    (if (and loudp (not (null? mvs)))
-		(negamax-status (car mvs) history best-alpha alpha beta))
+		(negamax-status (car mvs) hist best-alpha alpha beta))
 	    (if (null? mvs)
 		best-alpha
 		(let ((this-score (- (negamax-primary (car (do-move (car mvs) brd trn)) (other-side trn)
-						      (- beta) (- best-alpha) (- depth-remaining 1) (if loudp (cons (car mvs) history) '())))))
-;		  (negamax-finish (car mvs) history this-score)
+						      (- beta) (- best-alpha) (- depth-remaining 1) (if loudp (cons (car mvs) hist) '())))))
+;		  (negamax-finish (car mvs) hist this-score)
 		  (if (>= this-score beta)
 		      beta
 		      (if (> this-score best-alpha)
@@ -53,10 +53,13 @@
 
 	  (if (null? moves)
 	      (let ((final (* (score brd) (if (eq? trn 'white) 1 -1))))
-;		(format #t "~%TERMINAL NODE! SCORE: ~A ~%" final)
+		(if loudp
+		    (begin
+		      (negamax-status (car (if (null? hist) '(foo) hist)) (cdr (if (null? hist) '(0) hist)) final alpha beta)
+		      (write-string " TERMINAL NODE")))
 		final)
 	      (loop moves alpha)))))
-  (negamax-primary board turn -1000000 1000000 depth '()))
+  (negamax-primary board turn -1000000 1000000 depth history))
 
 (define (negamax-status currently-considering history best-alpha alpha beta)
 ;;   (newline)
