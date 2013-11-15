@@ -588,11 +588,21 @@ TODO: Very important: make benchmarks.
 .
 
 Start: Thu Nov 14 19:40:03 MST 2013
-Stop:
+Stop:  Thu Nov 14 21:06:37 MST 2013
 
 I've made it so that the user can reset the negamax search depth while
 playing the game.
 
 I'd like to add the "ten moves to victory" or something, but that
 might be hard, just because of how negamax is set up.
+
+Wrote a benchmarks file, and created a directory to store
+auto-generated benchmark results.
+
+I had a bit of a problem with getting file handles to open in
+Scheme... I forgot that I was closing the log file at the end of the
+benchmarks file, so I kept getting error messages when I tried to
+write to the file from the REPL. The error messages were not very
+helpful... that's something that Perl is pretty good with. Scheme's
+error messages are usually a bit more cryptic.
 .
