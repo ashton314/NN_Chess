@@ -11,13 +11,13 @@
    - How far pieces forward
 ** Performance measuring
    1. Get good data mapped to good outputs
-   2. Split this in half
-   3. Take one half and use it to train the network with
+   2. Training!!
       - Dotimes 10:
         + Select 10% of the training data and set it aside
         + Train with remaining 90% of data
         + Validate with remaining 10%
-        + Ummm... I forget
+      - Average results
+   3. Compare results with this network to other configurations
 
 ** Notes
    - look into having a "bias" node
