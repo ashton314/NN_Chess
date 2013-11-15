@@ -1,0 +1,31 @@
+-*- mode: org -*-
+
+* Neural networks
+** General information
+   - Best if you have some domain knowledge (e.g. the king is in
+     check, etc.)
+   - Testing toy neural network: http://archive.ics.uci.edu/ml/
+   - Try 2x the #of input nodes for # hidden nodes
+** Feture detection (!!!)
+   - Number of moves
+   - How far pieces forward
+** Performance measuring
+   1. Get good data mapped to good outputs
+   2. Split this in half
+   3. Take one half and use it to train the network with
+      - Dotimes 10:
+        + Select 10% of the training data and set it aside
+        + Train with remaining 90% of data
+        + Validate with remaining 10%
+        + Ummm... I forget
+
+** Notes
+   - look into having a "bias" node
+   - look into getting "Neural Smithing" by Russell D. Reed and Robert
+     J. Marks II
+
+** Ideas
+   - I could make the neural network's sole purpose to sort moves. To
+     do this I'll supply it with a list of features of the board. It
+     should then tell me (roughly) how good a move is. The stronger
+     the yes, then the sooner it is searched.
