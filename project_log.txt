@@ -608,7 +608,7 @@ error messages are usually a bit more cryptic.
 .
 
 Start: Fri Nov 15 13:20:46 MST 2013
-Stop:  
+Stop:  Fri Nov 15 16:15:46 MST 2013
 
 Getting some advice from Fred on how neural networks actually
 work. See notes.org.
@@ -621,4 +621,7 @@ extract a score from the neural network.
 Fred gave me a referance to a corpus of training data that I can use
 to make sure my neural networks are running correctly:
   http://archive.ics.uci.edu/ml/datasets/Iris
+
+Really good book I'll have to check out: "Neural Smithing" by Russell
+D. Reed and Robert J. Marks II.
 .
