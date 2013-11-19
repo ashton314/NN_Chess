@@ -660,3 +660,40 @@ TODO: Add mechanism to automatically back up network states. Maybe
 every time I load the network have it back up the file with the
 timestamp.
 .
+
+Start: Tue Nov 19 11:58:34 MST 2013
+Stop:
+
+Finished notating the network storage. Here's what the file looks
+like: <<__NETWORK_SCM__
+(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0) ;outputs
+((0 0 0 0 0 0 0 0 0 0 0 0 0)			      ;hidden layers
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0))
+__NETWORK_SCM__
+
+Looks like lunch is just about over, so I need to go now.
+.
