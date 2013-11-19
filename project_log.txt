@@ -625,3 +625,38 @@ to make sure my neural networks are running correctly:
 Really good book I'll have to check out: "Neural Smithing" by Russell
 D. Reed and Robert J. Marks II.
 .
+
+Start: Mon Nov 18 21:06:58 MST 2013
+Stop:
+
+I need to make a list of features that my neural net should look
+at.
+
+Features:
+  - number of white pawns and kings vs. number of black pawns and
+    kings (2)
+  - number of pawns within two moves of back row (2)
+  - number of endangered pieces (2)
+    + This will be good because it will mimic the quiescent score checker
+  - number of possible moves (you and opponent) (2)
+  - maximum number of consecutive empty rows (1)
+  - number of opponent pieces in front of your pawns (2)
+  - opponent's proximity to your pawns and kings (2)
+
+So far, 13 inputs total.
+
+I'll have to work to make these routines super-optimized.
+
+TODO: find a way to use the data loaded from NN_DATA/network.scm with
+my define-feed-forward-net macro. I might have to make a network, then
+destructively modify the network with the stored values after I've
+loaded them.
+
+TODO: IMPORTANT!!! finish figuring out how to notate the network in
+NN_DATA/network.scm
+DO THIS FIRST!!
+
+TODO: Add mechanism to automatically back up network states. Maybe
+every time I load the network have it back up the file with the
+timestamp.
+.
