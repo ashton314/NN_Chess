@@ -662,7 +662,7 @@ timestamp.
 .
 
 Start: Tue Nov 19 11:58:34 MST 2013
-Stop:
+Stop:  Tue Nov 19 12:05:07 MST 2013
 
 Finished notating the network storage. Here's what the file looks
 like: <<__NETWORK_SCM__
