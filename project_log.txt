@@ -697,3 +697,24 @@ __NETWORK_SCM__
 
 Looks like lunch is just about over, so I need to go now.
 .
+
+Start: Wed Nov 20 07:45:00 MST 2013
+Stop:  Wed Nov 20 08:21:50 MST 2013
+
+Working on writing the feature detectors. I finished writing the code
+to load the neural networks from file. I haven't tested this code yet,
+however. Also, I need to write code to save the trained network and
+back up the old network.
+
+Oh... new problem: Exactly what values will I use to train the
+network? Do I simply score the board with Negamax and then scale the
+result between -1 and 1? That could work. I /think/ that will
+work. I'll give it a shot.
+
+Also, I need to get a server to do some heavy training.
+
+I've implemented pawn and king count comparisons and advancement
+potential. I'm currently working on counting the number of available
+moves for a particular side (implemented) and the number of pieces in
+danger of being jumped.
+.
