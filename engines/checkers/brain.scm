@@ -61,11 +61,18 @@
 	 (count-black-moves (length black-moves))
 
 	 (count-white-endangered (length (delete-duplicates
-					  (fliter (lambda (chain) (or (>= (length chain) 3)
-								      (= 2 (num-diff (caar chain) (caadr)))))
+					  (filter (lambda (chain) (or (>= (length chain) 3)
+								      (= 2 (num-diff (modulo (car chain) 10) (modulo (cadr chain) 10)))))
 						  black-moves))))
 	 (count-black-endangered (length (delete-duplicates
-					  (fliter (lambda (chain) (or (>= (length chain) 3)
-								      (= 2 (num-diff (caar chain) (caadr)))))
+					  (filter (lambda (chain) (or (>= (length chain) 3)
+								      (= 2 (num-diff (modulo (car chain) 10) (modulo (cadr chain) 10)))))
 						  white-moves)))))
     (list count-white-moves count-black-moves count-white-endangered count-black-endangered)))
+
+(define (pieces-ahead-of board side)
+  ;; How do I define this?
+
+  ;; FIXME: IMPLEMENT HERE
+
+  #f)

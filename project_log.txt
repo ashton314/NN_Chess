@@ -701,6 +701,8 @@ Looks like lunch is just about over, so I need to go now.
 Start: Wed Nov 20 07:45:00 MST 2013
 Stop:  Wed Nov 20 08:21:50 MST 2013
 
+Meta: TODO
+
 Working on writing the feature detectors. I finished writing the code
 to load the neural networks from file. I haven't tested this code yet,
 however. Also, I need to write code to save the trained network and
@@ -717,4 +719,92 @@ I've implemented pawn and king count comparisons and advancement
 potential. I'm currently working on counting the number of available
 moves for a particular side (implemented) and the number of pieces in
 danger of being jumped.
+.
+
+Start: Thu Nov 21 19:12:42 MST 2013
+Stop:  Thu Nov 21 20:38:55 MST 2013
+
+Meta: IMPROVEMENTS, TODO
+
+I've finished the rough draft for the feature detectors. I'm going to
+need to write some tests to make sure that this is really working.
+
+I've got the basic feature detectors working! I don't know how
+efficent they are; I'm sure I could up the performance on these
+routines.
+
+I might need to find more features about the board and implement
+them. I've been thinking about the following:
+  - how many enemy pieces are in front of my pieces
+  - how many endangered kings and pawns (like the one I've got, except
+    it separates kings and pawns)
+
+TODO: I need to add more tests for jump chains. Here's some data to
+help with testing:
+
+     1   2   3   4   5   6   7   8
+   +---+---+---+---+---+---+---+---+
+ 1 | . |   | . |   | . |   | . |   |
+   +---+---+---+---+---+---+---+---+
+ 2 |   | . |   | . | B | . | b | . |
+   +---+---+---+---+---+---+---+---+
+ 3 | . |   | . |   | . |   | . | w |
+   +---+---+---+---+---+---+---+---+
+ 4 | w | . | b | . |   | . | b | . |
+   +---+---+---+---+---+---+---+---+
+ 5 | . |   | . |   | . | b | . |   |
+   +---+---+---+---+---+---+---+---+
+ 6 | b | . | b | . | w | . | W | . |
+   +---+---+---+---+---+---+---+---+
+ 7 | . |   | . | b | . |   | . |   |
+   +---+---+---+---+---+---+---+---+
+ 8 | b | . | b | . |   | . |   | . |
+   +---+---+---+---+---+---+---+---+
+
+#(#(0 0 0 0) #(0 0 -2 -1) #(0 0 0 1) #(1 -1 0 -1) #(0 0 -1 0) #(-1 -1 1 2) #(0 -1 0 0) #(-1 -1 0 0))
+
+
+     1   2   3   4   5   6   7   8
+   +---+---+---+---+---+---+---+---+
+ 1 | . |   | . |   | . |   | . |   |
+   +---+---+---+---+---+---+---+---+
+ 2 | w | . |   | . |   | . | w | . |
+   +---+---+---+---+---+---+---+---+
+ 3 | . | b | . |   | . | B | . | w |
+   +---+---+---+---+---+---+---+---+
+ 4 | w | . |   | . | b | . |   | . |
+   +---+---+---+---+---+---+---+---+
+ 5 | . | w | . |   | . | b | . | b |
+   +---+---+---+---+---+---+---+---+
+ 6 | b | . | b | . |   | . |   | . |
+   +---+---+---+---+---+---+---+---+
+ 7 | . | b | . | b | . | W | . |   |
+   +---+---+---+---+---+---+---+---+
+ 8 | b | . | b | . |   | . |   | . |
+   +---+---+---+---+---+---+---+---+
+
+#(#(0 0 0 0) #(1 0 0 1) #(-1 0 -2 1) #(1 0 -1 0) #(1 0 -1 -1) #(-1 -1 0 0) #(-1 -1 2 0) #(-1 -1 0 0))
+
+     1   2   3   4   5   6   7   8
+   +---+---+---+---+---+---+---+---+
+ 1 | . |   | . |   | . |   | . |   |
+   +---+---+---+---+---+---+---+---+
+ 2 | w | . |   | . | B | . | w | . |
+   +---+---+---+---+---+---+---+---+
+ 3 | . |   | . |   | . | w | . | w |
+   +---+---+---+---+---+---+---+---+
+ 4 | w | . | w | . | b | . | w | . |
+   +---+---+---+---+---+---+---+---+
+ 5 | . | w | . | b | . |   | . | b |
+   +---+---+---+---+---+---+---+---+
+ 6 | b | . | b | . | b | . | b | . |
+   +---+---+---+---+---+---+---+---+
+ 7 | . | b | . | b | . |   | . |   |
+   +---+---+---+---+---+---+---+---+
+ 8 | b | . | b | . |   | . |   | . |
+   +---+---+---+---+---+---+---+---+
+
+#(#(0 0 0 0) #(1 0 -2 1) #(0 0 1 1) #(1 1 -1 1) #(1 -1 0 -1) #(-1 -1 -1 -1) #(-1 -1 0 0) #(-1 -1 0 0))
+
+That's all for tonight.
 .

@@ -12,6 +12,10 @@
     (is (white-advancement-potential board) 1 "white advancement potential works for board0")
     (is (black-advancement-potential board) 1 "black advancement potential works for board0")
     (let ((results (analyze-movement board)))
+      (is (car results) 6 "white has 6 moves in board0")
+      (is (cadr results) 15 "black has 15 moves in board0")
+      (is (caddr results) 0 "white has no endangered pieces")
+      (is (cadddr results) 1 "black has one endangered piece"))))
 
 ;; High-level chunks
 (feature-recognition)
