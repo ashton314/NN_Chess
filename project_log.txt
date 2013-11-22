@@ -797,14 +797,30 @@ help with testing:
    +---+---+---+---+---+---+---+---+
  5 | . | w | . | b | . |   | . | b |
    +---+---+---+---+---+---+---+---+
- 6 | b | . | b | . | b | . | b | . |
+ 6 | b | . | b | . |   | . | b | . |
    +---+---+---+---+---+---+---+---+
- 7 | . | b | . | b | . |   | . |   |
+ 7 | . | b | . | b | . | b | . |   |
    +---+---+---+---+---+---+---+---+
  8 | b | . | b | . |   | . |   | . |
    +---+---+---+---+---+---+---+---+
 
-#(#(0 0 0 0) #(1 0 -2 1) #(0 0 1 1) #(1 1 -1 1) #(1 -1 0 -1) #(-1 -1 -1 -1) #(-1 -1 0 0) #(-1 -1 0 0))
+#(#(0 0 0 0) #(1 0 -2 1) #(0 0 1 1) #(1 1 -1 1) #(1 -1 0 -1) #(-1 -1 0 -1) #(-1 -1 -1 0) #(-1 -1 0 0))
 
 That's all for tonight.
+.
+
+Start: Fri Nov 22 14:23:12 MST 2013
+Stop:  Fri Nov 22 15:02:00 MST 2013
+
+I need to encode the rest of the tests today, as well as impelement
+some new feature detectors.
+
+Another extremely important feature: who's turn it is to move.
+
+Oh fie. How many output nodes should I have? I'll need something to
+sort moves by. I guess I could have it return a score: 1 good for
+white, -1 good for black, etc. I'm not quite sure how well training
+that will go. I'll give it a shot.
+
+As to the number of nodes... I'm not quite sure.
 .
