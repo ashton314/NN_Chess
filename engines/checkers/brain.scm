@@ -2,6 +2,8 @@
 ;;; Ashton Wiersdorf
 ;;; Part of the NN_Chess project
 
+(load "engine.scm")
+
 ;; Load neural network
 (define *network-stream* (open-input-file "NN_DATA/network.scm"))
 (define *output-nodes* (read *network-stream*))
@@ -51,12 +53,19 @@
 (define (black-advancement-potential board)
   (advancement-potential board 'black))
 
-(define (analize-movement board)
+(define (analyze-movement board)
   (let* ((white-moves (possible-moves board 'white))
 	 (black-moves (possible-moves board 'black))
 
 	 (count-white-moves (length white-moves))
-	 (count-black-moves (length black-moves)))
-    ;; NOT FINISHED HERE
+	 (count-black-moves (length black-moves))
 
-    ))
+	 (count-white-endangered (length (delete-duplicates
+					  (fliter (lambda (chain) (or (>= (length chain) 3)
+								      (= 2 (num-diff (caar chain) (caadr)))))
+						  black-moves))))
+	 (count-black-endangered (length (delete-duplicates
+					  (fliter (lambda (chain) (or (>= (length chain) 3)
+								      (= 2 (num-diff (caar chain) (caadr)))))
+						  white-moves)))))
+    (list count-white-moves count-black-moves count-white-endangered count-black-endangered)))
