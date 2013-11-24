@@ -71,8 +71,15 @@
     (list count-white-moves count-black-moves count-white-endangered count-black-endangered)))
 
 (define (pieces-ahead-of board side)
-  ;; How do I define this?
-
-  ;; FIXME: IMPLEMENT HERE
-
-  #f)
+  (call-with-values
+      (lambda () (cond ((eq? side 'white) (values reverse! white-piece? black-piece?))
+		       ((eq? side 'black) (values (lambda (x) x) black-piece? white-piece?))
+		       (else (error "Unknown side passed to pieces-ahead-of"))))
+    (lambda (preprocess first-pred second-pred)
+      (define (searcher board-list acc)
+	(if (null? board-list)
+	    acc
+	    (if (vector-there-exists? (car board-list) first-pred)
+		acc
+		(searcher (cdr board-list) (+ acc (count (car board-list) second-pred))))))
+      (searcher (preprocess (vector->list board)) 0))))

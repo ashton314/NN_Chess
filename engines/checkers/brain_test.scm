@@ -16,6 +16,8 @@
       (is (cadr results) 15 "black has 15 moves in board0")
       (is (caddr results) 0 "white has no endangered pieces")
       (is (cadddr results) 1 "black has one endangered piece"))
+    (is (pieces-ahead-of board 'white) 3 "three black pieces ahead of white")
+    (is (pieces-ahead-of board 'black) 0 "no pieces ahead of black")
 
     (set! board #(#(0 0 0 0) #(1 0 0 1) #(-1 0 -2 1) #(1 0 -1 0) #(1 0 -1 -1) #(-1 -1 0 0) #(-1 -1 2 0) #(-1 -1 0 0)))
     (is (pawn-compare board) -5 "pawn comparison works for board1")
@@ -27,6 +29,8 @@
       (is (cadr results) 10 "black has 10 moves in board1")
       (is (caddr results) 2 "white has 2 endangered pieces")
       (is (cadddr results) 1 "black has one endangered piece"))
+    (is (pieces-ahead-of board 'white) 2 "two pieces ahead of white")
+    (is (pieces-ahead-of board 'black) 2 "two pieces ahead of black")
 
     (set! board #(#(0 0 0 0) #(1 0 -2 1) #(0 0 1 1) #(1 1 -1 1) #(1 -1 0 -1) #(-1 -1 0 -1) #(-1 -1 -1 0) #(-1 -1 0 0)))
     (is (pawn-compare board) -3 "pawn comparison works for board2")
@@ -37,7 +41,10 @@
       (is (car results) 4 "white has 4 moves in board2")
       (is (cadr results) 8 "black has 8 moves in board2")
       (is (caddr results) 1 "white has one endangered piece")
-      (is (cadddr results) 2 "black has two endangered pieces"))))
+      (is (cadddr results) 2 "black has two endangered pieces"))
+    (is (pieces-ahead-of board 'white) 8 "eight pieces ahead of white")
+    (is (pieces-ahead-of board 'black) 0 "no pieces ahead of black")))
+
 
 
 ;; High-level chunks

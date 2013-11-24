@@ -31,6 +31,23 @@
 	((= i leng) target)
       (vector-set! target i (vector-ref vals i)))))
 
+(define (vector-there-exists? vect pred)
+  (let ((max (vector-length vect)))
+    (define (loop i)
+      (if (= i max)
+	  #f
+	  (if (pred (vector-ref vect i))
+	      #t
+	      (loop (+ i 1)))))
+    (loop 0)))
+
+(define (count datum pred)
+  (let ((cnt 0))
+    ((cond ((vector? datum) vector-map)
+	   ((list? datum) map)
+	   (else (error "Don't know how to iterate over datum")))
+     (lambda (x) (if (pred x) (inc! cnt))) datum) cnt))
+
 (define (range lower upper)
   (define (loop i acc)
     (if (< i lower)
