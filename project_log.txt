@@ -824,3 +824,26 @@ that will go. I'll give it a shot.
 
 As to the number of nodes... I'm not quite sure.
 .
+
+Start: Sat Nov 23 19:46:42 MST 2013
+Stop:
+
+Meta: TODO
+
+I'm going to work on setting up the network tonight.
+
+I've got a new feature detector working; I wrote a function to tell me
+how many enemy pieces are ahead of the furthest one of my pieces. This
+obviously doesn't tell me everything, but it can tell me a bit about
+the board.
+
+I've been considering using self-training networks to make this neural
+network. However, I've already got the backprop network working well,
+so I'll try using that.
+
+TODO: Write tests using the data that Fred pointed me to to make sure
+that back prop is working perfectly.
+
+I reorg'd a bit of the engines/checkers/ directory: I'm putting the
+feature detectors into their own file.
+.
