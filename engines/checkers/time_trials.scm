@@ -5,12 +5,12 @@
 (load "engine.scm")
 
 (define *log-benchmarks* (prompt-for-confirmation "Log benchmarks? "))
-(define *log-stream* (open-output-file (format #f "benchmark_logs/~A_log" (- (get-universal-time) epoch)) #t))
+(define *log-stream* (if *log-benchmarks* (open-output-file (format #f "benchmark_logs/~A_log" (- (get-universal-time) epoch)) #t) #t))
 
 ;; Helper functions
 (define (disp-stats benchmark-name)
   (lambda (run-time gc-time real-time)
-    (format (if *log-benchmarks* *log-stream* #t) "BENCHMARK: ~A
+    (format *log-stream* "BENCHMARK: ~A
 ---------------------------------------------
 RUN TIME:  ~A
 GC TIME:   ~A
@@ -37,4 +37,4 @@ REAL TIME: ~A\n\n" (string-upcase benchmark-name) (internal-time/ticks->seconds 
 ;; High-level chunks
 (negamax-benchmarks)
 
-(close-port *log-stream*)
+(if (port? *log-stream*) (close-port *log-stream*))
