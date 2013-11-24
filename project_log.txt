@@ -826,7 +826,7 @@ As to the number of nodes... I'm not quite sure.
 .
 
 Start: Sat Nov 23 19:46:42 MST 2013
-Stop:
+Stop:  Sat Nov 23 21:52:53 MST 2013
 
 Meta: TODO
 
@@ -846,4 +846,53 @@ that back prop is working perfectly.
 
 I reorg'd a bit of the engines/checkers/ directory: I'm putting the
 feature detectors into their own file.
+
+OK, I think I've found a better network configuration. Here's the
+notes and the starting network:
+
+Inputs: 11
+  - pawn-compare
+  - king-compare
+  - white-advancement-potential
+  - black-advancement-potential
+  - movement analysis (2)
+  - endanger analysis (2)
+  - pieces-ahead-of-white
+  - pieces-ahead-of-black
+  - current-turn
+Outputs: 5
+  - very good for white
+  - good for white
+  - whatever
+  - good for black
+  - very good for black
+
+<<__NETWORK__
+((0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)  ; output nodes
+ (0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0))
+((0 0 0 0 0 0 0 0 0 0 0)                        ; hidden nodes
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0)
+ (0 0 0 0 0 0 0 0 0 0 0))
 .
