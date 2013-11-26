@@ -1,4 +1,4 @@
-;;; AI Routines
+;;; AI Training Routines
 ;;; Ashton Wiersdorf
 ;;; Part of the NN_Chess project
 
@@ -42,9 +42,21 @@ Outputs: 5
   - whatever
   - good for black
   - very good for black
+
+Scoring:
+  10..1000   - good (.2), very good (1)
+  6..10      - good (.7), very good (.7)
+  1..6       - whatever (.2), good (1), very good (.2)
+  0          - bad (.2), whatever (1), good (.2)
+  -1..-6     - whatever (.2), bad (1), very bad (.2)
+  -6..-10    - bad (.7), very bad (.7)
+  -10..-1000 - bad (.2), very bad (1)
 |#
 
 ;; Save network
 (set! *network-stream* (open-output-file "NN_DATA/network.scm"))
-;; write data here
+(write-string "Comments: ")
+(format *network-stream* ";; COMMENTS: ~A" (read-string))
+(write-line *output-nodes* *network-stream*)
+(write-line *hidden-layer* *network-stream*)
 (close-port *network-stream*)
