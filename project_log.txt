@@ -898,7 +898,7 @@ Outputs: 5
 .
 
 Start: Mon Nov 25 18:45:36 MST 2013
-Stop:
+Stop:  Mon Nov 25 19:15:08 MST 2013
 
 Apropos the outputs, I'm not quite sure what my thresholds should be
 for training. I'll start with the following, but I'll make sure to be
