@@ -56,7 +56,7 @@ Scoring:
 ;; Save network
 (set! *network-stream* (open-output-file "NN_DATA/network.scm"))
 (write-string "Comments: ")
-(format *network-stream* ";; COMMENTS: ~A" (read-string))
+(format *network-stream* ";; COMMENTS: ~A~%" (read-line))
 (write-line *output-nodes* *network-stream*)
 (write-line *hidden-layer* *network-stream*)
 (close-port *network-stream*)
