@@ -911,5 +911,34 @@ open to experimentation.
     -1..-6     - whatever (.2), bad (1), very bad (.2)
     -6..-10    - bad (.7), very bad (.7)
     -10..-1000 - bad (.2), very bad (1)
+.
 
+Start: Wed Nov 27 16:23:14 MST 2013
+Stop:  Wed Nov 27 18:17:40 MST 2013
+
+Today I want to get the training framework set up. I'll need to make
+it flexible so I can modify it later. First I'll need to enumerate
+what I'll want to tweak:
+  - where to load and save the training data
+  - number of hidden-layer nodes
+  - potentially, the number of imputs
+  - number of outputs
+  - scores assocciated with outputs (see previous set of notes)
+
+I'll need to make some macros to handle this stuff.
+
+***
+
+I decided to work on performing some really rigorous tests on the
+neural networks. I haven't finished these, but I've got the data
+formatted and everything.
+
+I'm also working on a training library. The function has yet to be
+completely implemented, but it will partition the training data you
+give it into some number of specified sets, train with all but one of
+the sets, and then validate with the remaining set. Rotate through
+training with sets until the validation error is below a certain
+threshold. (All configurable.)
+
+FOR NEXT TIME: Finish lib/network_trainer.scm
 .
