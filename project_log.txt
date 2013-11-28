@@ -942,3 +942,11 @@ threshold. (All configurable.)
 
 FOR NEXT TIME: Finish lib/network_trainer.scm
 .
+
+Start: Thu Nov 28 15:01:40 MST 2013
+Stop:  Thu Nov 28 15:31:06 MST 2013
+
+Did some more work on lib/network_trainer.scm. It's still not
+finished, but it's a lot closer. I just need to write the function
+that uses the validation set.
+.

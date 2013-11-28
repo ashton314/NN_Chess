@@ -27,4 +27,4 @@
   ((0 0 0 0 0 0 0 0) (0 0 0 0 0 0 0 0) (0 0 0 0 0 0 0 0))
   ((0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0)))
 
-(train-network flower-net *training-data* #t 3 0.1 0.9)
+(train-network flower-net *training-data* #t 5 0.1 0.9)
