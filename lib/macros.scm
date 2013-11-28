@@ -2,6 +2,13 @@
 ;;; Ashton Wiersdorf
 ;;; Part of the NN_Chess project
 
+(define-syntax while
+  (syntax-rules ()
+    ((_ condition body ...)
+     (do ()
+	 ((not condition) #f)
+       body ...))))
+
 (define-syntax dotimes
   (syntax-rules ()
     ((_ (var times) body ...)
