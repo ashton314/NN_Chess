@@ -192,6 +192,9 @@ Syntax description:
 		    (map (lambda (layer) (vector-map (lambda (node) (pretty-print node)) layer) (newline)) hidden-layers)
 		    (pretty-print output-layer)
 		    (newline))
+
+		   ((debug-get-layers)
+		    (list hidden-layers output-layer))
 		   
 		   (else
 		    (error (format #f "Unknown option to neural net: '~A'~%" op)))))))))))
