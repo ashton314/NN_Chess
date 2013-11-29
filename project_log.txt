@@ -945,8 +945,33 @@ FOR NEXT TIME: Finish lib/network_trainer.scm
 
 Start: Thu Nov 28 15:01:40 MST 2013
 Stop:  Thu Nov 28 15:31:06 MST 2013
+Start: Thu Nov 28 19:19:39 MST 2013
+Stop:
 
 Did some more work on lib/network_trainer.scm. It's still not
 finished, but it's a lot closer. I just need to write the function
 that uses the validation set.
+
+Finished rough draft of lib/network_trainer.scm. I need to debug this
+now...
+
+Alright! I'm pretty sure it's working. I've been using it to aid in
+the heavy_testing/ file, and it's training properly. It's fairly nice
+to use. I'm happy with it. However, there /is/ one problem: it doesn't
+support on-the-fly generated training data. I might be able to use
+lazy evaluation to do what I want (which would be really cool!) but
+I'm not quite sure... Lazy streams don't exactly lend themselves to be
+shuffled. However, if I'm continuously generating new board moves (how
+the heck am I going to do that anyways?) I might not need to shuffle
+the board. I should probably save every board state and the
+coresponding score.
+
+OH! I thought of another feature: how many pieces are simultaniously
+in danger. (Translation: what is the longest possible jump for the
+other side?)
+
+I had one problem where the flower-net in heavy_testing/ didn't train
+correctly. However, I've run the training framework on the net maybe 7
+times and haven't had a single problem. I'll keep an eye on it, but it
+looks like my neural network engine is good.
 .
