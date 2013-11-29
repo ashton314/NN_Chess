@@ -16,9 +16,11 @@
   (let ((leng (length lst)))
     (partition lst leng (ceiling->exact (/ leng num-sets)) '())))
 
+(define *training-session-id* (- (get-universal-time) epoch))
+
 (define (train-network network-object training-data
 		       shuffle-data? training-sets
-		       output-error-margin validation-pass-rate pass-validation?)
+		       output-error-margin validation-pass-rate pass-validation? . debug?)
   ;; Trains a network.
   ;; Training data should be a set of pairs: car => inputs, cdr => outputs
   ;; If shuffle-data? is true, trains the network in a random order
@@ -28,14 +30,27 @@
   ;; pass-validation? if #t, loops until validation set passes
 
   (if (not (and (integer? training-sets) (positive? training-sets)))
-      (error "fourth argument to train-network must be a positive integer"))
+      (error "fourth argument to train-network must be a positive integer"))	
 
   (let* ((data (if shuffle-data? (shuffle training-data) training-data))
 	 (sets (n-partitions data training-sets)))
+
+    (if (and (pair? debug?) (car debug?)) ; debug
+	(let ((debug-stream (open-output-file "network_trainer.log" #t))
+	      (layers (network-object 'debug-get-layers)))
+	  (format debug-stream "\nSESSION: ~A\nLAYERS:\n  HIDDEN LAYERS:\n" *training-session-id*)
+	  (pp (car layers) debug-stream #t)
+	  (format debug-stream "  OUTPUT LAYER:\n")
+	  (pp (cadr layers) debug-stream #t)
+	  (format debug-stream "SETS:\n")
+	  (map (lambda (datum) (pp datum debug-stream #t)) sets)
+	  (format debug-stream "--END--\n\n")
+	  (close-port debug-stream)))
+
     (do ((validate-set (car sets) (car train-sets))
 	 (train-sets (cdr sets) (append (cdr train-sets) (list validate-set)))
 	 (i 0 (1+ i)))
-	((or (>= i training-sets)
+	((or (if pass-validation? #f (>= i training-sets))
 	     (within-bounds network-object validate-set output-error-margin validation-pass-rate))
 	 network-object)
 ;      (format #t "Validate set: ~A\nTraining sets: ~A\n" validate-set train-sets)
@@ -58,5 +73,5 @@
 				  (lambda (x) (<= x error-margin))))
 		      validate-set)))
     (let ((percentage (/ (length (filter (lambda (x) x) matches)) (length matches))))
-      (format #t "Validation pass rate: ~A\n" percentage)
+      (format #t "Validation pass rate: ~A\n" (exact->inexact percentage))
       (>= percentage required-pass-rate))))
