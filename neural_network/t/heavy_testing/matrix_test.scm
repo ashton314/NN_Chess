@@ -16,10 +16,9 @@
 (define *training-data-stream* (open-input-file "iris_data.scm"))
 (define *training-data* '())
 
-(do ((line (read *training-data*)))
+(do ((line (read *training-data-stream*) (read *training-data-stream*)))
     ((eof-object? line) (close-port *training-data-stream*))
-  (push! *training-data* line))
-
+  (push! line *training-data*))
 
 (define-feed-forward-net flower-net
   1
@@ -27,4 +26,4 @@
   ((0 0 0 0 0 0 0 0) (0 0 0 0 0 0 0 0) (0 0 0 0 0 0 0 0))
   ((0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0)))
 
-(train-network flower-net *training-data* #t 5 0.1 0.9)
+(train-network flower-net *training-data* #t 5 0.1 0.9 #t)

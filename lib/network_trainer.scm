@@ -18,13 +18,14 @@
 
 (define (train-network network-object training-data
 		       shuffle-data? training-sets
-		       output-error-margin validation-pass-rate)
+		       output-error-margin validation-pass-rate pass-validation?)
   ;; Trains a network.
   ;; Training data should be a set of pairs: car => inputs, cdr => outputs
   ;; If shuffle-data? is true, trains the network in a random order
   ;; If training-sets should be an integer; break up training-data into training-sets sets
   ;; output-error-margin is by how much a validation may be off and still get the problem "right"
   ;; validation-pass-rate is a percentage of how much of the validation set must pass for the training to be complete
+  ;; pass-validation? if #t, loops until validation set passes
 
   (if (not (and (integer? training-sets) (positive? training-sets)))
       (error "fourth argument to train-network must be a positive integer"))
@@ -37,11 +38,11 @@
 	((or (>= i training-sets)
 	     (within-bounds network-object validate-set output-error-margin validation-pass-rate))
 	 network-object)
-      (format #t "Validate set: ~A\nTraining sets: ~A\n" validate-set train-sets)
+;      (format #t "Validate set: ~A\nTraining sets: ~A\n" validate-set train-sets)
       (map (lambda (set)
 	     ;; set => (((i1 i2 i3) . (o1 o2)) ((i4 i5 i6) . (o4 o5)) ..)
 	     (map (lambda (data-set)
-		    (format #t "  Data set: ~A\n" data-set)
+;		    (format #t "  Data set: ~A\n" data-set)
 		    (network-object 'train (car data-set) (cdr data-set)))
 		  set)) train-sets))))
 
@@ -52,8 +53,10 @@
   (let ((matches (map (lambda (data-set)
 			(for-all? (map (lambda (output target)
 					 (num-diff output target))
-				       (network-object 'run (car data-set))
+				       (vector->list (network-object 'run (car data-set)))
 				       (cdr data-set))
 				  (lambda (x) (<= x error-margin))))
 		      validate-set)))
-    (>= (/ (length (filter (lambda (x) x) matches)) (length matches)) required-pass-rate)))
+    (let ((percentage (/ (length (filter (lambda (x) x) matches)) (length matches))))
+      (format #t "Validation pass rate: ~A\n" percentage)
+      (>= percentage required-pass-rate))))
