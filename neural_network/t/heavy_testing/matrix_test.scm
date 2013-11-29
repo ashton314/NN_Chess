@@ -26,4 +26,11 @@
   ((0 0 0 0 0 0 0 0) (0 0 0 0 0 0 0 0) (0 0 0 0 0 0 0 0))
   ((0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0)))
 
-(train-network flower-net *training-data* #t 5 0.1 0.9 #t)
+(train-network flower-net *training-data* #t 5 0.1 0.9 #t #t)
+
+;; final validation:
+(format #t "Final validation set:\n")
+(map (lambda (in out)
+       (format #t "~A (should be ~A)\n" (flower-net 'run in) out))
+     '((7.1 3. 5.9 2.1) (6.6 2.9 4.6 1.3) (4.6 3.2 1.4 .2))
+     '((0 0 1) (0 1 0) (1 0 0)))
