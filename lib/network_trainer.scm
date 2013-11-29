@@ -46,5 +46,14 @@
 		  set)) train-sets))))
 
 (define (within-bounds network-object validate-set error-margin required-pass-rate)
-  (reduce #t (lambda (a b) (and a b))
-	  (map ;; FIXME: FINISH UP HERE
+  (define (num-diff a b)
+    (abs (- a b)))
+
+  (let ((matches (map (lambda (data-set)
+			(for-all? (map (lambda (output target)
+					 (num-diff output target))
+				       (network-object 'run (car data-set))
+				       (cdr data-set))
+				  (lambda (x) (<= x error-margin))))
+		      validate-set)))
+    (>= (/ (length (filter (lambda (x) x) matches)) (length matches)) required-pass-rate)))
