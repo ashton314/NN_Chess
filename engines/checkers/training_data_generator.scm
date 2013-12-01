@@ -19,7 +19,7 @@
 					      (decoded-time/second now)))))
 (format *data-fh* ";; SESSION ID: ~A\n" *session-id*)
 
-(define *continuation-pool-size* 5000)
+(define *continuation-pool-size* 1000)
 (define *continuation-pool* (make-vector *continuation-pool-size*))
 (define *slots-full* 0)
 (define *score-depth* 5)
@@ -34,14 +34,15 @@
 
 (define (make-data node obligitory-slot turn)
   (let ((score (negamax node turn *score-depth* #f '())))
-    (write-line (list node turn score) *data-fh*))
-  (let ((children (possible-moves node turn)))
+    (write-line (list node turn score) *data-fh*)
+    (flush-output *data-fh*))
+  (let ((children (map (lambda (move) (car (do-move move node turn))) (possible-moves node turn))))
     (if (null? children)
 	(begin
 	  (vector-set! *continuation-pool* obligitory-slot #f)
 	  (repack-continuation-pool))
 	(begin 
-	  (vector-set! *continuation-pool* obligitory-slot (pop! children)) ; clobber this node's location
+	  (vector-set! *continuation-pool* obligitory-slot (cons (pop! children) (other-side turn)))
 	  (if (>= *slots-full* *continuation-pool-size*)
 	      (for-each (lambda (child-node)
 			  (vector-set! *continuation-pool* (random *continuation-pool-size*) (cons child-node (other-side turn))))
