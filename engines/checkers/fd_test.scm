@@ -3,7 +3,7 @@
 ;;; Part of the NN_Chess project
 
 (load "../../lib/tap.scm")
-(load "brain.scm")
+(load "network_trainer.scm")
 
 (define (feature-recognition)
   (let ((board #(#(0 0 0 0) #(0 0 -2 -1) #(0 0 0 1) #(1 -1 0 -1) #(0 0 -1 0) #(-1 -1 1 2) #(0 -1 0 0) #(-1 -1 0 0))))
