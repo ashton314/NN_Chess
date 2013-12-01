@@ -15,7 +15,9 @@
       (is (car results) 6 "white has 6 moves in board0")
       (is (cadr results) 15 "black has 15 moves in board0")
       (is (caddr results) 0 "white has no endangered pieces")
-      (is (cadddr results) 1 "black has one endangered piece"))
+      (is (cadddr results) 1 "black has one endangered piece")
+      (is (cadddr (cdr results)) 1 "white's longest jump is 1")
+      (is (cadddr (cddr results)) 0 "black has no jumps"))
     (is (pieces-ahead-of board 'white) 3 "three black pieces ahead of white")
     (is (pieces-ahead-of board 'black) 0 "no pieces ahead of black")
 
@@ -28,7 +30,9 @@
       (is (car results) 6 "white has 6 moves in board1")
       (is (cadr results) 10 "black has 10 moves in board1")
       (is (caddr results) 2 "white has 2 endangered pieces")
-      (is (cadddr results) 1 "black has one endangered piece"))
+      (is (cadddr results) 1 "black has one endangered piece")
+      (is (cadddr (cdr results)) 1 "white's longest jump is 1")
+      (is (cadddr (cddr results)) 1 "black's longest jump is 1"))
     (is (pieces-ahead-of board 'white) 2 "two pieces ahead of white")
     (is (pieces-ahead-of board 'black) 2 "two pieces ahead of black")
 
@@ -41,7 +45,9 @@
       (is (car results) 4 "white has 4 moves in board2")
       (is (cadr results) 8 "black has 8 moves in board2")
       (is (caddr results) 1 "white has one endangered piece")
-      (is (cadddr results) 2 "black has two endangered pieces"))
+      (is (cadddr results) 2 "black has two endangered pieces")
+      (is (cadddr (cdr results)) 2 "white's longest jump is 2")
+      (is (cadddr (cddr results)) 1 "black's longest jump is 1"))
     (is (pieces-ahead-of board 'white) 8 "eight pieces ahead of white")
     (is (pieces-ahead-of board 'black) 0 "no pieces ahead of black")))
 

@@ -56,8 +56,10 @@
 	 (count-black-endangered (length (delete-duplicates
 					  (filter (lambda (chain) (or (>= (length chain) 3)
 								      (= 2 (num-diff (modulo (car chain) 10) (modulo (cadr chain) 10)))))
-						  white-moves)))))
-    (list count-white-moves count-black-moves count-white-endangered count-black-endangered)))
+						  white-moves))))
+	 (count-longest-jump-white (if (> count-black-endangered 0) (- (apply max (map length white-moves)) 1) 0))
+	 (count-longest-jump-black (if (> count-white-endangered 0) (- (apply max (map length black-moves)) 1) 0)))
+    (list count-white-moves count-black-moves count-white-endangered count-black-endangered count-longest-jump-white count-longest-jump-black)))
 
 (define (pieces-ahead-of board side)
   (call-with-values
