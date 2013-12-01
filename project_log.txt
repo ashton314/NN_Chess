@@ -975,3 +975,21 @@ correctly. However, I've run the training framework on the net maybe 7
 times and haven't had a single problem. I'll keep an eye on it, but it
 looks like my neural network engine is good.
 .
+
+Start: Sat Nov 30 19:16:28 MST 2013
+Stop:
+Additions: 1:00 (thinking time)
+
+I finally figured out how I'm going to generate random moves! It'll
+take some doing... First, I need to add a feature for longest possible
+jump. That'll be what I do first, then I'll code the data generators
+and start one off on the vm. (Oh, I got a vm from Better Servers by
+the way.)
+
+***
+
+Alright! I've finished the rough draft for my game-tree wanderer. I'm
+going to commit this and then clone my repo onto my vm to test the
+game-tree wanderer algorithm/code.
+
+.
