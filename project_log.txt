@@ -977,8 +977,10 @@ looks like my neural network engine is good.
 .
 
 Start: Sat Nov 30 19:16:28 MST 2013
-Stop:
+Stop:  Sat Nov 30 22:58:17 MST 2013
 Additions: 1:00 (thinking time)
+Subtractions: 1:00 (I probably spent this much time helping my mom and
+generally loafing)
 
 I finally figured out how I'm going to generate random moves! It'll
 take some doing... First, I need to add a feature for longest possible
@@ -992,4 +994,6 @@ Alright! I've finished the rough draft for my game-tree wanderer. I'm
 going to commit this and then clone my repo onto my vm to test the
 game-tree wanderer algorithm/code.
 
+I'm generating training data!! (I'm doing this on the vm. Woot!!)
+Hopefully my program is working correctly.
 .
