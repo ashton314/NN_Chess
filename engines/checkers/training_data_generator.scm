@@ -22,7 +22,7 @@
 (define *continuation-pool-size* 1000)
 (define *continuation-pool* (make-vector *continuation-pool-size*))
 (define *slots-full* 0)
-(define *score-depth* 5)
+(define *score-depth* 7)
 
 (define *root-node* #(#(1 1 1 1) #(1 1 1 1) #(1 1 1 1)
 		      #(0 0 0 0) #(0 0 0 0)
