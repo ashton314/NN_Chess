@@ -51,7 +51,7 @@
 			children)
 	      (for-each (lambda (child-node)
 			  (if (< *slots-full* *continuation-pool-size*) (inc! *slots-full*))
-			  (vector-set! *continuation-pool* (- *slots-full*) (cons child-node (other-side turn))))
+			  (vector-set! *continuation-pool* (- 1 *slots-full*) (cons child-node (other-side turn))))
 		  children)))))
   (if (= 0 *slots-full*)
       (begin
