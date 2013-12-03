@@ -22,7 +22,7 @@
 (define *continuation-pool-size* 1000)
 (define *continuation-pool* (make-vector *continuation-pool-size*))
 (define *slots-full* 0)
-(define *score-depth* 7)
+(define *score-depth* 5)
 
 (define *root-node* #(#(1 1 1 1) #(1 1 1 1) #(1 1 1 1)
 		      #(0 0 0 0) #(0 0 0 0)
@@ -31,6 +31,8 @@
 
 (format *data-fh* " ; SCORE DEPTH: ~A\n" *score-depth*)
 (format *data-fh* " ; CONTINUATION POOL SIZE: ~A\n\n" *continuation-pool-size*)
+
+(gc-flip)
 
 (define (make-data node obligitory-slot turn)
   (let ((score (negamax node turn *score-depth* #f '())))
@@ -49,7 +51,7 @@
 			children)
 	      (for-each (lambda (child-node)
 			  (if (< *slots-full* *continuation-pool-size*) (inc! *slots-full*))
-			  (vector-set! *continuation-pool* *slots-full* (cons child-node (other-side turn))))
+			  (vector-set! *continuation-pool* (- *slots-full*) (cons child-node (other-side turn))))
 		  children)))))
   (if (= 0 *slots-full*)
       (begin
@@ -63,8 +65,10 @@
 
 (define (repack-continuation-pool)
   ;; WARNING!! THIS IS HIGHLY INEFFICIENT!!
-  (format *data-fh* " ; REPACKING CONTINUATION POOL")
+  (format *data-fh* " ; REPACKING CONTINUATION POOL\n")
+  (format *data-fh* " ; CONTINUATION POOL: ~A\n" *continuation-pool*)
   (set! *continuation-pool* (list->vector (filter (lambda (x) x) ; only true values
 						  (vector->list *continuation-pool*))))
+  (gc-flip)
   (set! *continuation-pool-size* (vector-length *continuation-pool*))
   (set! *slots-full* (min *continuation-pool-size* *slots-full*)))
