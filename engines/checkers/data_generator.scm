@@ -26,10 +26,10 @@
 (format *data-fh* ";; SESSION ID: ~A\n" *session-id*)
 (format #t ";; SESSION ID: ~A\n" *session-id*)
 
-(define *continuation-pool-size* 7)
+(define *continuation-pool-size* 20)
 (define *continuation-pool* (make-vector *continuation-pool-size*))
 (define *slots-full* 0)
-(define *score-depth* 3)
+(define *score-depth* 5)
 
 (define *root-node* #(#(1 1 1 1) #(1 1 1 1) #(1 1 1 1)
 		      #(0 0 0 0) #(0 0 0 0)
@@ -48,6 +48,8 @@
 	     (children (map (lambda (move) (car (do-move move start-node start-turn)))
 			    (possible-moves start-node start-turn))))      
 
+    (format #t "Iteration: ~A\n" iteration-number)
+    (if (= 9 (remainder iteration-number 10)) (debug))
     (if (= 0 (remainder iteration-number 100))
 	(begin
 	  (write-line `((iteration ,iteration-number) (slot ,slot) (turn ,turn) (score ,score)))
@@ -55,6 +57,7 @@
 	  (gc-flip)))
 
     (write-line (list node turn score) *data-fh*)
+    (flush-output *data-fh*)
 
     (if (null? children)		; terminal board state
 	(begin
