@@ -4,6 +4,11 @@
 
 (load-option 'format)
 
+(define *root-node* #(#(1 1 1 1) #(1 1 1 1) #(1 1 1 1)
+		      #(0 0 0 0) #(0 0 0 0)
+		      #(-1 -1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1)))
+(define *root-turn* 'white)
+
 (define (best-move-dumb board turn depth)
   (define (best-car best lst)
     (if (null? lst)
@@ -44,7 +49,6 @@
 		best-alpha
 		(let ((this-score (- (negamax-primary (car (do-move (car mvs) brd trn)) (other-side trn)
 						      (- beta) (- best-alpha) (- depth-remaining 1) (if loudp (cons (car mvs) hist) '())))))
-;		  (negamax-finish (car mvs) hist this-score)
 		  (if (>= this-score beta)
 		      beta
 		      (if (> this-score best-alpha)

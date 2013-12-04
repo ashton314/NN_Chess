@@ -50,7 +50,7 @@
 
     (format #t "Iteration: ~A\n" iteration-number)
     (if (= 9 (remainder iteration-number 10)) (debug))
-    (if (= 0 (remainder iteration-number 100))
+    (if (= 0 (remainder iteration-number 20))
 	(begin
 	  (write-line `((iteration ,iteration-number) (slot ,slot) (turn ,turn) (score ,score)))
 	  (format #t "Garbage collecting\n")
