@@ -1007,3 +1007,40 @@ I got a memory overflow error. >:-( This is going to be tricky to debug.
 
 Second draft done. Need to debug.
 .
+
+Start: Tue Dec  3 19:10:19 MST 2013
+Stop:  Tue Dec  3 21:26:26 MST 2013
+Subtractions: 0:45
+
+I wonder if the memory leak is in negamax... I'll take a look.
+
+Hhmmm... looks like it might be. I'm going to check again.
+
+OK, I know it's not possible-moves, which is a releif. That seems to
+have its memory reclaimed when the garbage collector runs. I suppose
+it /could/ still be this function when another function is calling it
+or what not, but I don't think so.
+
+I take that back. `negamax' seems to have the memory it uses reclaimed
+just fine. Curious...
+
+I checked the basic board movement routines (possible-moves, do-move,
+etc.) and they don't seem to have any memory leaks. :-( I'm
+stumped. I'll look at my data generating code again.
+
+OK! I don't think it was a memory leak, actually... I'm guessing that
+it was that 1000-position cache that I kept in memory. I've reduced
+the cache to 20 positions, and it seems to be running just fine. I'd
+like to get this up to at least 100 so I get lots of interesting
+positions. There's a command-line flag (--heap (see the mit-scheme
+user manual (https://www.gnu.org/software/mit-scheme/documentation/mit-scheme-user/Command_002dLine-Options.html#Command_002dLine-Options)))
+
+that will reset the amount of heap space that scheme will use. I'll
+need to multiply the current value (whatever that is (I need to find
+this out somehow (I think print-gc-statistics might tell me the number
+I need (I've been programming in Scheme for too long (can you
+tell?))))) by at least 5. I wonder how much memory I can allocate...
+
+TODO: Find out how many 1024-word blocks mit-scheme has as heap space
+by default, then multiply this value by at least 5.
+.
