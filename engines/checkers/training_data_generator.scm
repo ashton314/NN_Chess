@@ -19,7 +19,7 @@
 					      (decoded-time/second now)))))
 (format *data-fh* ";; SESSION ID: ~A\n" *session-id*)
 
-(define *continuation-pool-size* 1000)
+(define *continuation-pool-size* 100)
 (define *continuation-pool* (make-vector *continuation-pool-size*))
 (define *slots-full* 0)
 (define *score-depth* 5)

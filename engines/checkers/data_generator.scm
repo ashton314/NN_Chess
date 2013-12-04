@@ -49,12 +49,15 @@
 			    (possible-moves start-node start-turn))))      
 
     (format #t "Iteration: ~A\n" iteration-number)
-    (if (= 9 (remainder iteration-number 10)) (debug))
-    (if (= 0 (remainder iteration-number 20))
-	(begin
-	  (write-line `((iteration ,iteration-number) (slot ,slot) (turn ,turn) (score ,score)))
-	  (format #t "Garbage collecting\n")
-	  (gc-flip)))
+    (if (= 0 (remainder iteration-number 10))
+	(print-gc-statistics))
+
+;    (if (= 9 (remainder iteration-number 10)) (debug))
+    ;; (if (= 0 (remainder iteration-number 10))
+    ;; 	(begin
+    ;; 	  (write-line `((iteration ,iteration-number) (slot ,slot) (turn ,turn) (score ,score)))
+    ;; 	  (format #t "Garbage collecting\n")
+    ;; 	  (gc-flip)))
 
     (write-line (list node turn score) *data-fh*)
     (flush-output *data-fh*)
@@ -65,18 +68,18 @@
 	  (vector-set! *continuation-pool* slot #f)
 	  (repack-continuation-pool))
 	(begin
-	  (vector-set! *continuation-pool* slot (cons (pop! children) ; clobber slot where this node came from
+	  (vector-set! *continuation-pool* slot (cons (car children) ; clobber slot where this node came from
 						      (other-side turn)))
 	  (if (>= *slots-full* *continuation-pool-size*)
 	      (for-each (lambda (child-node)
 			  (vector-set! *continuation-pool* (random *continuation-pool-size*)
 				       (cons child-node (other-side turn))))
-			children)
+			(cdr children))
 	      (for-each (lambda (child-node)
 			  (if (< *slots-full* *continuation-pool-size*) (inc! *slots-full*))
 			  (vector-set! *continuation-pool* (- *slots-full* 1)
 				       (cons child-node (other-side turn))))
-			children))))
+			(cdr children)))))
 
     (if (= 0 *slots-full*)
 	(begin
