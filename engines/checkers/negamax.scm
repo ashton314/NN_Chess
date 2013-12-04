@@ -66,25 +66,14 @@
   (negamax-primary board turn -1000000 1000000 depth history))
 
 (define (negamax-status currently-considering history best-alpha alpha beta)
-;;   (newline)
-;;   (map (lambda (nul) (write-string "|  ")) history)
-;;   (format #t "/--  ~A --> Alpha: ~A Beta: ~A" currently-considering best-alpha beta)
   (write-string
    "\r                                                                                                                                                    ")
   (write-string "\rConsidering: ")
   (format #t "~A" (apply string-append (map (lambda (choice) (format #f "~A " choice)) (reverse history))))
-  (format #t "~A ### Alpha: ~A Beta: ~A" currently-considering best-alpha beta)
-;  (format #t "~27A" (apply string-append (map (lambda (choice) (format #f "~A " choice)) (reverse history))))
-;  (format #t "~15A  ### Best-Alpha: ~@8A Alpha: ~@8A Beta: ~@8A" currently-considering best-alpha alpha beta)
-)
-;  (read-line))
+  (format #t "~A ### Alpha: ~A Beta: ~A" currently-considering best-alpha beta))
 
 (define (negamax-finish current history scr)
-;  (newline)
   (format #t " ~A SCORE: ~A " current scr))
-;;   (map (lambda (nul) (write-string "|  ")) history)
-;;   (format #t "\\--  ~A --> RETURNING: ~A" current scr))
-
 
 ;; Move generation
 (define (possible-moves board turn)
