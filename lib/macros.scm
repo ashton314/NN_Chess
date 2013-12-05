@@ -2,6 +2,12 @@
 ;;; Ashton Wiersdorf
 ;;; Part of the NN_Chess project
 
+(define-syntax call-once
+  ;; Takes a thunk, and calls the thunk once. Next iteration, (or whatever) the thunk is NOT called
+  (syntax-rules ()
+    ((_ thunk)
+     (error "not implemented"))))
+
 (define-syntax while
   (syntax-rules ()
     ((_ condition body ...)

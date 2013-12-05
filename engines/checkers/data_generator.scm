@@ -7,12 +7,6 @@
 (load "engine.scm")
 (load "negamax.scm")
 
-(define-syntax call-once
-  ;; Takes a thunk, and calls the thunk once. Next iteration, (or whatever) the thunk is NOT called
-  (syntax-rules ()
-    ((_ thunk)
-     (error "not implemented"))))
-
 (define *session-id* (- (get-universal-time) epoch))
 
 (define *data-fh* (open-output-file (let ((now (local-decoded-time)))
@@ -26,10 +20,10 @@
 (format *data-fh* ";; SESSION ID: ~A\n" *session-id*)
 (format #t ";; SESSION ID: ~A\n" *session-id*)
 
-(define *continuation-pool-size* 20)
+(define *continuation-pool-size* 100)
 (define *continuation-pool* (make-vector *continuation-pool-size*))
 (define *slots-full* 0)
-(define *score-depth* 5)
+(define *score-depth* 7)
 
 (define *root-node* #(#(1 1 1 1) #(1 1 1 1) #(1 1 1 1)
 		      #(0 0 0 0) #(0 0 0 0)
