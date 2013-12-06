@@ -1,18 +1,5 @@
-test:
-
-docs:
+README: README.pod
 	pod2text README.pod README
 
-install:
-
-run:
-
-clean:
-	rm *~
-
-commit: clean
-	git add .
-	git commit
-
-push: commit
-	git push
+.scm.com:
+	mit-scheme --eval
