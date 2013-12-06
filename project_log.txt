@@ -1044,3 +1044,37 @@ tell?))))) by at least 5. I wonder how much memory I can allocate...
 TODO: Find out how many 1024-word blocks mit-scheme has as heap space
 by default, then multiply this value by at least 5.
 .
+
+Start: Wed Dec  4 07:56:51 MST 2013
+Stop:  Wed Dec  4 08:20:00 MST 2013
+
+Going to try increasing the memory available to scheme via the command
+line. First I need to figure out how much heap space it has by
+default...
+.
+
+Start: Wed Dec  4 20:53:14 MST 2013
+Stop:  Wed Dec  4 21:53:10 MST 2013
+
+Fie!! I ran out of memory /again/!!! Statistics:
+  search-depth:      7
+  pool-size:       100
+  heap-size:    115941
+
+Still not enough! Maybe I should drop search-depth... I'm going to
+profile negamax to see if I can figure out if something's wrong.
+
+OK, I tried profiling my code, but I need to compile it first. Here I
+go!!
+
+Dag, yo. This is more work than I thought. I'm going to have to spend
+some time reorganizing my entire project. That's going to be... ugly.
+.
+
+Start: Thu Dec  5 21:08:06 MST 2013
+Stop:
+
+I'm going to try reorganzing my project's directory heirarchy. I'm
+going to back up my changes to so the commit is stable, then reorg
+completely. Wish me luck!!
+.
