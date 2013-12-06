@@ -1072,9 +1072,31 @@ some time reorganizing my entire project. That's going to be... ugly.
 .
 
 Start: Thu Dec  5 21:08:06 MST 2013
-Stop:
+Stop:  Thu Dec  5 22:20:21 MST 2013
 
 I'm going to try reorganzing my project's directory heirarchy. I'm
 going to back up my changes to so the commit is stable, then reorg
 completely. Wish me luck!!
+
+OK! Swanky new structure is in place. Everything is broken right now;
+I'm working on fixing that. I still need to figure out how to compile
+files that require other files...
+
+I figured out how to exit MIT-Scheme without having any prompt for
+confirmation: use the function `%exit'. 'Tis a hidden function. I
+found it! The secret way... into MORDOR!!
+
+*ahem*
+
+Well, `make' is going to be lovely. This is the first project I've
+needed it this badly. I've used it once before, and it was nice. This
+time, it is going to be vital.
+
+One more note: I'm dumping everything from STDOUT to /dev/null so I
+don't get all these messy compile messages from mit-scheme as I
+repeatedly call it from the command line. I guess I should print the
+data while I debug my compiling and makefile, and then pipe it to
+/dev/null once I'm done with that.
+
+Good night.
 .
