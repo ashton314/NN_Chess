@@ -4,7 +4,8 @@
 
 (load-option 'format)
 
-(load "engine.scm")
+;(load "engine.scm")
+(declare (integrate-external "engine"))
 
 (define (play-game depth)
   (let ((board (make-board)))

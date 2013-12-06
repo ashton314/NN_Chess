@@ -8,7 +8,8 @@ COMMON_UTILS= bin/macros.scm bin/utils.scm
 .SUFFIXES: .scm .com
 
 .scm.com:
-	${SCHEME} ${SCHEME_FLAGS} "(begin (cf \"$<\" \"bin/\") (%exit))" > ${BLACK_HOLE} # WARNING!! MIT-SCHEME specific functions!!
+	cp $< bin/
+	${SCHEME} ${SCHEME_FLAGS} "(begin (cf \"bin/$<\") (%exit))" > ${BLACK_HOLE} # WARNING!! MIT-SCHEME specific functions!!
 
 # Defaults
 compile:
@@ -18,9 +19,13 @@ clean:
 	echo "not implemented"
 
 # Files
-player.com: bin/engine.com
+player.com: src/player.scm bin/engine.com
+	cp src/player.scm bin/
+	$(SCHEME) $(SCHEME_FLAGS) "(begin (cf "bin/player.scm") (%exit))" > ${BLACK_HOLE}
 
 bin/engine.com: src/checkers_engine/engine.scm ${COMMON_UTILS} bin/negamax.com bin/neural_network.com
+	cp src/checkers_engine/engine.scm bin/
+	${SCHEME} ${SCHEME_FLAGS} ## FIXME: NOT FINISHED HERE
 
 README: README.pod
 	pod2text README.pod README

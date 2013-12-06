@@ -4,10 +4,14 @@
 
 (load-option 'format)
 
-(load "../../lib/macros.scm")
-(load "../../lib/utils.scm")
-(load "negamax.scm")
-(load "../../neural_network/matrix.scm")
+;; (load "../../lib/macros.scm")
+;; (load "../../lib/utils.scm")
+;; (load "negamax.scm")
+;; (load "../../neural_network/matrix.scm")
+(declare (integrate-external "macros"))
+(declare (integrate-external "utils"))
+(declare (integrate-external "negamax"))
+(declare (integrate-external "neural_network"))
 
 ;; Global variables
 (define *white-pawn* "w")
