@@ -1110,6 +1110,14 @@ during scheme compilation.
 .
 
 Start: Fri Dec  6 17:20:00 MST 2013
-Stop:  
+Stop:  Fri Dec  6 19:53:10 MST 2013
+Subtractions: 0:30
 
 Working on Makefile some more.
+
+I give up. I'm going to cat all the files together and then compile
+that.
+
+The player works!! The Makefile is ugly, but I couldn't figure out any
+other way to get the dang thing to compile.
+.
