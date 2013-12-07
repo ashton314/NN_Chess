@@ -1,0 +1,1 @@
+(load "bin/player.com")
