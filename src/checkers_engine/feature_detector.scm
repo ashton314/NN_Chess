@@ -2,7 +2,7 @@
 ;;; Ashton Wiersdorf
 ;;; Part of the NN_Chess project
 
-(load "../../lib/utils.scm")
+;; (load "../../lib/utils.scm")
 
 (define (pawn-compare board)
   ;; Returns #white_pawns - #black_pawns
