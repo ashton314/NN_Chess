@@ -10,7 +10,7 @@ COMMON_UTILS=src/utils/macros.scm src/utils/utils.scm
 .SUFFIXES: .scm .com
 
 # Defaults
-compile: player.com
+compile: player.com trainer.com
 
 clean:
 	rm bin/*
@@ -27,6 +27,10 @@ doc: README
 player.com: src/misc/header.scm ${COMMON_UTILS} src/player.scm src/checkers_engine/engine.scm src/game_tree_search/negamax.scm src/neural_networks/neural_network.scm
 	cat src/misc/header.scm ${COMMON_UTILS} src/player.scm src/checkers_engine/engine.scm src/game_tree_search/negamax.scm src/neural_networks/neural_network.scm > bin/player.scm
 	cd bin; ${SCHEME} ${SCHEME_FLAGS} --eval "(begin (${CF} \"player.scm\") (${EXIT}))"
+
+trainer.com: src/misc/header.scm ${COMMON_UTILS} src/checkers_engine/engine.scm src/game_tree_search/negamax.scm src/neural_networks/neural_network.scm
+	cat src/misc/header.scm ${COMMON_UTILS} src/checkers_engine/engine.scm src/game_tree_search/negamax.scm src/neural_networks/neural_network.scm > bin/trainer.scm
+	cd bin; ${SCHEME} ${SCHEME_FLAGS} --eval "(begin (${CF} \"trainer.scm\") (${EXIT}))"
 
 bin/tap.com: src/utils/tap.scm
 	cp $? bin/

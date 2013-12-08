@@ -4,13 +4,13 @@
 
 (load-option 'format)
 
-(load "engine.scm")
-(load "negamax.scm")
+;; (load "engine.scm")
+;; (load "negamax.scm")
 
 (define *session-id* (- (get-universal-time) epoch))
 
 (define *data-fh* (open-output-file (let ((now (local-decoded-time)))
-				      (format #f "TRAINING_DATA/~A~A~A~A~A~A.scm"
+				      (format #f "DATA/TRAINING_DATA/~A~A~A~A~A~A.scm"
 					      (decoded-time/year now)
 					      (decoded-time/month now)
 					      (decoded-time/day now)
