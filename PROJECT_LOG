@@ -1121,3 +1121,15 @@ that.
 The player works!! The Makefile is ugly, but I couldn't figure out any
 other way to get the dang thing to compile.
 .
+
+Start: Sat Dec  7 17:25:26 MST 2013
+Stop:  Sat Dec  7 18:20:34 MST 2013
+
+Going to try profiling negamax now.
+
+Done. I need to start generating some data now.
+
+Booyah!! My compiled code runs 30% faster than non-compiled code!!
+
+Generating training data... hopefully it will work this time!
+.
