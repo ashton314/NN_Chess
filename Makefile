@@ -18,6 +18,9 @@ clean:
 test:
 	echo "not implemented"
 
+run:
+	${SCHEME} --load checkers.scm
+
 doc: README
 
 # Files

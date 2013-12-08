@@ -21,9 +21,6 @@
 				    (newline)
 				    ret)) moves))))
 
-(define (best-move-smart board turn depth net)
-  #f)
-
 (define (score board)
   (let ((scr 0)
 	(white 0)
