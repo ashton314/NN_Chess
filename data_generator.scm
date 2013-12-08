@@ -1,1 +1,1 @@
-(load "bin/trainer.com")
+(load "bin/generator.com")

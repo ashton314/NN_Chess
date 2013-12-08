@@ -43,8 +43,10 @@
 			    (possible-moves start-node start-turn))))      
 
     (format #t "Iteration: ~A\n" iteration-number)
-    (if (= 0 (remainder iteration-number 10))
-	(print-gc-statistics))
+    (if (= 0 (remainder iteration-number 5))
+	(begin
+	  (gc-flip)
+	  (print-gc-statistics)))
 
 ;    (if (= 9 (remainder iteration-number 10)) (debug))
     ;; (if (= 0 (remainder iteration-number 10))
