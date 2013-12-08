@@ -21,6 +21,9 @@ test:
 run:
 	${SCHEME} --load checkers.scm
 
+generate:
+	${SCHEME} --load data_generator.scm
+
 doc: README
 
 # Files

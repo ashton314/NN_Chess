@@ -1,0 +1,3317 @@
+;8855 samples
+;
+;*** Waiting
+;
+;   1 sample in (user), collect-coordinates, loop:
+; evaluating 
+;(and (even? col) (even? row))
+; for ### in
+;(cond (### #t) ((odd? col) (odd? row)) (else #f))
+;
+;   1 sample in (user), generate-possible-moves, (let):
+; evaluating 
+;(map list single-moves)
+; for ### in
+;(append (if (null? jumps) '() (apply append ...)) ###)
+;
+;   1 sample in (user), possible-moves, (lambda), (lambda):
+; evaluating 
+;(map collapse-num chain)
+; for ### in
+;(cons (collapse-num coord) ###)
+;
+;   1 sample in (user), copy-board-with-modifications, (let):
+; evaluating 
+;(sqr-get current-square board)
+; for ### in
+;(let ((piece ###)) (if (&= ... ...) (if ... 2 -2) piece))
+;
+;   1 sample in (runtime record), tag->structure-type, (let):
+; evaluating 
+;(structure-type? type)
+; for ### in
+;(and ### (eq? (structure-type/physical-type type) physical-type) type)
+;
+;   1 sample in (runtime boolean), for-all?:
+; evaluating 
+;(let loop ((items* items)) (if (pair? items*) (and ... ...) (begin ... #t)))
+;
+;   1 sample in (user), collect-diagnal-squares:
+; evaluating 
+;(filter (lambda (sqr) (and ... ... ... ...)) (map (lambda ... ...) '(1 1 -1 -1) '(1 -1 1 -1)))
+; for ### in
+;(let ((sqrs ###)) sqrs)
+;
+;   1 sample in (user), generate-possible-moves, (let):
+; evaluating 
+;(if (null? jumps) '() (apply append (map ... jumps)))
+; for ### in
+;(append ### (map list single-moves))
+;
+;   1 sample in (runtime error-handler), signal-condition:
+; evaluating 
+;(guarantee-condition condition 'signal-condition)
+; for ### in
+;(begin ### (let (...) (let ... ... ... ... ...)))
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(assert (for-all? (cons ... ...) (lambda ... ...)) (format #f "Square '~A' is not on the board!" current-square))
+; for ### in
+;(begin ### (assert (for-all? ... ...) (format #f "Square '~A' is not on the board!" target-square)) (assert (and ... ...) (format #f "Square '~A' is not a legal square!" current-square)) (assert (and ... ...) (format #f "Square '~A' is not a legal square!" target-square)) ...)
+;
+;   1 sample in (runtime srfi-1), filter, recur:
+; evaluating 
+;(null-list? lis 'filter)
+; for ### in
+;(if ### lis (let (... ...) (if ... ... ...)))
+;
+;   1 sample in (runtime error-handler), guarantee-condition:
+; evaluating 
+;(condition? object)
+; for ### in
+;(if (not ###) (error:not-condition object caller))
+;
+;   1 sample in (runtime population), add-to-population!/unsafe:
+; evaluating 
+;(set-cdr! population (system-pair-cons 55 (if object object bogus-false) (cdr population)))
+;
+;   1 sample in (runtime port), make-port:
+; evaluating 
+;(begin (guarantee-port-type type 'make-port) (%make-port type state))
+;
+;   1 sample in (runtime continuation), call-with-current-continuation:
+; evaluating 
+;(call-with-current-continuation (lambda (control-point) (let ... ...)))
+;
+;   1 sample in (user), possible-moves, (lambda):
+; evaluating 
+;(reduce append '() (map sub-jumps (map ... ...)))
+; for ### in
+;(delete-duplicates! ###)
+;
+;   1 sample in (user), loop:
+; evaluating 
+;(length lst)
+; for ### in
+;(&= ### 1)
+;
+;   1 sample in (runtime procedure), procedure-arity-valid?:
+; evaluating 
+;(guarantee-index-fixnum n-arguments 'procedure-arity-valid?)
+; for ### in
+;(begin ### (let (...) (cond ... ... ...)))
+;
+;   1 sample in (runtime error-handler), %make-condition:
+; evaluating 
+;(make-vector (%record-ref type 4) #f)
+; for ### in
+;(%%make-condition type continuation restarts ###)
+;
+;   1 sample in (user), split-num:
+; evaluating 
+;(remainder num 10)
+; for ### in
+;(cons (truncate (&/ num 10)) ###)
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(num-diff (car current-square) (car target-square))
+; for ### in
+;(let ((temp ###)) (cond (... #t) (... ...) (else ...)))
+;
+;   1 sample in (runtime error-handler), signal-simple:
+; evaluating 
+;(condition? datum)
+; for ### in
+;(if ### (begin (signal-condition datum) (default-handler datum)) (call-with-current-continuation (lambda ... ...)))
+;
+;   1 sample in (runtime environment), interpreter-environment/safe-lookup, (let):
+; evaluating 
+;(safe-lexical-reference environment name)
+; for ### in
+;(set-car! cell ###)
+;
+;   1 sample in (runtime string-i/o-port), call-with-narrow-output-string:
+; evaluating 
+;(let ((port ...)) (generator port) (get-output-string port))
+;
+;   1 sample in (runtime string), list->string:
+; evaluating 
+;(string-allocate (length chars))
+; for ### in
+;(let ((result ###)) (let loop (... ...) (if ... ... result)))
+;
+;   1 sample in (runtime procedure), (let), (let):
+; evaluating 
+;(compiled-entry-kind object)
+; for ### in
+;(system-hunk3-cxr0 ###)
+;
+;   1 sample in (runtime unparser), limit-unparse-depth:
+; evaluating 
+;(if *unparser-list-depth-limit* (let (...) (define ... ... #!unspecific) (shallow-fluid-bind swap! ... swap!)) (kernel))
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(assert (&= (num-diff ... ...) (num-diff ... ...)) "Non-diagnal motion!")
+; for ### in
+;(begin ### (let (...) (cond ... ... ...)))
+;
+;   1 sample in (user), copy-board-with-modifications, (let):
+; evaluating 
+;(midpoint current-square target-square)
+; for ### in
+;(sqr-set! ### 0 new-board)
+;
+;   1 sample in (runtime vector), vector-map:
+; evaluating 
+;(for-each (lambda (v) (if ... ...)) vectors)
+; for ### in
+;(begin ### (let (...) (for-each ... vectors) (let ... ... result)))
+;
+;   1 sample in (runtime number), complex:truncate:
+; evaluating 
+;(if (object-type? 60 x) (real:truncate (rec:real-arg 'truncate x)) ((named-lambda ... ...) x))
+;
+;   1 sample in (runtime format), format-object, (lambda):
+; evaluating 
+;(lambda (port string arguments) (if (null? arguments) (error "FORMAT: too few arguments" string)) (if (eq? n-columns #!default) (write ... port) (output-port/write-string port ...)) (format-loop port string (cdr arguments)))
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(assert (and (there-exists? ... ...) (there-exists? ... odd?)) (format #f "Square '~A' is not a legal square!" current-square))
+; for ### in
+;(begin ### (assert (and ... ...) (format #f "Square '~A' is not a legal square!" target-square)) (if (&= ... 1) (assert ... ...)) (assert (&= ... ...) "Non-diagnal motion!") ...)
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(abs (sqr-get current-square board))
+; for ### in
+;(&= ### 1)
+;
+;   1 sample in (runtime continuation), call-with-current-continuation, (lambda):
+; evaluating 
+;(make-continuation control-point (get-dynamic-state) (get-thread-event-block))
+; for ### in
+;(let ((k ###)) (%within-continuation k #f (lambda () ...)))
+;
+;   1 sample in (runtime string), %substring:
+; evaluating 
+;(string-allocate (minus-fixnum end start))
+; for ### in
+;(let ((result ###)) (%substring-move! string start end result ...) result)
+;
+;   1 sample in (runtime procedure), procedure?:
+; evaluating 
+;(skip-entities object)
+; for ### in
+;(let ((object ###)) (or (... object) (object-type? 24 object) (and ... ...)))
+;
+;   1 sample in (user), post-process:
+; evaluating 
+;(if (null? this-list) acc (post-process (cdr this-list) (cons ... acc)))
+;
+;   2 samples in (runtime list), delete!, (let), (lambda):
+; evaluating 
+;(= item (car items))
+; for ### in
+;(if ### (trim-initial-segment (cdr items)) (begin (locate-initial-segment items ...) items))
+;
+;   2 samples in (user), assert-legal:
+; evaluating 
+;(num-diff (cdr current-square) (cdr target-square))
+; for ### in
+;(&= (num-diff (car current-square) (car target-square)) ###)
+;
+;   2 samples in (runtime number), int:->string, print-fixnum, loop:
+; evaluating 
+;(if (zero-fixnum? n) (if (less-than-fixnum? n-digits min-digits) (loop n ... ...) tail) (loop (fixnum-quotient n radix) (plus-fixnum n-digits 1) (cons ... tail)))
+;
+;   2 samples in (runtime list), list-of-type?, loop:
+; evaluating 
+;(predicate (car l1))
+; for ### in
+;(and ### (let (...) (cond ... ... ...)))
+;
+;   2 samples in (user), (lambda):
+; evaluating 
+;(integer? num)
+; for ### in
+;(and ### (not (&< 8 num)))
+;
+;   2 samples in (runtime string-i/o-port), with-output-to-string:
+; evaluating 
+;(call-with-narrow-output-string (lambda (port) (with-output-to-port port thunk)))
+;
+;   2 samples in (user), assert-legal, (let):
+; evaluating 
+;(sqr-get (midpoint current-square target-square) board)
+; for ### in
+;((if (white-piece? ...) black-piece? white-piece?) ###)
+;
+;   2 samples in (user), copy-board-with-modifications, (let):
+; evaluating 
+;(reverse! ret)
+; for ### in
+;(cons new-board ###)
+;
+;   2 samples in (user), assert-legal:
+; evaluating 
+;((if (white-piece? ...) < >) (car current-square) (car target-square))
+; for ### in
+;(assert ### (format #f "Piece at ~A may not move backwards!" current-square))
+;
+;   2 samples in (user), copy-board-with-modifications:
+; evaluating 
+;(vector-copy (vector-map vector-copy board))
+; for ### in
+;(let ((new-board ###) (ret ...)) (sqr-set! target-square (let ... ...) new-board) (sqr-set! current-square 0 new-board) (if (&= ... 2) (begin ... ...)) ...)
+;
+;   2 samples in (runtime srfi-1), delete-duplicates!, (let), recur, (let), (let):
+; evaluating 
+;(delete! x tail elt=)
+; for ### in
+;(recur ###)
+;
+;   2 samples in (runtime list), map:
+; evaluating 
+;(begin (set! map-1 (named-lambda ... ...)) (set! map-2 (named-lambda ... ...)) (set! map-n (named-lambda ... ...)) (set! bad-end (named-lambda ... ...)) ...)
+;
+;   2 samples in (user), sub-jumps:
+; evaluating 
+;(reverse chain)
+; for ### in
+;(loop ### '())
+;
+;   2 samples in (runtime 1d-property), (let):
+; evaluating 
+;(add-to-population!/unsafe population-of-1d-tables table)
+; for ### in
+;(begin ### table)
+;
+;   2 samples in (user), score, (let), (lambda), (lambda):
+; evaluating 
+;(begin (cond (... ... white) (... ... black)) (set! scr (&+ scr cell)) scr)
+;
+;   2 samples in (runtime error-handler), ignore-errors:
+; evaluating 
+;(call-with-current-continuation (lambda (k) (bind-condition-handler ... ... thunk)))
+;
+;   2 samples in (runtime list), map, map-2:
+; evaluating 
+;(procedure (car l1) (car l2))
+; for ### in
+;(cons ### '())
+;
+;   2 samples in (runtime state-space), set-dynamic-state!:
+; evaluating 
+;(dynamic-state? state)
+; for ### in
+;(if (not ###) (error:wrong-type-argument state "dynamic state" 'set-dynamic-state!))
+;
+;   2 samples in (runtime error-handler), signal-condition, (let), (let), do-loop:
+; evaluating 
+;(let ((types ...)) (if (pair? types) (intersect-generalizations? types) #t))
+; for ### in
+;(if ### (let (...) (define ... ... #!unspecific) (shallow-fluid-bind swap! ... swap!)))
+;
+;   3 samples in (runtime state-space), get-dynamic-state:
+; evaluating 
+;(limit-interrupts! interrupt-mask/gc-ok)
+; for ### in
+;(let ((interrupt-mask ###)) (let (...) (set-interrupt-enables! interrupt-mask) state))
+;
+;   3 samples in (user), copy-board-with-modifications, (let):
+; evaluating 
+;(sqr-get (midpoint current-square target-square) new-board)
+; for ### in
+;(cons ### ret)
+;
+;   3 samples in (runtime error-handler), condition-constructor, (let), (let), (lambda), (let):
+; evaluating 
+;(let ((values ...)) (let do-loop (... ...) (cond ... ...)))
+; for ### in
+;(begin ### condition)
+;
+;   3 samples in (runtime format), format, (let), (lambda):
+; evaluating 
+;(current-output-port)
+; for ### in
+;(start ###)
+;
+;   3 samples in (runtime vector), vector-copy, (let):
+; evaluating 
+;(make-vector length)
+; for ### in
+;(let ((new-vector ###)) (subvector-move-right! vector 0 length new-vector ...) new-vector)
+;
+;   3 samples in (runtime vector), vector-map, (let):
+; evaluating 
+;(make-vector n)
+; for ### in
+;(let ((result ###)) (let do-loop (...) (if ... ... #t)) result)
+;
+;   3 samples in (runtime list), map, loop:
+; evaluating 
+;(procedure (car l1) (car l2))
+; for ### in
+;(cons ### '())
+;
+;   3 samples in (runtime string), string-tail:
+; evaluating 
+;(begin ((named-lambda ... ...) string 'string-tail) (if (not ...) (error:wrong-type-argument start "string index" 'string-tail)) (if (greater-than-fixnum? start ...) (error:bad-range-argument start 'string-tail)) ((named-lambda ... ...) string start (string-length string)))
+;
+;   3 samples in (user), copy-board-with-modifications, (let):
+; evaluating 
+;(sqr-set! current-square 0 new-board)
+; for ### in
+;(begin ### (if (&= ... 2) (begin ... ...)) (cons new-board (reverse! ret)))
+;
+;   3 samples in (runtime continuation), guarantee-continuation:
+; evaluating 
+;(continuation? object)
+; for ### in
+;(if (not ###) (error:not-continuation object caller))
+;
+;   3 samples in (runtime string), %substring:
+; evaluating 
+;(string-allocate (minus-fixnum end start))
+; for ### in
+;(let ((result ###)) (%substring-move! string start end result ...) result)
+;
+;   3 samples in (runtime format), format-wrapper, (lambda):
+; evaluating 
+;(reverse! parsed-arguments)
+; for ### in
+;(cons modifiers ###)
+;
+;   3 samples in (runtime rep), skip-non-repls:
+; evaluating 
+;(repl-state? (cmdl/state cmdl))
+; for ### in
+;(if ### cmdl (skip-non-repls (cmdl/parent cmdl)))
+;
+;   3 samples in (user), assert-legal:
+; evaluating 
+;(num-diff (car current-square) (car target-square))
+; for ### in
+;(&= ### (num-diff (cdr current-square) (cdr target-square)))
+;
+;   3 samples in (user), collect-coordinates, loop:
+; evaluating 
+;(or (and (even? col) (even? row)) (and (odd? col) (odd? row)))
+; for ### in
+;(cond (### acc) ((... ...) (cons ... acc)) (else acc))
+;
+;   4 samples in (runtime error-handler), (let), %%make-condition:
+; evaluating 
+;((access record-type-default-value-by-index #f) rtd:condition 5)
+; for ### in
+;(%record tag type continuation restarts ...)
+;
+;   4 samples in (runtime error-handler), condition-constructor, (let), (let), (lambda):
+; evaluating 
+;(guarantee-continuation continuation constructor)
+; for ### in
+;(begin ### (let (...) (let ... ...) condition))
+;
+;   4 samples in (runtime port), port/operation/discretionary-flush-output:
+; evaluating 
+;(port/type port)
+; for ### in
+;(%record-ref ### 14)
+;
+;   4 samples in (runtime rep), nearest-repl/environment:
+; evaluating 
+;(cmdl/state (nearest-repl))
+; for ### in
+;(%record-ref ### 2)
+;
+;   4 samples in (runtime list), guarantee-list-of-type:
+; evaluating 
+;(list-of-type? object predicate)
+; for ### in
+;(if (not ###) (error:wrong-type-argument object description (if ... #f caller)))
+;
+;   4 samples in (runtime port), guarantee-port-type:
+; evaluating 
+;(port-type? object)
+; for ### in
+;(if (not ###) (error:wrong-type-argument object "port type" procedure))
+;
+;   5 samples in (runtime port), (let), %make-port:
+; evaluating 
+;((access record-type-default-value-by-index #f) <port> 6)
+; for ### in
+;(%record tag %type %state ((access record-type-default-value-by-index #f) <port> 3) ...)
+;
+;   5 samples in (runtime port), port/operation:
+; evaluating 
+;(port? port)
+; for ### in
+;(if (not ###) (error:not-port port 'port/operation))
+;
+;   5 samples in (runtime error-handler), bind-condition-handler:
+; evaluating 
+;(guarantee-list-of-type types condition-type? "list of condition types" 'bind-condition-handler)
+; for ### in
+;(begin ### (guarantee-procedure-of-arity handler 1 'bind-condition-handler) (let (...) (define ... ... #!unspecific) (shallow-fluid-bind swap! ... swap!)))
+;
+;   5 samples in (runtime port), with-output-to-port:
+; evaluating 
+;(output-port? port)
+; for ### in
+;(if (not ###) (error:not-output-port port 'with-output-to-port))
+;
+;   5 samples in (runtime string-i/o-port), open-narrow-output-string:
+; evaluating 
+;(string-allocate 16)
+; for ### in
+;(make-ostate ### 0 0)
+;
+;   5 samples in (runtime procedure), guarantee-procedure:
+; evaluating 
+;(procedure? object)
+; for ### in
+;(if (not ###) (error:not-procedure object caller))
+;
+;   5 samples in (runtime port), output-port?:
+; evaluating 
+;(port? object)
+; for ### in
+;(and ### (%record-ref (%record-ref object 1) 9) #t)
+;
+;   5 samples in (runtime rep), nearest-repl:
+; evaluating 
+;(nearest-cmdl)
+; for ### in
+;(skip-non-repls ###)
+;
+;   5 samples in (runtime reference-trap), macro-reference-trap?:
+; evaluating 
+;(reference-trap? object)
+; for ### in
+;(and ### (eq? 15 (vector-ref object 1)))
+;
+;   5 samples in (user), split-num:
+; evaluating 
+;(&/ num 10)
+; for ### in
+;(truncate ###)
+;
+;   5 samples in (runtime string-i/o-port), maybe-grow-buffer, (let), (let):
+; evaluating 
+;(wide-string? buffer)
+; for ### in
+;(if ### (make-wide-string m*) (string-allocate m*))
+;
+;   5 samples in (user), possible-moves, (lambda):
+; evaluating 
+;(map sub-jumps (map (lambda ... ...) (generate-possible-moves board coord #f turn)))
+; for ### in
+;(reduce append '() ###)
+;
+;   5 samples in (user), possible-moves, (lambda):
+; evaluating 
+;(map (lambda (chain) (cons ... ...)) (generate-possible-moves board coord #f turn))
+; for ### in
+;(map sub-jumps ###)
+;
+;   5 samples in (runtime port), port/operation/write-char:
+; evaluating 
+;(port/type port)
+; for ### in
+;(%record-ref ### 9)
+;
+;   5 samples in (runtime string), %substring:
+; evaluating 
+;(string-allocate (minus-fixnum end start))
+; for ### in
+;(let ((result ###)) (%substring-move! string start end result ...) result)
+;
+;   5 samples in (user), collect-coordinates, loop:
+; evaluating 
+;(odd? col)
+; for ### in
+;(and ### (odd? row))
+;
+;   6 samples in (user), midpoint:
+; evaluating 
+;(&/ (&- (car target) (car current)) 2)
+; for ### in
+;(&+ (car current) ###)
+;
+;   6 samples in (user), generate-possible-moves:
+; evaluating 
+;(collect-diagnal-squares coordinate 1)
+; for ### in
+;(filter (lambda (move) (not ...)) ###)
+;
+;   6 samples in (user), midpoint:
+; evaluating 
+;(&/ (&- (cdr target) (cdr current)) 2)
+; for ### in
+;(&+ (cdr current) ###)
+;
+;   6 samples in (runtime continuation), %within-continuation, (lambda):
+; evaluating 
+;(begin (set-dynamic-state! (%record-ref ... 2) thread-switch?) (set-thread-event-block! (%record-ref ... 3)) (thunk))
+;
+;   6 samples in (user), generate-possible-moves, (lambda):
+; evaluating 
+;(condition? (ignore-errors (lambda () ...)))
+; for ### in
+;(if ### #f #t)
+;
+;   6 samples in (runtime number), (lambda):
+; evaluating 
+;(complex:< y x)
+; for ### in
+;(if ### #f #t)
+;
+;   6 samples in (user), generate-possible-moves, (let), (lambda):
+; evaluating 
+;(copy-board-with-modifications coordinate jump board)
+; for ### in
+;(car ###)
+;
+;   6 samples in (runtime procedure), guarantee-procedure-of-arity:
+; evaluating 
+;(guarantee-procedure object caller)
+; for ### in
+;(begin ### (if (not ...) (error:bad-range-argument object caller)))
+;
+;   6 samples in (user), assert-legal:
+; evaluating 
+;(and (there-exists? (cons ... ...) (lambda ... ...)) (there-exists? (cons ... ...) odd?))
+; for ### in
+;(assert ### (format #f "Square '~A' is not a legal square!" current-square))
+;
+;   7 samples in (user), assert-legal:
+; evaluating 
+;(and (there-exists? (cons ... ...) (lambda ... ...)) (there-exists? (cons ... ...) odd?))
+; for ### in
+;(assert ### (format #f "Square '~A' is not a legal square!" target-square))
+;
+;   7 samples in (runtime port), make-port:
+; evaluating 
+;(guarantee-port-type type 'make-port)
+; for ### in
+;(begin ### (%make-port type state))
+;
+;   7 samples in (runtime list), map, map-2, (let):
+; evaluating 
+;(let loop ((l1 ...) (l2 ...) (previous head)) (cond (... ...) (... #!unspecific) (else ...)))
+; for ### in
+;(begin ### head)
+;
+;   7 samples in (runtime procedure), procedure-arity-valid?:
+; evaluating 
+;(procedure-arity procedure)
+; for ### in
+;(let ((arity ###)) (cond (... #f) (... ...) (else #t)))
+;
+;   7 samples in (runtime port), port-type/%operation:
+; evaluating 
+;(assq name (%record-ref type 3))
+; for ### in
+;(let ((or-predicate-6290 ###)) (if or-predicate-6290 or-predicate-6290 (assq name ...)))
+;
+;   7 samples in (runtime string), xsubstring-find-previous-char:
+; evaluating 
+;(guarantee-char char 'xsubstring-find-previous-char)
+; for ### in
+;(begin ### (cond (... ... ...) (... ... ...) (else ...)))
+;
+;   7 samples in (user), copy-board-with-modifications, (let):
+; evaluating 
+;(sqr-set! target-square (let (...) (if ... ... piece)) new-board)
+; for ### in
+;(begin ### (sqr-set! current-square 0 new-board) (if (&= ... 2) (begin ... ...)) (cons new-board (reverse! ret)))
+;
+;   8 samples in (runtime continuation), %within-continuation, (lambda):
+; evaluating 
+;(set-thread-event-block! (%record-ref (entity-extra k) 3))
+; for ### in
+;(begin ### (thunk))
+;
+;   8 samples in (user), assert-legal, (let):
+; evaluating 
+;(sqr-get current-square board)
+; for ### in
+;(white-piece? ###)
+;
+;   8 samples in (runtime port), (let), (lambda), (let):
+; evaluating 
+;(if (and n (greater-than-fixnum? n 0)) (begin (%record-set! port 5 char) (transcribe-char char port)))
+; for ### in
+;(begin ### n)
+;
+;   8 samples in (runtime unparser), guarantee-unparser-table:
+; evaluating 
+;(unparser-table? object)
+; for ### in
+;(if (not ###) (error:not-unparser-table object caller))
+;
+;   8 samples in (user), sqr-set!:
+; evaluating 
+;(&/ (-1+ (cdr sqr)) 2)
+; for ### in
+;(truncate ###)
+;
+;   8 samples in (user), generate-possible-moves:
+; evaluating 
+;(collect-diagnal-squares coordinate 2)
+; for ### in
+;(filter (lambda (move) (not ...)) ###)
+;
+;   8 samples in (runtime string-i/o-port), find-newline:
+; evaluating 
+;(wide-string? string)
+; for ### in
+;(if ### (let loop (...) (and ... ...)) (xsubstring-find-previous-char string start end #\newline))
+;
+;   8 samples in (runtime reference-trap), map-reference-trap:
+; evaluating 
+;(if (primitive-object-type? 50 (getter)) (let (...) (if ... ... ...)) (getter))
+;
+;   9 samples in (runtime character), guarantee-8-bit-char:
+; evaluating 
+;(8-bit-char? object)
+; for ### in
+;(if (not ###) (error:not-8-bit-char object))
+;
+;   9 samples in (runtime boolean), for-all?, loop:
+; evaluating 
+;(predicate (car items*))
+; for ### in
+;(and ### (loop (cdr items*)))
+;
+;   9 samples in (runtime port), port/type:
+; evaluating 
+;(port? port)
+; for ### in
+;(if (not ###) (error:not-port port 'port/type))
+;
+;  10 samples in (runtime continuation), call-with-current-continuation, (lambda):
+; evaluating 
+;(get-thread-event-block)
+; for ### in
+;(make-continuation control-point (get-dynamic-state) ###)
+;
+;  10 samples in (user), generate-possible-moves, (lambda):
+; evaluating 
+;(condition? (ignore-errors (lambda () ...)))
+; for ### in
+;(if ### #f #t)
+;
+;  10 samples in (user), do-move:
+; evaluating 
+;(map split-num moves)
+; for ### in
+;(let ((mvs ###)) (if (&> ... 2) (let () ... ...)) (make-move (car mvs) (cdr mvs) board '()))
+;
+;  10 samples in (runtime output-port), optional-output-port:
+; evaluating 
+;(output-port? port)
+; for ### in
+;(if (not ###) (error:not-output-port port caller))
+;
+;  10 samples in (runtime record), tag->structure-type:
+; evaluating 
+;(structure-type? tag)
+; for ### in
+;(if ### (and (eq? ... physical-type) tag) (let (...) (and ... ... type)))
+;
+;  10 samples in (runtime reference-trap), unassigned-reference-trap?:
+; evaluating 
+;(reference-trap? object)
+; for ### in
+;(and ### (eq? 0 (vector-ref object 1)))
+;
+;  10 samples in (runtime string), string-find-next-char:
+; evaluating 
+;(guarantee-char char 'string-find-next-char)
+; for ### in
+;(begin ### (%substring-find-next-char string 0 (string-length string) char))
+;
+;  10 samples in (runtime rep), skip-non-repls:
+; evaluating 
+;(cmdl/state cmdl)
+; for ### in
+;(repl-state? ###)
+;
+;  11 samples in (runtime unparser), unparse/pair:
+; evaluating 
+;(unparse-list/prefix-pair? pair)
+; for ### in
+;(let ((temp ###)) (if temp (let ... ...) (let ... ...)))
+;
+;  11 samples in (runtime port), port/operation/write-substring:
+; evaluating 
+;(port/type port)
+; for ### in
+;(%record-ref ### 10)
+;
+;  11 samples in (runtime boot-definitions), with-limited-interrupts:
+; evaluating 
+;(with-interrupt-mask (fixnum-and limit-mask (get-interrupt-enables)) procedure)
+;
+;  11 samples in (user), assert-legal:
+; evaluating 
+;(there-exists? (cons (car target-square) (cons ... '())) (lambda (n) (or ... ...)))
+; for ### in
+;(and ### (there-exists? (cons ... ...) odd?))
+;
+;  11 samples in (runtime format), format-wrapper, (lambda):
+; evaluating 
+;(apply operator (cons modifiers (reverse! parsed-arguments)))
+; for ### in
+;(### port (string-tail string 1) supplied-arguments)
+;
+;  11 samples in (runtime procedure), guarantee-procedure-of-arity:
+; evaluating 
+;(procedure-arity-valid? object arity)
+; for ### in
+;(if (not ###) (error:bad-range-argument object caller))
+;
+;  12 samples in (user), collect-diagnal-squares:
+; evaluating 
+;(map (lambda (x y) (cons ... ...)) '(1 1 -1 -1) '(1 -1 1 -1))
+; for ### in
+;(filter (lambda (sqr) (and ... ... ... ...)) ###)
+;
+;  12 samples in (user), assert-legal, (let):
+; evaluating 
+;(midpoint current-square target-square)
+; for ### in
+;(sqr-get ### board)
+;
+;  12 samples in (runtime environment), environment-lookup, (let):
+; evaluating 
+;(macro-reference-trap? value)
+; for ### in
+;(if ### (error:macro-binding environment name) value)
+;
+;  12 samples in (runtime state-space), shallow-fluid-bind:
+; evaluating 
+;(%execute-at-new-state-point state-space:global before during after)
+;
+;  13 samples in (runtime state-space), set-dynamic-state!:
+; evaluating 
+;(if (not global-only?) (%translate-to-state-point (%record-ref state 2)))
+; for ### in
+;(begin ### (%translate-to-state-point (%record-ref state 1)))
+;
+;  13 samples in (runtime vector), vector-map, (let), (let), do-loop:
+; evaluating 
+;(map (lambda (v) (vector-ref v i)) vectors)
+; for ### in
+;(cons (vector-ref vector i) ###)
+;
+;  13 samples in (user), assert-legal:
+; evaluating 
+;(for-all? (cons (car target-square) (cons ... '())) (lambda (num) (and ... ... ...)))
+; for ### in
+;(assert ### (format #f "Square '~A' is not on the board!" target-square))
+;
+;  13 samples in (runtime unparser), (let):
+; evaluating 
+;(guarantee-unparser-table table #f)
+; for ### in
+;(begin ### table)
+;
+;  14 samples in (runtime string-i/o-port), move-chars!, (let), (let):
+; evaluating 
+;(wide-string? string)
+; for ### in
+;(cond (### (source->sink! ... ...)) ((wide-string? string*) (source->sink! ... ...)) (else (xsubstring-move! string start end string* ...) n))
+;
+;  14 samples in (runtime output-port), output-port/write-string:
+; evaluating 
+;(xstring-length string)
+; for ### in
+;(output-port/write-substring port string 0 ###)
+;
+;  14 samples in (runtime string-i/o-port), move-chars!, (let), (let):
+; evaluating 
+;(wide-string? string*)
+; for ### in
+;(if ### (source->sink! (string-source string start end) (wide-string-sink string* start* end*)) (begin (xsubstring-move! string start end string* ...) n))
+;
+;  14 samples in (runtime list), guarantee-list->length:
+; evaluating 
+;(list?->length object)
+; for ### in
+;(let ((n ###)) (if (not n) (error:not-list object caller)) n)
+;
+;  15 samples in (runtime number), odd?:
+; evaluating 
+;(complex:even? n)
+; for ### in
+;(if ### #f #t)
+;
+;  15 samples in (runtime thread), (let), make-thread-mutex:
+; evaluating 
+;((access record-type-default-value-by-index #f) rtd:thread-mutex 1)
+; for ### in
+;(%record tag ### #f)
+;
+;  15 samples in (runtime port), (let), (lambda), (let):
+; evaluating 
+;(xstring-ref string (-1+ end))
+; for ### in
+;(%record-set! port 5 ###)
+;
+;  15 samples in (runtime string-i/o-port), maybe-grow-buffer, (let), (let):
+; evaluating 
+;(let ((m* ...)) (if (wide-string? buffer) (make-wide-string m*) (string-allocate m*)))
+; for ### in
+;(let ((buffer* ###)) (move-chars! buffer 0 (%record-ref os 2) buffer* ...) (%record-set! os 1 buffer*))
+;
+;  15 samples in (runtime error-handler), condition-constructor, (let), (let), (lambda):
+; evaluating 
+;(%make-condition type continuation (cond (... *bound-restarts*) (... ...) (else ... ...)))
+; for ### in
+;(let ((condition ###)) (let (...) (let do-loop ... ...)) condition)
+;
+;  16 samples in (user), assert-legal:
+; evaluating 
+;(there-exists? (cons (car current-square) (cons ... '())) (lambda (n) (or ... ...)))
+; for ### in
+;(and ### (there-exists? (cons ... ...) odd?))
+;
+;  16 samples in (runtime state-space), %without-interrupts:
+; evaluating 
+;(with-limited-interrupts interrupt-mask/gc-ok (lambda (interrupt-mask) (procedure ...)))
+;
+;  16 samples in (runtime output-port), output-port/discretionary-flush:
+; evaluating 
+;(port/operation/discretionary-flush-output port)
+; for ### in
+;(### port)
+;
+;  17 samples in (user), sqr-get:
+; evaluating 
+;(truncate (&/ (-1+ ...) 2))
+; for ### in
+;(vector-ref (vector-ref board (-1+ ...)) ###)
+;
+;  17 samples in (user), copy-board-with-modifications:
+; evaluating 
+;(vector-map vector-copy board)
+; for ### in
+;(vector-copy ###)
+;
+;  17 samples in (runtime string), xsubstring-move!, (let):
+; evaluating 
+;(deref xstring2)
+; for ### in
+;(substring-move-left! (deref xstring1) start1 end1 ### ...)
+;
+;  17 samples in (user), assert-legal:
+; evaluating 
+;(sqr-get current-square board)
+; for ### in
+;(white-piece? ###)
+;
+;  17 samples in (user), collect-coordinates, loop:
+; evaluating 
+;(sqr-get (cons row col) board)
+; for ### in
+;((if (eq? turn 'white) white-piece? black-piece?) ###)
+;
+;  17 samples in (runtime continuation), call-with-current-continuation, (lambda):
+; evaluating 
+;(get-dynamic-state)
+; for ### in
+;(make-continuation control-point ### (get-thread-event-block))
+;
+;  18 samples in (user), assert-legal:
+; evaluating 
+;(for-all? (cons (car current-square) (cons ... '())) (lambda (num) (and ... ... ...)))
+; for ### in
+;(assert ### (format #f "Square '~A' is not on the board!" current-square))
+;
+;  18 samples in (runtime character), char->ascii:
+; evaluating 
+;(guarantee-8-bit-char char 'char->ascii)
+; for ### in
+;(begin ### (char->integer char))
+;
+;  18 samples in (runtime environment), environment-lookup, (let):
+; evaluating 
+;(unassigned-reference-trap? value)
+; for ### in
+;(cond (### (error:unassigned-variable environment name)) ((macro-reference-trap? value) (error:macro-binding environment name)) (else value))
+;
+;  19 samples in (runtime string-i/o-port), narrow-out/write-char, (let):
+; evaluating 
+;(maybe-grow-buffer os 1)
+; for ### in
+;(begin ### (string-set! (%record-ref os 1) (%record-ref os 2) char) (%record-set! os 2 (plus-fixnum ... 1)) (%record-set! os 3 (new-column char ...)) ...)
+;
+;  19 samples in (runtime output-port), output-port/write-char:
+; evaluating 
+;(port/operation/write-char port)
+; for ### in
+;(### port char)
+;
+;  19 samples in (runtime error-handler), bind-condition-handler:
+; evaluating 
+;(guarantee-procedure-of-arity handler 1 'bind-condition-handler)
+; for ### in
+;(begin ### (let (...) (define ... ... #!unspecific) (shallow-fluid-bind swap! ... swap!)))
+;
+;  20 samples in (runtime rep), nearest-repl:
+; evaluating 
+;(skip-non-repls (nearest-cmdl))
+; for ### in
+;(let ((or-predicate-7291 ###)) (if or-predicate-7291 or-predicate-7291 (error "NEAREST-REPL: no REPLs")))
+;
+;  20 samples in (runtime output-port), display:
+; evaluating 
+;(optional-output-port port 'display)
+; for ### in
+;(let ((port ###)) (unparse-object/top-level object port #f environment) ((%record-ref ... 14) port))
+;
+;  22 samples in (runtime string), (lambda):
+; evaluating 
+;(external-string? xstring)
+; for ### in
+;(if ### (%record-ref xstring 1) xstring)
+;
+;  22 samples in (runtime number), reduce-comparator, loop:
+; evaluating 
+;(binary-comparator x y)
+; for ### in
+;(and ### (if (pair? rest) (loop y ... ...) #t))
+;
+;  23 samples in (runtime string), list->string:
+; evaluating 
+;(length chars)
+; for ### in
+;(string-allocate ###)
+;
+;  24 samples in (runtime string), xsubstring-move!, (let):
+; evaluating 
+;(deref xstring1)
+; for ### in
+;(substring-move-left! ### start1 end1 (deref xstring2) ...)
+;
+;  25 samples in (runtime number), real:min:
+; evaluating 
+;(rat:< x y)
+; for ### in
+;(if ### x y)
+;
+;  25 samples in (runtime boolean), there-exists?, loop:
+; evaluating 
+;(predicate (car items*))
+; for ### in
+;(if ### #t (loop (cdr items*)))
+;
+;  26 samples in (runtime output-port), output-port/write-substring:
+; evaluating 
+;(port/operation/write-substring port)
+; for ### in
+;(### port string start end)
+;
+;  26 samples in (user), assert-legal:
+; evaluating 
+;(sqr-get current-square board)
+; for ### in
+;(right-turn ### turn)
+;
+;  26 samples in (user), possible-moves:
+; evaluating 
+;(collect-coordinates board turn)
+; for ### in
+;(map (lambda (coord) (delete-duplicates! ...)) ###)
+;
+;  27 samples in (runtime string), list->string, (let), loop:
+; evaluating 
+;(guarantee-8-bit-char (car chars))
+; for ### in
+;(begin ### (string-set! result index (car chars)) (loop (cdr chars) (plus-fixnum index 1)))
+;
+;  27 samples in (runtime error-handler), signal-simple, (lambda):
+; evaluating 
+;(if (condition-type? datum) (make-condition datum continuation 'bound-restarts arguments) (make-simple-condition continuation 'bound-restarts datum arguments))
+; for ### in
+;(let ((condition ###)) (signal-condition condition) (default-handler condition))
+;
+;  31 samples in (runtime string-i/o-port), get-output-string:
+; evaluating 
+;(port/operation port 'extract-output)
+; for ### in
+;(### port)
+;
+;  32 samples in (user), assert-legal:
+; evaluating 
+;(sqr-get current-square board)
+; for ### in
+;(abs ###)
+;
+;  33 samples in (runtime port), (let), (lambda):
+; evaluating 
+;(defer port char)
+; for ### in
+;(let ((n ###)) (if (and n ...) (begin ... ...)) n)
+;
+;  34 samples in (runtime port), (let), (lambda), (let):
+; evaluating 
+;(if (and n (positive? n)) (let (...) (%record-set! port 5 ...) (transcribe-substring string start end port)))
+; for ### in
+;(begin ### n)
+;
+;  35 samples in (runtime error-handler), signal-condition, (let), (let), do-loop:
+; evaluating 
+;(if (let (...) (if ... ... #t)) (let (...) (define ... ... #!unspecific) (shallow-fluid-bind swap! ... swap!)))
+; for ### in
+;(begin ### (do-loop (cdr frames)))
+;
+;  36 samples in (runtime string-i/o-port), maybe-grow-buffer, (let):
+; evaluating 
+;(wide-string? buffer)
+; for ### in
+;(if ### (wide-string-length buffer) (string-length buffer))
+;
+;  36 samples in (user), do-move, make-move:
+; evaluating 
+;(copy-board-with-modifications current-square (car moves) brd)
+; for ### in
+;(let ((new-data ###)) (let (... ...) (if ... ... ...)))
+;
+;  39 samples in (user), assert-legal:
+; evaluating 
+;(if (&= (abs ...) 1) (assert (... ... ...) (format #f "Piece at ~A may not move backwards!" current-square)))
+; for ### in
+;(begin ### (assert (&= ... ...) "Non-diagnal motion!") (let (...) (cond ... ... ...)))
+;
+;  40 samples in (runtime string), %substring, (let):
+; evaluating 
+;(%substring-move! string start end result ...)
+; for ### in
+;(begin ### result)
+;
+;  41 samples in (runtime state-space), %execute-at-new-state-point:
+; evaluating 
+;(%without-interrupts (lambda (interrupt-mask) (let ... ... ... ... ...)))
+; for ### in
+;(let ((old-root ###)) (let (...) (%translate-to-state-point old-root) value))
+;
+;  44 samples in (runtime rep), nearest-repl/environment:
+; evaluating 
+;(nearest-repl)
+; for ### in
+;(cmdl/state ###)
+;
+;  45 samples in (runtime unparser), unparse-list/unparser:
+; evaluating 
+;(safe-car pair)
+; for ### in
+;(let ((tag ###)) (or (structure-tag/unparser-method tag 'list) (unparser/tagged-pair-method tag)))
+;
+;  46 samples in (runtime state-space), %execute-at-new-state-point, (let), (let):
+; evaluating 
+;(%translate-to-state-point old-root)
+; for ### in
+;(begin ### value)
+;
+;  50 samples in (runtime string-i/o-port), move-chars!:
+; evaluating 
+;(min (&- end start) (&- end* start*))
+; for ### in
+;(let ((n ###)) (let (... ...) (cond ... ... ...)))
+;
+;  52 samples in (runtime number), int:->string:
+; evaluating 
+;(n>0 number)
+; for ### in
+;(list->string ###)
+;
+;  55 samples in (runtime number), (lambda):
+; evaluating 
+;(int:gcd u v)
+; for ### in
+;(let ((d ###)) (make-rational (integer-quotient u d) (integer-quotient v d)))
+;
+;  57 samples in (runtime string), xsubstring-find-previous-char:
+; evaluating 
+;(char->ascii char)
+; for ### in
+;(vector-8b-find-previous-char xstring start end ###)
+;
+;  58 samples in (runtime unparser), unparse-object/top-level:
+; evaluating 
+;(if (or (eq? environment #!default) (unparser-table? environment)) (if *default-unparser-state* (%record-ref *default-unparser-state* 4) (nearest-repl/environment)) (begin (guarantee-environment environment #f) environment))
+; for ### in
+;(unparse-object/internal object port (if *default-unparser-state* (%record-ref *default-unparser-state* 2) 0) slashify? ...)
+;
+;  61 samples in (runtime string), %substring, (let):
+; evaluating 
+;(%substring-move! string start end result ...)
+; for ### in
+;(begin ### result)
+;
+;  63 samples in (runtime format), format-loop, (let):
+; evaluating 
+;(substring string 0 index)
+; for ### in
+;(output-port/write-string port ###)
+;
+;  63 samples in (runtime unparser), unparse-list, (lambda):
+; evaluating 
+;(safe-cdr list)
+; for ### in
+;(unparse-tail ### 2)
+;
+;  63 samples in (runtime port), (let), %make-port:
+; evaluating 
+;((access record-type-default-value-by-index #f) <port> 3)
+; for ### in
+;(%record tag %type %state ### ...)
+;
+;  65 samples in (runtime continuation), %within-continuation, (lambda):
+; evaluating 
+;(set-dynamic-state! (%record-ref (entity-extra k) 2) thread-switch?)
+; for ### in
+;(begin ### (set-thread-event-block! (%record-ref ... 3)) (thunk))
+;
+;  66 samples in (runtime format), format-wrapper, (lambda):
+; evaluating 
+;(string-tail string 1)
+; for ### in
+;((apply operator (cons modifiers ...)) port ### supplied-arguments)
+;
+;  71 samples in (runtime vector), vector-map, (let), (let), do-loop:
+; evaluating 
+;(apply procedure (cons (vector-ref vector i) (map ... vectors)))
+; for ### in
+;(vector-set! result i ###)
+;
+;  71 samples in (runtime string-i/o-port), update-column-for-substring!, (let), (lambda):
+; evaluating 
+;(wide-string? string)
+; for ### in
+;(if ### (wide-string-ref string i) (string-ref string i))
+;
+;  72 samples in (user), assert-legal:
+; evaluating 
+;(sqr-get target-square board)
+; for ### in
+;(zero? ###)
+;
+;  77 samples in (runtime unparser), unparse-list, (lambda):
+; evaluating 
+;(safe-car list)
+; for ### in
+;(*unparse-object ###)
+;
+;  77 samples in (runtime unparser), unparse-list, (lambda):
+; evaluating 
+;(output-port/write-char *output-port* #\()
+; for ### in
+;(begin ### (*unparse-object (safe-car list)) (unparse-tail (safe-cdr list) 2) (output-port/write-char *output-port* #\)))
+;
+;  80 samples in (user), negamax, negamax-primary:
+; evaluating 
+;(score brd)
+; for ### in
+;(&* ### (if (eq? trn 'white) 1 -1))
+;
+;  80 samples in (user), score, (let):
+; evaluating 
+;(vector-map (lambda (row) (vector-map ... row)) board)
+; for ### in
+;(begin ### (cond (... -1000) (... 1000) (else scr)))
+;
+;  85 samples in (runtime format), format-loop:
+; evaluating 
+;(string-find-next-char string #\~)
+; for ### in
+;(let ((index ###)) (cond (index ... ...) (... ...) (else ...)))
+;
+;  87 samples in (runtime string-i/o-port), maybe-grow-buffer, (let), (let):
+; evaluating 
+;(move-chars! buffer 0 (%record-ref os 2) buffer* ...)
+; for ### in
+;(begin ### (%record-set! os 1 buffer*))
+;
+; 101 samples in (runtime string-i/o-port), move-chars!, (let), (let):
+; evaluating 
+;(xsubstring-move! string start end string* ...)
+; for ### in
+;(begin ### n)
+;
+; 104 samples in (runtime format), format-loop, (let):
+; evaluating 
+;(string-tail string (1+ index))
+; for ### in
+;(parse-dispatch port ### arguments '() ...)
+;
+; 113 samples in (runtime reference-trap), map-reference-trap:
+; evaluating 
+;(getter)
+; for ### in
+;(primitive-object-type? 50 ###)
+;
+; 114 samples in (runtime string), %substring, (let):
+; evaluating 
+;(%substring-move! string start end result ...)
+; for ### in
+;(begin ### result)
+;
+; 120 samples in (runtime string-i/o-port), update-column-for-substring!, (let), (let), (let):
+; evaluating 
+;(find-newline string start end)
+; for ### in
+;(let ((nl ###)) (if nl (loop ... 0) (loop start ...)))
+;
+; 125 samples in (runtime string-i/o-port), call-with-narrow-output-string:
+; evaluating 
+;(open-narrow-output-string)
+; for ### in
+;(let ((port ###)) (generator port) (get-output-string port))
+;
+; 145 samples in (user), sqr-get:
+; evaluating 
+;(&/ (-1+ (cdr sqr)) 2)
+; for ### in
+;(truncate ###)
+;
+; 146 samples in (runtime string), %substring-move!, (let):
+; evaluating 
+;(cond ((if ... ... #t) (cond ... ... ... ... ...))
+;      ((greater-than-fixnum? n 4) (if ... ... ...))
+;      ((eq? n 4) (string-set! string2 ... ...) (string-set! string2 ... ...) (string-set! string2 ... ...) (string-set! string2 start2 ...))
+;      ((eq? n 3) (string-set! string2 ... ...) (string-set! string2 ... ...) (string-set! string2 start2 ...))
+;      ...)
+; for ### in
+;(begin ### (plus-fixnum start2 n))
+;
+; 152 samples in (runtime environment), environment-lookup:
+; evaluating 
+;(environment-safe-lookup environment name)
+; for ### in
+;(let ((value ###)) (cond (... ...) (... ...) (else value)))
+;
+; 154 samples in (runtime number), number->string:
+; evaluating 
+;(and (let (...) (or ... ...)) (<= 2 radix 36))
+; for ### in
+;(cond (### radix) ((and ... ... ...) (parse-format-tail ...)) (else (error:bad-range-argument radix 'number->string)))
+;
+; 175 samples in (runtime unparser), unparse-tail:
+; evaluating 
+;(output-port/write-string *output-port* " . ")
+; for ### in
+;(begin ### (*unparse-object l))
+;
+; 186 samples in (runtime string-i/o-port), string-out/write-substring, (let):
+; evaluating 
+;(maybe-grow-buffer os n)
+; for ### in
+;(begin ### (let (...) (let ... ... ...)) (update-column-for-substring! os n) n)
+;
+; 193 samples in (runtime unparser), unparse-object/internal:
+; evaluating 
+;(environment-lookup environment '*unparser-table*)
+; for ### in
+;(let ((table ###)) (guarantee-unparser-table table #f) table)
+;
+; 195 samples in (runtime 1d-property), 1d-table/get:
+; evaluating 
+;(weak-assq (or key false-key) table)
+; for ### in
+;(let ((entry ###)) (if entry (system-pair-cdr entry) default))
+;
+; 199 samples in (runtime record), tag->structure-type:
+; evaluating 
+;(named-structure/get-tag-description tag)
+; for ### in
+;(let ((type ###)) (and (structure-type? type) (eq? ... physical-type) type))
+;
+; 226 samples in (runtime record), structure-tag/unparser-method:
+; evaluating 
+;(tag->structure-type tag physical-type)
+; for ### in
+;(let ((type ###)) (and type (structure-type/unparser-method type)))
+;
+; 233 samples in (runtime unparser), (let):
+; evaluating 
+;(structure-tag/unparser-method tag 'list)
+; for ### in
+;(let ((or-predicate-9601 ###)) (if or-predicate-9601 or-predicate-9601 (unparser/tagged-pair-method tag)))
+;
+; 259 samples in (runtime format), format-loop, (let):
+; evaluating 
+;(if (not (zero? index)) (output-port/write-string port (substring string 0 index)))
+; for ### in
+;(begin ### (parse-dispatch port (string-tail string ...) arguments '() ...))
+;
+; 293 samples in (runtime string-i/o-port), string-out/write-substring, (let), (let), (let):
+; evaluating 
+;(move-chars! string start end (%record-ref os 1) ...)
+; for ### in
+;(begin ### (%record-set! os 2 end*))
+;
+; 309 samples in (runtime string-i/o-port), string-out/write-substring, (let):
+; evaluating 
+;(let ((start* ...)) (let (...) (move-chars! string start end ... ...) (%record-set! os 2 end*)))
+; for ### in
+;(begin ### (update-column-for-substring! os n) n)
+;
+; 309 samples in (runtime unparser), unparse/pair, (let):
+; evaluating 
+;(unparse-list/unparser pair)
+; for ### in
+;(let ((temp ###)) (if temp (let ... ...) (unparse-list pair)))
+;
+; 389 samples in (runtime unparser), unparse/number:
+; evaluating 
+;(number->string object (let (...) (let ... ...)))
+; for ### in
+;(output-port/write-string *output-port* ###)
+;
+; 420 samples in (user), generate-possible-moves, (let), (lambda), (let):
+; evaluating 
+;(generate-possible-moves new-board jump #t turn)
+; for ### in
+;(let ((chains ###)) (if (null? chains) (cons ... '()) (map ... chains)))
+;
+; 426 samples in (user), generate-possible-moves, (let):
+; evaluating 
+;(map (lambda (jump) (let ... ...)) jumps)
+; for ### in
+;(apply append ###)
+;
+; 438 samples in (user), assert-legal:
+; evaluating 
+;(assert (zero? (sqr-get target-square board)) (format #f "Target square ~A is not empty!" target-square))
+; for ### in
+;(begin ### (assert (for-all? ... ...) (format #f "Square '~A' is not on the board!" current-square)) (assert (for-all? ... ...) (format #f "Square '~A' is not on the board!" target-square)) (assert (and ... ...) (format #f "Square '~A' is not a legal square!" current-square)) ...)
+;
+; 439 samples in (runtime unparser), unparse-list, (lambda):
+; evaluating 
+;(unparse-tail (safe-cdr list) 2)
+; for ### in
+;(begin ### (output-port/write-char *output-port* #\)))
+;
+; 446 samples in (runtime error-handler), signal-simple, (lambda), (let):
+; evaluating 
+;(signal-condition condition)
+; for ### in
+;(begin ### (default-handler condition))
+;
+; 457 samples in (runtime string-i/o-port), string-out/write-substring, (let):
+; evaluating 
+;(update-column-for-substring! os n)
+; for ### in
+;(begin ### n)
+;
+; 483 samples in (runtime unparser), unparse-list, (lambda):
+; evaluating 
+;(*unparse-object (safe-car list))
+; for ### in
+;(begin ### (unparse-tail (safe-cdr list) 2) (output-port/write-char *output-port* #\)))
+;
+; 567 samples in (user), assert-legal:
+; evaluating 
+;(format #f "Square '~A' is not on the board!" target-square)
+; for ### in
+;(assert (for-all? (cons ... ...) (lambda ... ...)) ###)
+;
+; 571 samples in (user), assert-legal:
+; evaluating 
+;(format #f "Square '~A' is not on the board!" current-square)
+; for ### in
+;(assert (for-all? (cons ... ...) (lambda ... ...)) ###)
+;
+; 579 samples in (user), assert-legal:
+; evaluating 
+;(format #f "Square '~A' is not a legal square!" target-square)
+; for ### in
+;(assert (and (there-exists? ... ...) (there-exists? ... odd?)) ###)
+;
+; 619 samples in (user), assert-legal:
+; evaluating 
+;(format #f "Piece at ~A may not move backwards!" current-square)
+; for ### in
+;(assert ((if ... < >) (car current-square) (car target-square)) ###)
+;
+; 624 samples in (user), assert-legal:
+; evaluating 
+;(format #f "Square '~A' is not a legal square!" current-square)
+; for ### in
+;(assert (and (there-exists? ... ...) (there-exists? ... odd?)) ###)
+;
+; 767 samples in (user), do-move, make-move:
+; evaluating 
+;(assert-legal current-square (car moves) brd turn)
+; for ### in
+;(begin ### (let (...) (let ... ...)))
+;
+; 813 samples in (user), negamax, negamax-primary, loop:
+; evaluating 
+;(do-move (car mvs) brd trn)
+; for ### in
+;(car ###)
+;
+; 996 samples in (runtime port), (let), (lambda):
+; evaluating 
+;(defer port string start end)
+; for ### in
+;(let ((n ###)) (if (and n ...) (let ... ... ...)) n)
+;
+;1167 samples in (runtime list), map, map-1:
+; evaluating 
+;(procedure (car l))
+; for ### in
+;(cons ### '())
+;
+;1416 samples in (user), assert-legal:
+; evaluating 
+;(format #f "Target square ~A is not empty!" target-square)
+; for ### in
+;(assert (zero? (sqr-get target-square board)) ###)
+;
+;1436 samples in (runtime srfi-1), filter, recur, (let):
+; evaluating 
+;(recur tail)
+; for ### in
+;(let ((new-tail ###)) (if (eq? tail new-tail) lis (cons head new-tail)))
+;
+;2410 samples in (runtime output-port), display, (let):
+; evaluating 
+;(unparse-object/top-level object port #f environment)
+; for ### in
+;(begin ### ((%record-ref ... 14) port))
+;
+;2476 samples in (runtime format), format-object, (lambda), (lambda):
+; evaluating 
+;(if (eq? n-columns #!default) (write (car arguments) port) (output-port/write-string port (... ... n-columns)))
+; for ### in
+;(begin ### (format-loop port string (cdr arguments)))
+;
+;2849 samples in (user), generate-possible-moves, (lambda):
+; evaluating 
+;(ignore-errors (lambda () (assert-legal coordinate move board turn)))
+; for ### in
+;(condition? ###)
+;
+;3277 samples in (user), generate-possible-moves, (lambda):
+; evaluating 
+;(ignore-errors (lambda () (assert-legal coordinate move board turn)))
+; for ### in
+;(condition? ###)
+;
+;3574 samples in (runtime format), format, (lambda):
+; evaluating 
+;(format-loop port format-string arguments)
+; for ### in
+;(begin ### (output-port/discretionary-flush port))
+;
+;3742 samples in (user), generate-possible-moves:
+; evaluating 
+;(filter (lambda (move) (not ...)) (collect-diagnal-squares coordinate 2))
+; for ### in
+;(let ((jumps ###) (single-moves ...)) (append (if ... '() ...) (map list single-moves)))
+;
+;4047 samples in (runtime string-i/o-port), call-with-narrow-output-string, (let):
+; evaluating 
+;(generator port)
+; for ### in
+;(begin ### (get-output-string port))
+;
+;4153 samples in (user), generate-possible-moves:
+; evaluating 
+;(if must-jump? '() (filter (lambda ... ...) (collect-diagnal-squares coordinate 1)))
+; for ### in
+;(let ((jumps ...) (single-moves ###)) (append (if ... '() ...) (map list single-moves)))
+;
+;7120 samples in (runtime list), map, loop:
+; evaluating 
+;(procedure (car l))
+; for ### in
+;(cons ### '())
+;
+;7123 samples in (runtime list), map, map-1, (let):
+; evaluating 
+;(let loop ((l ...) (previous head)) (cond (... ...) (... #!unspecific) (else ...)))
+; for ### in
+;(begin ### head)
+;
+;7890 samples in (runtime srfi-1), filter, recur, (let):
+; evaluating 
+;(pred head)
+; for ### in
+;(if ### (let (...) (if ... lis ...)) (recur tail))
+;
+;7919 samples in (user), possible-moves, (lambda):
+; evaluating 
+;(generate-possible-moves board coord #f turn)
+; for ### in
+;(map (lambda (chain) (cons ... ...)) ###)
+;
+;7934 samples in (user), possible-moves:
+; evaluating 
+;(map (lambda (coord) (delete-duplicates! ...)) (collect-coordinates board turn))
+; for ### in
+;(reduce append '() ###)
+;
+;7961 samples in (user), negamax, negamax-primary:
+; evaluating 
+;(possible-moves brd trn)
+; for ### in
+;(let ((moves ###)) (define (loop mvs best-alpha) (if ... ...) (if ... best-alpha ...)) (if (null? moves) (let ... ... final) (loop moves alpha)))
+;
+;8854 samples in (user), negamax, negamax-primary, loop:
+; evaluating 
+;(negamax-primary (car (do-move ... brd trn)) (other-side trn) (&- 0 beta) (&- 0 best-alpha) ...)
+; for ### in
+;(&- 0 ###)
+;
+;
+;*** Sampled
+;
+;   1 sample in (runtime number), odd?:
+; evaluating 
+;(complex:even? n)
+; for ### in
+;(if ### #f #t)
+;
+;   1 sample in (runtime unparser), unparse-list:
+; evaluating 
+;(limit-unparse-depth (lambda () (output-port/write-char *output-port* #\() (*unparse-object ...) (unparse-tail ... 2) ...))
+;
+;   1 sample in (runtime error-handler), (let), %%make-condition:
+; evaluating 
+;((access record-type-default-value-by-index #f) rtd:condition 5)
+; for ### in
+;(%record tag type continuation restarts ...)
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(num-diff (cdr current-square) (cdr target-square))
+; for ### in
+;(&= (num-diff (car current-square) (car target-square)) ###)
+;
+;   1 sample in (user), generate-possible-moves, (lambda):
+; evaluating 
+;(not (condition? (ignore-errors ...)))
+;
+;   1 sample in (runtime error-handler), bind-condition-handler:
+; evaluating 
+;(guarantee-list-of-type types condition-type? "list of condition types" 'bind-condition-handler)
+; for ### in
+;(begin ### (guarantee-procedure-of-arity handler 1 'bind-condition-handler) (let (...) (define ... ... #!unspecific) (shallow-fluid-bind swap! ... swap!)))
+;
+;   1 sample in (user), generate-possible-moves, (let):
+; evaluating 
+;(map list single-moves)
+; for ### in
+;(append (if (null? jumps) '() (apply append ...)) ###)
+;
+;   1 sample in (runtime procedure), skip-entities:
+; evaluating 
+;(if (object-type? 16 object) (skip-entities (if ... ... ...)) object)
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(sqr-get current-square board)
+; for ### in
+;(right-turn ### turn)
+;
+;   1 sample in (runtime error-handler), (lambda):
+; evaluating 
+;(make-1d-table)
+;
+;   1 sample in (user), possible-moves:
+; evaluating 
+;(map (lambda (coord) (delete-duplicates! ...)) (collect-coordinates board turn))
+; for ### in
+;(reduce append '() ###)
+;
+;   1 sample in (runtime fixnum-arithmetic), guarantee-index-fixnum:
+; evaluating 
+;(if (not (index-fixnum? object)) (error:wrong-type-argument object "index integer" caller))
+;
+;   1 sample in (runtime number), rat:abs:
+; evaluating 
+;(cond ((object-type? 58 q) (let ... ...)) ((integer-negative? q) (integer-negate q)) (else q))
+;
+;   1 sample in (runtime error-handler), (let), %%make-condition:
+; evaluating 
+;(%record tag type continuation restarts ...)
+;
+;   1 sample in (runtime error-handler), signal-condition:
+; evaluating 
+;(guarantee-condition condition 'signal-condition)
+; for ### in
+;(begin ### (let (...) (let ... ... ... ... ...)))
+;
+;   1 sample in (runtime vector), vector-copy, (let):
+; evaluating 
+;(make-vector length)
+; for ### in
+;(let ((new-vector ###)) (subvector-move-right! vector 0 length new-vector ...) new-vector)
+;
+;   1 sample in (runtime list), reduce:
+; evaluating 
+;(if (pair? list) (%fold-1 procedure (car list) (cdr list) 'reduce) (begin (if ... ...) initial))
+;
+;   1 sample in (runtime format), format-loop, (let):
+; evaluating 
+;(substring string 0 index)
+; for ### in
+;(output-port/write-string port ###)
+;
+;   1 sample in (runtime procedure), guarantee-procedure:
+; evaluating 
+;(if (not (procedure? object)) (error:not-procedure object caller))
+;
+;   1 sample in (runtime population), add-to-population!/unsafe:
+; evaluating 
+;(set-cdr! population (system-pair-cons 55 (if object object bogus-false) (cdr population)))
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(begin (assert (right-turn ... turn) "It is not your turn to move!")
+;       (assert (zero? ...) (format #f "Target square ~A is not empty!" target-square))
+;       (assert (for-all? ... ...) (format #f "Square '~A' is not on the board!" current-square))
+;       (assert (for-all? ... ...) (format #f "Square '~A' is not on the board!" target-square))
+;       ...)
+;
+;   1 sample in (runtime list), for-each, map-1:
+; evaluating 
+;(if (pair? l) (begin (procedure ...) (map-1 ...)) (begin (if ... ...) #!unspecific))
+;
+;   1 sample in (runtime number), binary-<:
+; evaluating 
+;(&< z1 z2)
+;
+;   1 sample in (runtime output-port), display:
+; evaluating 
+;(optional-output-port port 'display)
+; for ### in
+;(let ((port ###)) (unparse-object/top-level object port #f environment) ((%record-ref ... 14) port))
+;
+;   1 sample in (runtime error-handler), default/invoke-condition-handler:
+; evaluating 
+;(handler condition)
+;
+;   1 sample in (runtime thread), make-ring:
+; evaluating 
+;(let ((link ...)) (%record-set! link 1 link) (%record-set! link 2 link) link)
+;
+;   1 sample in (runtime procedure), procedure-arity-valid?:
+; evaluating 
+;(procedure-arity procedure)
+; for ### in
+;(let ((arity ###)) (cond (... #f) (... ...) (else #t)))
+;
+;   1 sample in (runtime number), complex:remainder:
+; evaluating 
+;(real:remainder (complex:real-arg 'remainder n) (complex:real-arg 'remainder d))
+;
+;   1 sample in (runtime list), null-list?:
+; evaluating 
+;(cond ((pair? l) #f) ((null? l) #t) (else (error:not-list l caller)))
+;
+;   1 sample in (runtime procedure), procedure-arity, loop:
+; evaluating 
+;(compiled-entry-kind p)
+; for ### in
+;(let ((info ###) (e+1 ...)) (let (... ...) (cond ... ... ...)))
+;
+;   1 sample in (runtime continuation), continuation?:
+; evaluating 
+;(and (entity? object) (if (%continuation? ...) #t (continuation? ...)))
+;
+;   1 sample in (runtime vector), vector-copy:
+; evaluating 
+;(begin (if (not ...) (error:wrong-type-argument vector "vector" 'vector-copy)) (let (...) (let ... ... new-vector)))
+;
+;   1 sample in (runtime thread), get-thread-event-block:
+; evaluating 
+;(let ((interrupt-mask ...)) (let (...) (set-interrupt-enables! interrupt-mask) value))
+;
+;   1 sample in (user), collect-diagnal-squares:
+; evaluating 
+;(let ((sqrs ...)) sqrs)
+;
+;   1 sample in (user), sub-jumps:
+; evaluating 
+;(reverse chain)
+; for ### in
+;(loop ### '())
+;
+;   1 sample in (runtime number), complex:abs:
+; evaluating 
+;(if (object-type? 60 x) (real:abs (rec:real-arg 'abs x)) ((named-lambda ... ...) x))
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(format #f "Square '~A' is not on the board!" current-square)
+; for ### in
+;(assert (for-all? (cons ... ...) (lambda ... ...)) ###)
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(format #f "Square '~A' is not a legal square!" current-square)
+; for ### in
+;(assert (and (there-exists? ... ...) (there-exists? ... odd?)) ###)
+;
+;   1 sample in (user), negamax, negamax-primary, loop:
+; evaluating 
+;(begin (if (and loudp ...) (negamax-status ... hist best-alpha alpha ...)) (if (null? mvs) best-alpha (let ... ...)))
+;
+;   1 sample in (runtime continuation), guarantee-continuation:
+; evaluating 
+;(continuation? object)
+; for ### in
+;(if (not ###) (error:not-continuation object caller))
+;
+;   1 sample in (user), copy-board-with-modifications:
+; evaluating 
+;(let ((new-board ...) (ret ...)) (sqr-set! target-square (let ... ...) new-board) (sqr-set! current-square 0 new-board) (if (&= ... 2) (begin ... ...)) ...)
+;
+;   1 sample in (user), (lambda):
+; evaluating 
+;(and (positive? (car sqr)) (positive? (cdr sqr)) (&> 9 (car sqr)) (&> 9 (cdr sqr)))
+;
+;   1 sample in (runtime number), binary->:
+; evaluating 
+;(&> z1 z2)
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(format #f "Piece at ~A may not move backwards!" current-square)
+; for ### in
+;(assert ((if ... < >) (car current-square) (car target-square)) ###)
+;
+;   1 sample in (runtime procedure), guarantee-procedure-of-arity:
+; evaluating 
+;(procedure-arity-valid? object arity)
+; for ### in
+;(if (not ###) (error:bad-range-argument object caller))
+;
+;   1 sample in (user), split-num:
+; evaluating 
+;(if (negative? num) (cons 0 num) (cons (truncate ...) (remainder num 10)))
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(format #f "Square '~A' is not a legal square!" target-square)
+; for ### in
+;(assert (and (there-exists? ... ...) (there-exists? ... odd?)) ###)
+;
+;   1 sample in (user), midpoint:
+; evaluating 
+;(cons (&+ (car current) (&/ ... 2)) (&+ (cdr current) (&/ ... 2)))
+;
+;   1 sample in (runtime list), guarantee-list-of-type:
+; evaluating 
+;(list-of-type? object predicate)
+; for ### in
+;(if (not ###) (error:wrong-type-argument object description (if ... #f caller)))
+;
+;   1 sample in (runtime unparser), unparse/pair, (let):
+; evaluating 
+;(unparse-list/unparser pair)
+; for ### in
+;(let ((temp ###)) (if temp (let ... ...) (unparse-list pair)))
+;
+;   1 sample in (user), assert-legal:
+; evaluating 
+;(abs (sqr-get current-square board))
+; for ### in
+;(&= ### 1)
+;
+;   1 sample in (user), generate-possible-moves, (lambda), (lambda):
+; evaluating 
+;(assert-legal coordinate move board turn)
+;
+;   1 sample in (runtime procedure), guarantee-procedure-of-arity:
+; evaluating 
+;(begin (guarantee-procedure object caller) (if (not ...) (error:bad-range-argument object caller)))
+;
+;   1 sample in (runtime continuation), make-continuation:
+; evaluating 
+;(make-entity (lambda (k value) (%within-continuation k #f ...)) (make-%continuation control-point dynamic-state block-thread-events?))
+;
+;   1 sample in (runtime error-handler), bind-condition-handler:
+; evaluating 
+;(guarantee-procedure-of-arity handler 1 'bind-condition-handler)
+; for ### in
+;(begin ### (let (...) (define ... ... #!unspecific) (shallow-fluid-bind swap! ... swap!)))
+;
+;   1 sample in (runtime srfi-1), filter, recur, (let):
+; evaluating 
+;(pred head)
+; for ### in
+;(if ### (let (...) (if ... lis ...)) (recur tail))
+;
+;   1 sample in (runtime continuation), call-with-current-continuation, (lambda):
+; evaluating 
+;(get-dynamic-state)
+; for ### in
+;(make-continuation control-point ### (get-thread-event-block))
+;
+;   2 samples in (runtime continuation), call-with-current-continuation, (lambda):
+; evaluating 
+;(get-thread-event-block)
+; for ### in
+;(make-continuation control-point (get-dynamic-state) ###)
+;
+;   2 samples in (user), (lambda):
+; evaluating 
+;(or (zero? n) (even? n))
+;
+;   2 samples in (runtime list), append:
+; evaluating 
+;(%append lists)
+;
+;   2 samples in (runtime number), odd?:
+; evaluating 
+;(not (complex:even? n))
+;
+;   2 samples in (user), assert-legal:
+; evaluating 
+;(format #f "Square '~A' is not on the board!" target-square)
+; for ### in
+;(assert (for-all? (cons ... ...) (lambda ... ...)) ###)
+;
+;   2 samples in (user), possible-moves, (lambda), (lambda):
+; evaluating 
+;(map collapse-num chain)
+; for ### in
+;(cons (collapse-num coord) ###)
+;
+;   2 samples in (user), copy-board-with-modifications, (let):
+; evaluating 
+;(sqr-get current-square board)
+; for ### in
+;(let ((piece ###)) (if (&= ... ...) (if ... 2 -2) piece))
+;
+;   2 samples in (runtime state-space), get-dynamic-state:
+; evaluating 
+;(let ((interrupt-mask ...)) (let (...) (set-interrupt-enables! interrupt-mask) state))
+;
+;   2 samples in (runtime string-i/o-port), maybe-grow-buffer, (let), (let):
+; evaluating 
+;(move-chars! buffer 0 (%record-ref os 2) buffer* ...)
+; for ### in
+;(begin ### (%record-set! os 1 buffer*))
+;
+;   2 samples in (runtime list), reverse*!:
+; evaluating 
+;(let loop ((current l) (new-cdr tail)) (if (pair? current) (let ... ... ...) (begin ... new-cdr)))
+;
+;   2 samples in (runtime error-handler), signal-simple, (lambda):
+; evaluating 
+;(let ((condition ...)) (signal-condition condition) (default-handler condition))
+;
+;   2 samples in (runtime format), format, (lambda):
+; evaluating 
+;(format-loop port format-string arguments)
+; for ### in
+;(begin ### (output-port/discretionary-flush port))
+;
+;   2 samples in (runtime string), substring:
+; evaluating 
+;(begin (if (not ...) (guarantee-substring/fail string start end 'substring)) ((named-lambda ... ...) string start end))
+;
+;   2 samples in (user), possible-moves, (lambda), (lambda):
+; evaluating 
+;(cons (collapse-num coord) (map collapse-num chain))
+;
+;   2 samples in (runtime unparser), unparse-list, (lambda):
+; evaluating 
+;(unparse-tail (safe-cdr list) 2)
+; for ### in
+;(begin ### (output-port/write-char *output-port* #\)))
+;
+;   2 samples in (runtime environment), environment-lookup, (let):
+; evaluating 
+;(macro-reference-trap? value)
+; for ### in
+;(if ### (error:macro-binding environment name) value)
+;
+;   2 samples in (runtime record), structure-tag/unparser-method:
+; evaluating 
+;(tag->structure-type tag physical-type)
+; for ### in
+;(let ((type ###)) (and type (structure-type/unparser-method type)))
+;
+;   2 samples in (runtime string-i/o-port), open-narrow-output-string:
+; evaluating 
+;(make-port narrow-output-type (make-ostate (string-allocate 16) 0 0))
+;
+;   2 samples in (runtime error-handler), signal-condition, (let), (let), do-loop:
+; evaluating 
+;(if (pair? frames) (begin (if ... ...) (do-loop ...)) #t)
+;
+;   2 samples in (runtime number), number->string:
+; evaluating 
+;(and (let (...) (or ... ...)) (<= 2 radix 36))
+; for ### in
+;(cond (### radix) ((and ... ... ...) (parse-format-tail ...)) (else (error:bad-range-argument radix 'number->string)))
+;
+;   2 samples in (runtime global-database), unparser/tagged-pair-method:
+; evaluating 
+;(1d-table/get tagged-pair-methods tag #f)
+;
+;   2 samples in (runtime vector), vector-map, (let):
+; evaluating 
+;(make-vector n)
+; for ### in
+;(let ((result ###)) (let do-loop (...) (if ... ... #t)) result)
+;
+;   2 samples in (runtime continuation), continuation?:
+; evaluating 
+;(entity? object)
+; for ### in
+;(and ### (if (%continuation? ...) #t (continuation? ...)))
+;
+;   2 samples in (runtime list), reverse:
+; evaluating 
+;(reverse* l '())
+;
+;   2 samples in (runtime unparser), unparse-tail:
+; evaluating 
+;(cond ((pair? l) (let ... ...)) ((null? l) #!unspecific) (else (output-port/write-string *output-port* " . ") (*unparse-object l)))
+;
+;   2 samples in (runtime list), list-of-type?:
+; evaluating 
+;(let loop ((l1 object) (l2 object)) (if (pair? l1) (and ... ...) (null? l1)))
+;
+;   2 samples in (runtime vector), vector-map, (let):
+; evaluating 
+;(for-each (lambda (v) (if ... ...)) vectors)
+; for ### in
+;(begin ### (let (...) (let do-loop ... ...) result))
+;
+;   2 samples in (user), split-num:
+; evaluating 
+;(remainder num 10)
+; for ### in
+;(cons (truncate (&/ num 10)) ###)
+;
+;   2 samples in (runtime state-space), dynamic-state?:
+; evaluating 
+;(begin '#[block-declaration 14] (and (%record? object) (eq? ... .tag.3)))
+;
+;   2 samples in (runtime procedure), procedure-arity, loop:
+; evaluating 
+;(compiled-entry-kind p)
+; for ### in
+;(system-hunk3-cxr0 ###)
+;
+;   2 samples in (runtime procedure), procedure-arity-valid?:
+; evaluating 
+;(begin (guarantee-index-fixnum n-arguments 'procedure-arity-valid?) (let (...) (cond ... ... ...)))
+;
+;   2 samples in (runtime error-handler), signal-condition, (let), (lambda):
+; evaluating 
+;(let outer ((type ...) (types ...)) (let inner (...) (cond ... ... ...)))
+;
+;   2 samples in (runtime continuation), call-with-current-continuation, (lambda), (let), (lambda):
+; evaluating 
+;(receiver k)
+;
+;   2 samples in (runtime rep), nearest-repl/environment:
+; evaluating 
+;(cmdl/state (nearest-repl))
+; for ### in
+;(%record-ref ### 2)
+;
+;   2 samples in (runtime number), complex:integer?:
+; evaluating 
+;(if (object-type? 60 object) (and (real:zero? ...) (real:integer? ...)) ((named-lambda ... ...) object))
+;
+;   2 samples in (runtime format), format-wrapper, (lambda):
+; evaluating 
+;(reverse! parsed-arguments)
+; for ### in
+;(cons modifiers ###)
+;
+;   2 samples in (runtime equality), equal?:
+; evaluating 
+;(or (eq? x y) (cond (... ...) (... ...) (else #f)))
+;
+;   2 samples in (runtime error-handler), condition-type?:
+; evaluating 
+;(begin '#[block-declaration 15] (and (%record? object) (eq? ... .tag.1)))
+;
+;   2 samples in (runtime string), %substring, (let):
+; evaluating 
+;(%substring-move! string start end result ...)
+; for ### in
+;(begin ### result)
+;
+;   2 samples in (user), (lambda):
+; evaluating 
+;(and (positive? num) (integer? num) (not (&< 8 num)))
+;
+;   2 samples in (runtime unparser), unparse-object/top-level:
+; evaluating 
+;(if (or (eq? environment #!default) (unparser-table? environment)) (if *default-unparser-state* (%record-ref *default-unparser-state* 4) (nearest-repl/environment)) (begin (guarantee-environment environment #f) environment))
+; for ### in
+;(unparse-object/internal object port (if *default-unparser-state* (%record-ref *default-unparser-state* 2) 0) slashify? ...)
+;
+;   2 samples in (user), sqr-set!:
+; evaluating 
+;(vector-set! (vector-ref board (-1+ ...)) (truncate (&/ ... 2)) obj)
+;
+;   2 samples in (runtime error-handler), error:
+; evaluating 
+;(signal-simple datum arguments make-simple-error standard-error-handler)
+;
+;   3 samples in (runtime error-handler), condition-constructor, (let), (let), (lambda), (let), do-loop:
+; evaluating 
+;(cond ((and ... ...) (vector-set! values ... ...) (do-loop ... ...)) ((or ... ...) (error:wrong-number-of-arguments constructor ... ...)))
+;
+;   3 samples in (runtime boolean), there-exists?, loop:
+; evaluating 
+;(if (pair? items*) (if (predicate ...) #t (loop ...)) (begin (if ... ...) #f))
+;
+;   3 samples in (runtime port), guarantee-port-type:
+; evaluating 
+;(begin (if (not ...) (error:wrong-type-argument object "port type" procedure)) object)
+;
+;   3 samples in (runtime vector), vector-map:
+; evaluating 
+;(begin (if (not ...) (error:wrong-type-argument vector "vector" 'vector-map)) (for-each (lambda ... ...) vectors) (let (...) (for-each ... vectors) (let ... ... result)))
+;
+;   3 samples in (user), assert-legal, (let):
+; evaluating 
+;(sqr-get current-square board)
+; for ### in
+;(white-piece? ###)
+;
+;   3 samples in (runtime list), reverse*!, loop:
+; evaluating 
+;(if (pair? current) (let (...) (set-cdr! current new-cdr) (loop next current)) (begin (if ... ...) new-cdr))
+;
+;   3 samples in (runtime port), current-output-port:
+; evaluating 
+;(or *current-output-port* (nearest-cmdl/port))
+;
+;   3 samples in (runtime global-database), named-structure/get-tag-description:
+; evaluating 
+;(1d-table/get named-structure-descriptions tag #f)
+;
+;   3 samples in (runtime format), format-loop, (let):
+; evaluating 
+;(if (not (zero? index)) (output-port/write-string port (substring string 0 index)))
+; for ### in
+;(begin ### (parse-dispatch port (string-tail string ...) arguments '() ...))
+;
+;   3 samples in (runtime error-handler), bind-condition-handler:
+; evaluating 
+;(begin (guarantee-list-of-type types condition-type? "list of condition types" 'bind-condition-handler) (guarantee-procedure-of-arity handler 1 'bind-condition-handler) (let (...) (define ... ... #!unspecific) (shallow-fluid-bind swap! ... swap!)))
+;
+;   3 samples in (runtime rep), repl-state?:
+; evaluating 
+;(begin '#[block-declaration 16] (and (%record? object) (eq? ... .tag.1)))
+;
+;   3 samples in (runtime port), make-port:
+; evaluating 
+;(guarantee-port-type type 'make-port)
+; for ### in
+;(begin ### (%make-port type state))
+;
+;   3 samples in (user), copy-board-with-modifications:
+; evaluating 
+;(vector-map vector-copy board)
+; for ### in
+;(vector-copy ###)
+;
+;   3 samples in (runtime output-port), optional-output-port:
+; evaluating 
+;(output-port? port)
+; for ### in
+;(if (not ###) (error:not-output-port port caller))
+;
+;   3 samples in (runtime string-i/o-port), call-with-narrow-output-string, (let):
+; evaluating 
+;(generator port)
+; for ### in
+;(begin ### (get-output-string port))
+;
+;   3 samples in (runtime number), complex:even?:
+; evaluating 
+;(if (object-type? 60 x) (real:even? (rec:real-arg 'even? x)) ((named-lambda ... ...) x))
+;
+;   3 samples in (runtime procedure), procedure-arity, loop:
+; evaluating 
+;(cond ((object-type? 24 p) (let ... ...)) ((... p) (lambda-components ... ...)) ((and ... ...) (let ... ...)) ((object-type? 16 p) (if ... ... ...)) ...)
+;
+;   3 samples in (runtime boolean), there-exists?, loop:
+; evaluating 
+;(predicate (car items*))
+; for ### in
+;(if ### #t (loop (cdr items*)))
+;
+;   3 samples in (runtime procedure), (let), (let):
+; evaluating 
+;(compiled-entry-kind object)
+; for ### in
+;(system-hunk3-cxr0 ###)
+;
+;   3 samples in (runtime thread), set-thread-event-block!:
+; evaluating 
+;(let ((interrupt-mask ...)) (let (...) (set-interrupt-enables! interrupt-mask) value))
+;
+;   3 samples in (runtime error-handler), signal-simple:
+; evaluating 
+;(if (condition? datum) (begin (signal-condition datum) (default-handler datum)) (call-with-current-continuation (lambda ... ...)))
+;
+;   3 samples in (runtime unparser), unparse-object/top-level:
+; evaluating 
+;(unparse-object/internal object port (if *default-unparser-state* (%record-ref *default-unparser-state* 2) 0) slashify? ...)
+;
+;   3 samples in (runtime error-handler), %make-condition:
+; evaluating 
+;(%%make-condition type continuation restarts (make-vector (%record-ref type 4) #f))
+;
+;   3 samples in (runtime unparser), unparse-tail:
+; evaluating 
+;(output-port/write-string *output-port* " . ")
+; for ### in
+;(begin ### (*unparse-object l))
+;
+;   3 samples in (runtime miscellaneous-global), limit-interrupts!:
+; evaluating 
+;(set-interrupt-enables! (fixnum-and limit-mask (get-interrupt-enables)))
+;
+;   3 samples in (user), assert-legal:
+; evaluating 
+;(num-diff (car current-square) (car target-square))
+; for ### in
+;(&= ### (num-diff (cdr current-square) (cdr target-square)))
+;
+;   3 samples in (user), assert-legal:
+; evaluating 
+;(format #f "Target square ~A is not empty!" target-square)
+; for ### in
+;(assert (zero? (sqr-get target-square board)) ###)
+;
+;   3 samples in (runtime unparser), safe-car:
+; evaluating 
+;(map-reference-trap (lambda () (car pair)))
+;
+;   4 samples in (runtime number), int:gcd:
+; evaluating 
+;(let loop ((n n) (m m)) (if (integer-zero? m) (if ... ... n) (loop m ...)))
+;
+;   4 samples in (runtime boolean), for-all?, loop:
+; evaluating 
+;(if (pair? items*) (and (predicate ...) (loop ...)) (begin (if ... ...) #t))
+;
+;   4 samples in (runtime unparser), unparse/pair:
+; evaluating 
+;(let ((temp ...)) (if temp (let ... ...) (let ... ...)))
+;
+;   4 samples in (runtime thread), (let), make-thread-mutex:
+; evaluating 
+;(%record tag ((access record-type-default-value-by-index #f) rtd:thread-mutex 1) #f)
+;
+;   4 samples in (runtime format), format, (lambda):
+; evaluating 
+;(begin (format-loop port format-string arguments) (output-port/discretionary-flush port))
+;
+;   4 samples in (runtime environment), environment-lookup, (let):
+; evaluating 
+;(unassigned-reference-trap? value)
+; for ### in
+;(cond (### (error:unassigned-variable environment name)) ((macro-reference-trap? value) (error:macro-binding environment name)) (else value))
+;
+;   4 samples in (runtime srfi-1), filter, recur:
+; evaluating 
+;(if (null-list? lis 'filter) lis (let (... ...) (if ... ... ...)))
+;
+;   4 samples in (runtime port), port-type/%operation:
+; evaluating 
+;(assq name (%record-ref type 3))
+; for ### in
+;(let ((or-predicate-6290 ###)) (if or-predicate-6290 or-predicate-6290 (assq name ...)))
+;
+;   4 samples in (runtime string-i/o-port), call-with-narrow-output-string:
+; evaluating 
+;(open-narrow-output-string)
+; for ### in
+;(let ((port ###)) (generator port) (get-output-string port))
+;
+;   4 samples in (runtime port), port-type?:
+; evaluating 
+;(begin '#[block-declaration 17] (and (%record? object) (eq? ... .tag.1)))
+;
+;   4 samples in (runtime string), %substring, (let):
+; evaluating 
+;(%substring-move! string start end result ...)
+; for ### in
+;(begin ### result)
+;
+;   4 samples in (runtime port), port/operation/discretionary-flush-output:
+; evaluating 
+;(%record-ref (port/type port) 14)
+;
+;   4 samples in (runtime list), map, loop:
+; evaluating 
+;(cond ((pair? l) (let ... ... ...)) ((null? l) #!unspecific) (else (bad-end)))
+;
+;   4 samples in (runtime unparser), unparse-list, (lambda):
+; evaluating 
+;(output-port/write-char *output-port* #\()
+; for ### in
+;(begin ### (*unparse-object (safe-car list)) (unparse-tail (safe-cdr list) 2) (output-port/write-char *output-port* #\)))
+;
+;   4 samples in (runtime 1d-property), weak-assq:
+; evaluating 
+;(let loop ((previous table) (alist ...)) (if (null? alist) #f (let ... ...)))
+;
+;   4 samples in (runtime number), int:->string:
+; evaluating 
+;(begin (set! digit->char (named-lambda ... ...)) (set! print-fixnum (named-lambda ... ...)) (set! print-medium (named-lambda ... ...)) (set! fast-test-to-avoid-ultimate-multiply (named-lambda ... ... ...)) ...)
+;
+;   4 samples in (runtime number), int:->string, print-fixnum:
+; evaluating 
+;(let loop ((n n) (n-digits 0) (tail tail)) (if (zero-fixnum? n) (if ... ... tail) (loop ... ... ...)))
+;
+;   4 samples in (runtime continuation), (lambda):
+; evaluating 
+;(%within-continuation k #f (lambda () value))
+;
+;   4 samples in (runtime string), %substring, (let):
+; evaluating 
+;(%substring-move! string start end result ...)
+; for ### in
+;(begin ### result)
+;
+;   4 samples in (runtime string), list->string:
+; evaluating 
+;(let ((result ...)) (let loop (... ...) (if ... ... result)))
+;
+;   4 samples in (runtime list), map, loop:
+; evaluating 
+;(cond ((and ... ...) (let ... ... ...)) ((and ... ...) #!unspecific) (else (bad-end)))
+;
+;   4 samples in (runtime state-space), set-dynamic-state!:
+; evaluating 
+;(begin (if (not ...) (error:wrong-type-argument state "dynamic state" 'set-dynamic-state!)) (if (not global-only?) (%translate-to-state-point ...)) (%translate-to-state-point (%record-ref state 1)))
+;
+;   5 samples in (runtime list), length:
+; evaluating 
+;(guarantee-list->length list 'length)
+;
+;   5 samples in (runtime string), xsubstring-find-previous-char:
+; evaluating 
+;(char->ascii char)
+; for ### in
+;(vector-8b-find-previous-char xstring start end ###)
+;
+;   5 samples in (user), collect-diagnal-squares, (lambda):
+; evaluating 
+;(cons (&+ (car square) (&* distance x)) (&+ (cdr square) (&* distance y)))
+;
+;   5 samples in (runtime format), format-loop, (let):
+; evaluating 
+;(string-tail string (1+ index))
+; for ### in
+;(parse-dispatch port ### arguments '() ...)
+;
+;   5 samples in (runtime vector), vector-copy, (let), (let):
+; evaluating 
+;(subvector-move-right! vector 0 length new-vector ...)
+; for ### in
+;(begin ### new-vector)
+;
+;   5 samples in (runtime string-i/o-port), narrow-out/extract-output:
+; evaluating 
+;(let ((os ...)) (string-head (%record-ref os 1) (%record-ref os 2)))
+;
+;   5 samples in (runtime port), (let), %make-port:
+; evaluating 
+;(%record tag %type %state ((access record-type-default-value-by-index #f) <port> 3) ...)
+;
+;   5 samples in (runtime thread), set-thread-event-block!, (let), (let):
+; evaluating 
+;(set-interrupt-enables! interrupt-mask)
+; for ### in
+;(begin ### value)
+;
+;   5 samples in (runtime error-handler), condition-constructor, (let), (let), (lambda):
+; evaluating 
+;(begin (guarantee-continuation continuation constructor) (let (...) (let ... ...) condition))
+;
+;   5 samples in (runtime rep), nearest-repl:
+; evaluating 
+;(skip-non-repls (nearest-cmdl))
+; for ### in
+;(let ((or-predicate-7291 ###)) (if or-predicate-7291 or-predicate-7291 (error "NEAREST-REPL: no REPLs")))
+;
+;   5 samples in (runtime unparser), guarantee-unparser-table:
+; evaluating 
+;(if (not (unparser-table? object)) (error:not-unparser-table object caller))
+;
+;   5 samples in (user), (lambda):
+; evaluating 
+;(and (positive? num) (integer? num) (not (&< 8 num)))
+;
+;   5 samples in (runtime port), port/operation/write-substring:
+; evaluating 
+;(%record-ref (port/type port) 10)
+;
+;   5 samples in (runtime string), list->string, (let), loop:
+; evaluating 
+;(guarantee-8-bit-char (car chars))
+; for ### in
+;(begin ### (string-set! result index (car chars)) (loop (cdr chars) (plus-fixnum index 1)))
+;
+;   5 samples in (runtime state-space), %execute-at-new-state-point:
+; evaluating 
+;(let ((old-root ...)) (let (...) (%translate-to-state-point old-root) value))
+;
+;   5 samples in (runtime record), structure-tag/unparser-method:
+; evaluating 
+;(let ((type ...)) (and type (structure-type/unparser-method type)))
+;
+;   5 samples in (runtime list), loop:
+; evaluating 
+;(cond ((pair? l1) (let ... ...)) ((null? l1) length) (else #f))
+;
+;   5 samples in (runtime unparser), unparse-list, (lambda):
+; evaluating 
+;(*unparse-object (safe-car list))
+; for ### in
+;(begin ### (unparse-tail (safe-cdr list) 2) (output-port/write-char *output-port* #\)))
+;
+;   5 samples in (user), num-diff:
+; evaluating 
+;(abs (&- a b))
+;
+;   5 samples in (runtime unparser), (let):
+; evaluating 
+;(structure-tag/unparser-method tag 'list)
+; for ### in
+;(let ((or-predicate-9601 ###)) (if or-predicate-9601 or-predicate-9601 (unparser/tagged-pair-method tag)))
+;
+;   5 samples in (runtime output-port), display:
+; evaluating 
+;(let ((port ...)) (unparse-object/top-level object port #f environment) ((%record-ref ... 14) port))
+;
+;   5 samples in (runtime error-handler), %make-condition:
+; evaluating 
+;(make-vector (%record-ref type 4) #f)
+; for ### in
+;(%%make-condition type continuation restarts ###)
+;
+;   5 samples in (runtime environment), environment-lookup:
+; evaluating 
+;(let ((value ...)) (cond (... ...) (... ...) (else value)))
+;
+;   5 samples in (runtime error-handler), ignore-errors:
+; evaluating 
+;(call-with-current-continuation (lambda (k) (bind-condition-handler ... ... thunk)))
+;
+;   5 samples in (runtime vector), vector-map, (let), (let), do-loop:
+; evaluating 
+;(if (less-than-fixnum? i n) (begin (vector-set! result i ...) (do-loop ...)) #t)
+;
+;   5 samples in (runtime vector), vector-map:
+; evaluating 
+;(for-each (lambda (v) (if ... ...)) vectors)
+; for ### in
+;(begin ### (let (...) (for-each ... vectors) (let ... ... result)))
+;
+;   5 samples in (runtime rep), nearest-cmdl:
+; evaluating 
+;(begin (if (not *nearest-cmdl*) (error "NEAREST-CMDL: no cmdl")) *nearest-cmdl*)
+;
+;   5 samples in (user), assert-legal:
+; evaluating 
+;(sqr-get current-square board)
+; for ### in
+;(abs ###)
+;
+;   5 samples in (runtime list), guarantee-list->length:
+; evaluating 
+;(let ((n ...)) (if (not n) (error:not-list object caller)) n)
+;
+;   6 samples in (runtime string-i/o-port), get-output-string:
+; evaluating 
+;((port/operation port 'extract-output) port)
+;
+;   6 samples in (runtime format), parse-dispatch:
+; evaluating 
+;((vector-ref format-dispatch-table (vector-8b-ref string 0)) port string supplied-arguments parsed-arguments ...)
+;
+;   6 samples in (runtime rep), nearest-repl:
+; evaluating 
+;(nearest-cmdl)
+; for ### in
+;(skip-non-repls ###)
+;
+;   6 samples in (runtime continuation), call-with-current-continuation:
+; evaluating 
+;(call-with-current-continuation (lambda (control-point) (let ... ...)))
+;
+;   6 samples in (runtime output-port), output-port/discretionary-flush:
+; evaluating 
+;(port/operation/discretionary-flush-output port)
+; for ### in
+;(### port)
+;
+;   6 samples in (runtime port), (lambda):
+; evaluating 
+;(make-thread-mutex)
+;
+;   6 samples in (runtime error-handler), signal-condition, (let), (let), do-loop, (let), (lambda):
+; evaluating 
+;(hook/invoke-condition-handler (general-car-cdr frames 5) condition)
+;
+;   6 samples in (runtime number), complex:<:
+; evaluating 
+;(cond ((object-type? 60 x) (if ... ... ...)) ((object-type? 60 y) (real:< x ...)) (else (... x y)))
+;
+;   6 samples in (runtime vector), make-vector:
+; evaluating 
+;(begin (if (not ...) (error:wrong-type-argument size "vector index" 'make-vector)) (vector-cons size (if ... #f fill)))
+;
+;   6 samples in (user), assert:
+; evaluating 
+;(if condition #t (error if-err))
+;
+;   6 samples in (runtime string), string-find-next-char:
+; evaluating 
+;(begin ((named-lambda ... ...) string 'string-find-next-char) (guarantee-char char 'string-find-next-char) (%substring-find-next-char string 0 (string-length string) char))
+;
+;   6 samples in (runtime environment), interpreter-environment/safe-lookup:
+; evaluating 
+;(let ((cell ...)) (set-car! cell (safe-lexical-reference environment name)) (map-reference-trap (lambda () ...)))
+;
+;   6 samples in (user), assert-legal:
+; evaluating 
+;(sqr-get target-square board)
+; for ### in
+;(zero? ###)
+;
+;   6 samples in (runtime port), (let), %make-port:
+; evaluating 
+;((access record-type-default-value-by-index #f) <port> 3)
+; for ### in
+;(%record tag %type %state ### ...)
+;
+;   7 samples in (runtime port), port/operation:
+; evaluating 
+;(begin (if (not ...) (error:not-port port 'port/operation)) (port-type/%operation (%record-ref port 1) name))
+;
+;   7 samples in (runtime vector), vector-map, (let), (let), do-loop:
+; evaluating 
+;(apply procedure (cons (vector-ref vector i) (map ... vectors)))
+; for ### in
+;(vector-set! result i ###)
+;
+;   7 samples in (runtime number), complex:->string:
+; evaluating 
+;(if (object-type? 60 z) (string-append (let ... ...) (let ... ...) (if imaginary-unit-j? "j" "i")) (real:->string z radix))
+;
+;   7 samples in (runtime string), string-head:
+; evaluating 
+;(begin ((named-lambda ... ...) string 'string-head) (if (not ...) (error:wrong-type-argument end "string index" 'string-head)) (if (greater-than-fixnum? end ...) (error:bad-range-argument end 'string-head)) ((named-lambda ... ...) string 0 end))
+;
+;   7 samples in (runtime unparser), *unparse-object:
+; evaluating 
+;((vector-ref *dispatch-table* (primitive-object-type object)) object)
+;
+;   7 samples in (runtime error-handler), bind-condition-handler, (let), (lambda):
+; evaluating 
+;(thunk)
+;
+;   7 samples in (runtime string-i/o-port), narrow-out/write-char, (let):
+; evaluating 
+;(maybe-grow-buffer os 1)
+; for ### in
+;(begin ### (string-set! (%record-ref os 1) (%record-ref os 2) char) (%record-set! os 2 (plus-fixnum ... 1)) (%record-set! os 3 (new-column char ...)) ...)
+;
+;   7 samples in (runtime reference-trap), macro-reference-trap?:
+; evaluating 
+;(and (reference-trap? object) (eq? 15 (vector-ref object 1)))
+;
+;   7 samples in (runtime record), tag->structure-type:
+; evaluating 
+;(if (structure-type? tag) (and (eq? ... physical-type) tag) (let (...) (and ... ... type)))
+;
+;   7 samples in (runtime output-port), optional-output-port:
+; evaluating 
+;(if (eq? port #!default) (current-output-port) (begin (if ... ...) port))
+;
+;   7 samples in (runtime number), rat:truncate:
+; evaluating 
+;(cond ((object-type? 58 q) (integer-quotient ... ...)) ((let ... ...) q) (else (error:wrong-type-argument q "real number" 'truncate)))
+;
+;   7 samples in (runtime port), port/operation/write-char:
+; evaluating 
+;(port/type port)
+; for ### in
+;(%record-ref ### 9)
+;
+;   7 samples in (runtime list), assq:
+; evaluating 
+;(let ((lose ...)) '#[block-declaration 18] (let loop (...) (if ... ... ...)))
+;
+;   7 samples in (runtime rep), skip-non-repls:
+; evaluating 
+;(cmdl/state cmdl)
+; for ### in
+;(repl-state? ###)
+;
+;   7 samples in (runtime output-port), output-port/write-char:
+; evaluating 
+;((port/operation/write-char port) port char)
+;
+;   7 samples in (runtime string-i/o-port), narrow-out/write-char:
+; evaluating 
+;(begin (if (not ...) (error:not-8-bit-char char)) (let (...) (maybe-grow-buffer os 1) (string-set! ... ... char) (%record-set! os 2 ...) ...))
+;
+;   7 samples in (runtime port), port/operation/write-char:
+; evaluating 
+;(%record-ref (port/type port) 9)
+;
+;   8 samples in (user), sqr-get:
+; evaluating 
+;(truncate (&/ (-1+ ...) 2))
+; for ### in
+;(vector-ref (vector-ref board (-1+ ...)) ###)
+;
+;   8 samples in (runtime port), transcribe-char:
+; evaluating 
+;(let ((tport ...)) (if tport (%write-char char tport)))
+;
+;   8 samples in (runtime boolean), for-all?:
+; evaluating 
+;(let loop ((items* items)) (if (pair? items*) (and ... ...) (begin ... #t)))
+;
+;   8 samples in (runtime environment), environment-safe-lookup:
+; evaluating 
+;(cond ((interpreter-environment? environment) (interpreter-environment/safe-lookup environment name))
+;      ((stack-ccenv? environment) (stack-ccenv/safe-lookup environment name))
+;      ((closure-ccenv? environment) (closure-ccenv/safe-lookup environment name))
+;      (else (illegal-environment environment 'environment-safe-lookup)))
+;
+;   8 samples in (user), sqr-get:
+; evaluating 
+;(vector-ref (vector-ref board (-1+ ...)) (truncate (&/ ... 2)))
+;
+;   8 samples in (runtime rep), nearest-repl:
+; evaluating 
+;(or (skip-non-repls (nearest-cmdl)) (error "NEAREST-REPL: no REPLs"))
+;
+;   8 samples in (runtime port), port/operation/discretionary-flush-output:
+; evaluating 
+;(port/type port)
+; for ### in
+;(%record-ref ### 14)
+;
+;   8 samples in (runtime output-port), output-port/discretionary-flush:
+; evaluating 
+;((port/operation/discretionary-flush-output port) port)
+;
+;   8 samples in (runtime reference-trap), unassigned-reference-trap?:
+; evaluating 
+;(and (reference-trap? object) (eq? 0 (vector-ref object 1)))
+;
+;   8 samples in (runtime port), port-type/%operation:
+; evaluating 
+;(let ((entry ...)) (and entry (cdr entry)))
+;
+;   8 samples in (runtime unparser), unparser-table?:
+; evaluating 
+;(begin '#[block-declaration 19] (and (%record? object) (eq? ... .tag.1)))
+;
+;   8 samples in (runtime rep), nearest-repl/environment:
+; evaluating 
+;(%record-ref (cmdl/state (nearest-repl)) 2)
+;
+;   8 samples in (runtime number), loop:
+; evaluating 
+;(if (integer-zero? m) (if (integer-negative? n) (integer-negate n) n) (loop m (integer-remainder n m)))
+;
+;   9 samples in (runtime thread), (let), (let):
+; evaluating 
+;(set-interrupt-enables! interrupt-mask)
+; for ### in
+;(begin ### value)
+;
+;   9 samples in (runtime boolean), there-exists?:
+; evaluating 
+;(let loop ((items* items)) (if (pair? items*) (if ... #t ...) (begin ... #f)))
+;
+;   9 samples in (runtime number), rat:->string:
+; evaluating 
+;(if (object-type? 58 q) (string-append (int:->string ... radix) "/" (int:->string ... radix)) (int:->string q radix))
+;
+;   9 samples in (runtime port), with-output-to-port:
+; evaluating 
+;(output-port? port)
+; for ### in
+;(if (not ###) (error:not-output-port port 'with-output-to-port))
+;
+;   9 samples in (runtime record), tag->structure-type:
+; evaluating 
+;(named-structure/get-tag-description tag)
+; for ### in
+;(let ((type ###)) (and (structure-type? type) (eq? ... physical-type) type))
+;
+;   9 samples in (runtime number), reduce-comparator:
+; evaluating 
+;(if (pair? numbers) (if (pair? ...) (let loop ... ...) (begin ... #t)) #t)
+;
+;   9 samples in (runtime unparser), safe-cdr:
+; evaluating 
+;(map-reference-trap (lambda () (cdr pair)))
+;
+;   9 samples in (runtime list), list?->length:
+; evaluating 
+;(let loop ((l1 object) (l2 object) (length 0)) (cond (... ...) (... length) (else #f)))
+;
+;   9 samples in (runtime number), make-rational:
+; evaluating 
+;(if (or (integer-zero? n) (integer-equal? 1 d)) n (system-pair-cons 58 n d))
+;
+;   9 samples in (runtime character), 8-bit-char?:
+; evaluating 
+;(and (char? object) (less-than-fixnum? (char->integer object) 256))
+;
+;   9 samples in (runtime boolean), for-all?, loop:
+; evaluating 
+;(predicate (car items*))
+; for ### in
+;(and ### (loop (cdr items*)))
+;
+;   9 samples in (runtime number), complex:truncate:
+; evaluating 
+;(if (object-type? 60 x) (real:truncate (rec:real-arg 'truncate x)) ((named-lambda ... ...) x))
+;
+;   9 samples in (user), score, (let), (lambda):
+; evaluating 
+;(vector-map (lambda (cell) (cond ... ...) (set! scr ...) scr) row)
+;
+;   9 samples in (runtime unparser), (let):
+; evaluating 
+;(guarantee-unparser-table table #f)
+; for ### in
+;(begin ### table)
+;
+;  10 samples in (runtime unparser), unparse-object/internal:
+; evaluating 
+;(let ((.*output-port*.4-0 port) (.*list-depth*.4-0 list-depth) (.*slashify?*.4-0 slashify?) (.*environment*.4-0 environment) (.*dispatch-table*.4-0 ...)) (define (swap!) (set! *output-port* ...) (set! *list-depth* ...) (set! *slashify?* ...) ...) (shallow-fluid-bind swap! (lambda () ...) swap!))
+;
+;  10 samples in (runtime continuation), %within-continuation:
+; evaluating 
+;(within-control-point (%record-ref (entity-extra k) 1) (lambda () (set-dynamic-state! ... thread-switch?) (set-thread-event-block! ...) (thunk)))
+;
+;  10 samples in (runtime port), port/operation/write-substring:
+; evaluating 
+;(port/type port)
+; for ### in
+;(%record-ref ### 10)
+;
+;  10 samples in (runtime port), output-port?:
+; evaluating 
+;(and (port? object) (%record-ref (%record-ref object 1) 9) #t)
+;
+;  10 samples in (runtime number), real:->string:
+; evaluating 
+;(if (object-type? 6 x) (flo:->string x radix) (rat:->string x radix))
+;
+;  10 samples in (runtime format), format-object, (lambda):
+; evaluating 
+;(lambda (port string arguments) (if (null? arguments) (error "FORMAT: too few arguments" string)) (if (eq? n-columns #!default) (write ... port) (output-port/write-string port ...)) (format-loop port string (cdr arguments)))
+;
+;  10 samples in (runtime number), int:->string, n>0:
+; evaluating 
+;(if (fixnum? value) (print-fixnum value 1 '()) (let (...) (let ... ...)))
+;
+;  11 samples in (runtime port), port/type:
+; evaluating 
+;(begin (if (not ...) (error:not-port port 'port/type)) (%record-ref port 1))
+;
+;  11 samples in (runtime thread), (lambda):
+; evaluating 
+;(make-ring)
+;
+;  11 samples in (runtime unparser), unparse-list/prefix-pair?:
+; evaluating 
+;(and *unparse-abbreviate-quotations?* (pair? (safe-cdr object)) (null? (safe-cdr ...)) (let (...) (cond ... ... ... ... ...)))
+;
+;  11 samples in (runtime record), (let), (lambda):
+; evaluating 
+;(and (%record? object) (eq? (%record-ref object 0) tag))
+;
+;  11 samples in (runtime output-port), display, (let):
+; evaluating 
+;(unparse-object/top-level object port #f environment)
+; for ### in
+;(begin ### ((%record-ref ... 14) port))
+;
+;  11 samples in (runtime output-port), output-port/write-char:
+; evaluating 
+;(port/operation/write-char port)
+; for ### in
+;(### port char)
+;
+;  12 samples in (runtime output-port), output-port/write-substring:
+; evaluating 
+;(port/operation/write-substring port)
+; for ### in
+;(### port string start end)
+;
+;  12 samples in (runtime string-i/o-port), open-narrow-output-string:
+; evaluating 
+;(string-allocate 16)
+; for ### in
+;(make-ostate ### 0 0)
+;
+;  12 samples in (runtime number), (lambda):
+; evaluating 
+;(let ((d ...)) (make-rational (integer-quotient u d) (integer-quotient v d)))
+;
+;  12 samples in (runtime unparser), unparse/number:
+; evaluating 
+;(output-port/write-string *output-port* (number->string object (let ... ...)))
+;
+;  12 samples in (runtime 1d-property), 1d-table/get:
+; evaluating 
+;(let ((entry ...)) (if entry (system-pair-cdr entry) default))
+;
+;  12 samples in (runtime state-space), (let), (let):
+; evaluating 
+;(set-interrupt-enables! interrupt-mask)
+; for ### in
+;(begin ### state)
+;
+;  12 samples in (runtime string-i/o-port), call-with-narrow-output-string:
+; evaluating 
+;(let ((port ...)) (generator port) (get-output-string port))
+;
+;  12 samples in (runtime string-i/o-port), maybe-grow-buffer, (let), loop:
+; evaluating 
+;(if (&< m n) (loop (&+ m m)) m)
+;
+;  12 samples in (runtime string-i/o-port), update-column-for-substring!:
+; evaluating 
+;(let ((string ...) (end ...)) (let (...) (let () ... ...)))
+;
+;  13 samples in (runtime format), format, (let), (lambda):
+; evaluating 
+;(start (current-output-port))
+;
+;  13 samples in (runtime continuation), %within-continuation, (lambda):
+; evaluating 
+;(begin (set-dynamic-state! (%record-ref ... 2) thread-switch?) (set-thread-event-block! (%record-ref ... 3)) (thunk))
+;
+;  13 samples in (runtime unparser), unparse-list/unparser:
+; evaluating 
+;(let ((tag ...)) (or (structure-tag/unparser-method tag 'list) (unparser/tagged-pair-method tag)))
+;
+;  13 samples in (runtime number), reduce-comparator, loop:
+; evaluating 
+;(binary-comparator x y)
+; for ### in
+;(and ### (if (pair? rest) (loop y ... ...) #t))
+;
+;  13 samples in (runtime state-space), %execute-at-new-state-point, (let):
+; evaluating 
+;(with-stack-marker during %translate-to-state-point old-root)
+; for ### in
+;(let ((value ###)) (%translate-to-state-point old-root) value)
+;
+;  14 samples in (runtime string), xstring-length:
+; evaluating 
+;(cond ((string? string) (string-length string)) ((wide-string? string) (wide-string-length string)) ((external-string? string) (%record-ref string 2)) (else (error:not-xstring string 'xstring-length)))
+;
+;  14 samples in (runtime record), record-accessor, (let), (let), (lambda):
+; evaluating 
+;(begin (if (not ...) (error:not-tagged-record record record-type accessor)) (%record-ref record index))
+;
+;  14 samples in (runtime string-i/o-port), with-output-to-string:
+; evaluating 
+;(call-with-narrow-output-string (lambda (port) (with-output-to-port port thunk)))
+;
+;  14 samples in (runtime port), (let), (lambda):
+; evaluating 
+;(let ((n ...)) (if (and n ...) (begin ... ...)) n)
+;
+;  14 samples in (runtime string), xsubstring-find-previous-char:
+; evaluating 
+;(begin (guarantee-char char 'xsubstring-find-previous-char) (cond (... ... ...) (... ... ...) (else ...)))
+;
+;  14 samples in (runtime unparser), unparse-list, (lambda):
+; evaluating 
+;(begin (output-port/write-char *output-port* #\() (*unparse-object (safe-car list)) (unparse-tail (safe-cdr list) 2) (output-port/write-char *output-port* #\)))
+;
+;  14 samples in (runtime format), format-wrapper, (lambda):
+; evaluating 
+;((apply operator (cons modifiers ...)) port (string-tail string 1) supplied-arguments)
+;
+;  15 samples in (runtime string), xstring-ref:
+; evaluating 
+;(cond ((string? string) (string-ref string index)) ((wide-string? string) (wide-string-ref string index)) ((external-string? string) (external-string-ref string index)) (else (error:not-xstring string 'xstring-ref)))
+;
+;  15 samples in (runtime string), %substring-find-next-char:
+; evaluating 
+;(let loop ((i start)) (cond (... #f) (... i) (else ...)))
+;
+;  15 samples in (runtime reference-trap), reference-trap?:
+; evaluating 
+;(and (vector? object) (if (zero? ...) #f (eq? ... '|#[(runtime reference-trap)reference-trap]|)))
+;
+;  15 samples in (runtime string), xsubstring-move!, (let):
+; evaluating 
+;(deref xstring2)
+; for ### in
+;(substring-move-left! (deref xstring1) start1 end1 ### ...)
+;
+;  15 samples in (runtime list), map:
+; evaluating 
+;(begin (set! map-1 (named-lambda ... ...)) (set! map-2 (named-lambda ... ...)) (set! map-n (named-lambda ... ...)) (set! bad-end (named-lambda ... ...)) ...)
+;
+;  15 samples in (runtime port), make-port:
+; evaluating 
+;(begin (guarantee-port-type type 'make-port) (%make-port type state))
+;
+;  15 samples in (runtime string), string-tail:
+; evaluating 
+;(begin ((named-lambda ... ...) string 'string-tail) (if (not ...) (error:wrong-type-argument start "string index" 'string-tail)) (if (greater-than-fixnum? start ...) (error:bad-range-argument start 'string-tail)) ((named-lambda ... ...) string start (string-length string)))
+;
+;  16 samples in (runtime output-port), output-port/write-substring:
+; evaluating 
+;((port/operation/write-substring port) port string start end)
+;
+;  16 samples in (runtime string-i/o-port), string-out/write-substring, (let), (let), (let):
+; evaluating 
+;(move-chars! string start end (%record-ref os 1) ...)
+; for ### in
+;(begin ### (%record-set! os 2 end*))
+;
+;  16 samples in (runtime format), format-loop:
+; evaluating 
+;(let ((index ...)) (cond (index ... ...) (... ...) (else ...)))
+;
+;  16 samples in (runtime string), list->string:
+; evaluating 
+;(length chars)
+; for ### in
+;(string-allocate ###)
+;
+;  16 samples in (runtime number), (lambda):
+; evaluating 
+;(not (complex:< y x))
+;
+;  17 samples in (runtime thread), (let), make-thread-mutex:
+; evaluating 
+;((access record-type-default-value-by-index #f) rtd:thread-mutex 1)
+; for ### in
+;(%record tag ### #f)
+;
+;  17 samples in (runtime character), guarantee-char:
+; evaluating 
+;(if (not (char? object)) (error:not-char object caller))
+;
+;  17 samples in (runtime vector), vector-map, (let), (let), do-loop:
+; evaluating 
+;(map (lambda (v) (vector-ref v i)) vectors)
+; for ### in
+;(cons (vector-ref vector i) ###)
+;
+;  17 samples in (runtime number), number->string:
+; evaluating 
+;(complex:->string z (cond (... 10) (... radix) (... ...) (else ...)))
+;
+;  17 samples in (runtime port), (let), (lambda):
+; evaluating 
+;(let ((n ...)) (if (and n ...) (let ... ... ...)) n)
+;
+;  18 samples in (runtime string), xsubstring-move!:
+; evaluating 
+;(let ((deref ...)) (cond (... ...) (... ...)))
+;
+;  18 samples in (runtime continuation), call-with-current-continuation, (lambda):
+; evaluating 
+;(let ((k ...)) (%within-continuation k #f (lambda () ...)))
+;
+;  18 samples in (runtime error-handler), condition?:
+; evaluating 
+;(begin '#[block-declaration 20] (and (%record? object) (eq? ... .tag.2)))
+;
+;  18 samples in (runtime string), %substring:
+; evaluating 
+;(string-allocate (minus-fixnum end start))
+; for ### in
+;(let ((result ###)) (%substring-move! string start end result ...) result)
+;
+;  19 samples in (runtime string), (lambda):
+; evaluating 
+;(if (external-string? xstring) (%record-ref xstring 1) xstring)
+;
+;  19 samples in (runtime character), char->ascii:
+; evaluating 
+;(begin (guarantee-8-bit-char char 'char->ascii) (char->integer char))
+;
+;  19 samples in (runtime output-port), output-port/write-string:
+; evaluating 
+;(output-port/write-substring port string 0 (xstring-length string))
+;
+;  19 samples in (runtime port), transcribe-substring:
+; evaluating 
+;(let ((tport ...)) (if tport (write-substring string start end tport)))
+;
+;  19 samples in (runtime format), format-object, (lambda), (lambda):
+; evaluating 
+;(if (eq? n-columns #!default) (write (car arguments) port) (output-port/write-string port (... ... n-columns)))
+; for ### in
+;(begin ### (format-loop port string (cdr arguments)))
+;
+;  19 samples in (runtime port), port?:
+; evaluating 
+;(begin '#[block-declaration 21] (and (%record? object) (eq? ... .tag.2)))
+;
+;  20 samples in (runtime string-i/o-port), string-out/write-substring:
+; evaluating 
+;(let ((os ...) (n ...)) (maybe-grow-buffer os n) (let (...) (let ... ... ...)) (update-column-for-substring! os n) ...)
+;
+;  20 samples in (runtime port), (let), (lambda):
+; evaluating 
+;(begin (defer port) (discretionary-flush-transcript port))
+;
+;  20 samples in (runtime character), char->ascii:
+; evaluating 
+;(guarantee-8-bit-char char 'char->ascii)
+; for ### in
+;(begin ### (char->integer char))
+;
+;  20 samples in (runtime string), %substring-move!:
+; evaluating 
+;(let ((n ...)) (cond (... ...) (... ...) (... ... ... ... ...) (... ... ... ...) ...) (plus-fixnum start2 n))
+;
+;  20 samples in (user), score, (let), (lambda), (lambda):
+; evaluating 
+;(begin (cond (... ... white) (... ... black)) (set! scr (&+ scr cell)) scr)
+;
+;  21 samples in (runtime string-i/o-port), maybe-grow-buffer:
+; evaluating 
+;(let ((buffer ...) (n ...)) (let (...) (if ... ...)))
+;
+;  21 samples in (runtime string-i/o-port), move-chars!:
+; evaluating 
+;(min (&- end start) (&- end* start*))
+; for ### in
+;(let ((n ###)) (let (... ...) (cond ... ... ...)))
+;
+;  21 samples in (runtime format), format-object, (lambda), (lambda):
+; evaluating 
+;(begin (if (null? arguments) (error "FORMAT: too few arguments" string)) (if (eq? n-columns #!default) (write ... port) (output-port/write-string port ...)) (format-loop port string (cdr arguments)))
+;
+;  21 samples in (runtime number), reduce-comparator, loop:
+; evaluating 
+;(and (binary-comparator x y) (if (pair? rest) (loop y ... ...) #t))
+;
+;  22 samples in (runtime string), %substring:
+; evaluating 
+;(string-allocate (minus-fixnum end start))
+; for ### in
+;(let ((result ###)) (%substring-move! string start end result ...) result)
+;
+;  22 samples in (runtime string), external-string?:
+; evaluating 
+;(begin '#[block-declaration 22] (and (%record? object) (eq? ... .tag.1)))
+;
+;  24 samples in (runtime boot-definitions), with-limited-interrupts:
+; evaluating 
+;(with-interrupt-mask (fixnum-and limit-mask (get-interrupt-enables)) procedure)
+;
+;  24 samples in (runtime port), discretionary-flush-transcript:
+; evaluating 
+;(let ((tport ...)) (if tport (output-port/discretionary-flush tport)))
+;
+;  24 samples in (runtime port), (let), (lambda):
+; evaluating 
+;(defer port string start end)
+; for ### in
+;(let ((n ###)) (if (and n ...) (let ... ... ...)) n)
+;
+;  24 samples in (runtime port), with-output-to-port, (let), (lambda):
+; evaluating 
+;(thunk)
+;
+;  24 samples in (runtime string-i/o-port), string-out/write-substring, (let):
+; evaluating 
+;(maybe-grow-buffer os n)
+; for ### in
+;(begin ### (let (...) (let ... ... ...)) (update-column-for-substring! os n) n)
+;
+;  25 samples in (runtime number), rat:<:
+; evaluating 
+;(cond ((object-type? 58 q) (if ... ... ...)) ((object-type? 58 r) (integer-less? ... ...)) (else (integer-less? q r)))
+;
+;  25 samples in (runtime number), complex:min:
+; evaluating 
+;(cond ((object-type? 60 x) (if ... ... ...)) ((object-type? 60 y) (real:min x ...)) (else (... x y)))
+;
+;  25 samples in (runtime string), list->string, (let), loop:
+; evaluating 
+;(if (pair? chars) (begin (guarantee-8-bit-char ...) (string-set! result index ...) (loop ... ...)) result)
+;
+;  25 samples in (runtime state-space), %translate-to-state-point:
+; evaluating 
+;(%without-interrupts (lambda (interrupt-mask) (%%translate-to-state-point point interrupt-mask)))
+;
+;  26 samples in (runtime number), int:even?:
+; evaluating 
+;(integer-remainder n 2)
+; for ### in
+;(integer-zero? ###)
+;
+;  27 samples in (runtime string), xsubstring-move!, (let):
+; evaluating 
+;(deref xstring1)
+; for ### in
+;(substring-move-left! ### start1 end1 (deref xstring2) ...)
+;
+;  28 samples in (runtime string-i/o-port), move-chars!:
+; evaluating 
+;(let ((n ...)) (let (... ...) (cond ... ... ...)))
+;
+;  29 samples in (runtime format), format:
+; evaluating 
+;(begin (if (not ...) (error "FORMAT: illegal format string" format-string)) (let (...) (if destination ... ...)))
+;
+;  29 samples in (runtime record), record-type-default-value-by-index:
+; evaluating 
+;((vector-ref (%record-ref record-type 4) (minus-fixnum field-name-index 1)))
+;
+;  29 samples in (runtime string), %substring:
+; evaluating 
+;(string-allocate (minus-fixnum end start))
+; for ### in
+;(let ((result ###)) (%substring-move! string start end result ...) result)
+;
+;  29 samples in (runtime number), (lambda), (let):
+; evaluating 
+;(integer-quotient u d)
+; for ### in
+;(make-rational ### (integer-quotient v d))
+;
+;  29 samples in (runtime string-i/o-port), find-newline:
+; evaluating 
+;(if (wide-string? string) (let loop (...) (and ... ...)) (xsubstring-find-previous-char string start end #\newline))
+;
+;  31 samples in (runtime number), complex:/:
+; evaluating 
+;(cond ((object-type? 60 z1) (if ... ... ...)) ((object-type? 60 z2) (let ... ...)) (else (... z1 z2)))
+;
+;  31 samples in (runtime format), format-wrapper, (lambda):
+; evaluating 
+;(apply operator (cons modifiers (reverse! parsed-arguments)))
+; for ### in
+;(### port (string-tail string 1) supplied-arguments)
+;
+;  32 samples in (runtime string-i/o-port), with-output-to-string, (lambda):
+; evaluating 
+;(with-output-to-port port thunk)
+;
+;  32 samples in (runtime port), (let), (lambda):
+; evaluating 
+;(defer port char)
+; for ### in
+;(let ((n ###)) (if (and n ...) (begin ... ...)) n)
+;
+;  32 samples in (runtime string-i/o-port), maybe-grow-buffer, (let), (let):
+; evaluating 
+;(let ((m* ...)) (if (wide-string? buffer) (make-wide-string m*) (string-allocate m*)))
+; for ### in
+;(let ((buffer* ###)) (move-chars! buffer 0 (%record-ref os 2) buffer* ...) (%record-set! os 1 buffer*))
+;
+;  33 samples in (runtime unparser), unparse-object/internal, (let), (lambda):
+; evaluating 
+;(*unparse-object object)
+;
+;  33 samples in (runtime unparser), safe-cdr, (lambda):
+; evaluating 
+;(cdr pair)
+;
+;  33 samples in (runtime state-space), %without-interrupts:
+; evaluating 
+;(with-limited-interrupts interrupt-mask/gc-ok (lambda (interrupt-mask) (procedure ...)))
+;
+;  33 samples in (runtime string), list->string:
+; evaluating 
+;(string-allocate (length chars))
+; for ### in
+;(let ((result ###)) (let loop (... ...) (if ... ... result)))
+;
+;  34 samples in (runtime state-space), set-dynamic-state!:
+; evaluating 
+;(if (not global-only?) (%translate-to-state-point (%record-ref state 2)))
+; for ### in
+;(begin ### (%translate-to-state-point (%record-ref state 1)))
+;
+;  34 samples in (runtime number), (lambda), (let):
+; evaluating 
+;(integer-quotient v d)
+; for ### in
+;(make-rational (integer-quotient u d) ###)
+;
+;  36 samples in (runtime number), int:->string, print-fixnum, loop:
+; evaluating 
+;(if (zero-fixnum? n) (if (less-than-fixnum? n-digits min-digits) (loop n ... ...) tail) (loop (fixnum-quotient n radix) (plus-fixnum n-digits 1) (cons ... tail)))
+;
+;  36 samples in (runtime character), guarantee-8-bit-char:
+; evaluating 
+;(if (not (8-bit-char? object)) (error:not-8-bit-char object))
+;
+;  36 samples in (runtime state-space), shallow-fluid-bind:
+; evaluating 
+;(%execute-at-new-state-point state-space:global before during after)
+;
+;  37 samples in (runtime environment), interpreter-environment/safe-lookup, (let), (lambda):
+; evaluating 
+;(car cell)
+;
+;  39 samples in (runtime continuation), %within-continuation, (lambda):
+; evaluating 
+;(set-dynamic-state! (%record-ref (entity-extra k) 2) thread-switch?)
+; for ### in
+;(begin ### (set-thread-event-block! (%record-ref ... 3)) (thunk))
+;
+;  39 samples in (runtime unparser), limit-unparse-depth:
+; evaluating 
+;(if *unparser-list-depth-limit* (let (...) (define ... ... #!unspecific) (shallow-fluid-bind swap! ... swap!)) (kernel))
+;
+;  43 samples in (runtime number), loop:
+; evaluating 
+;(integer-remainder n m)
+; for ### in
+;(loop m ###)
+;
+;  46 samples in (runtime reference-trap), map-reference-trap:
+; evaluating 
+;(primitive-object-type? 50 (getter))
+; for ### in
+;(if ### (let (...) (if ... ... ...)) (getter))
+;
+;  49 samples in (runtime string), %substring-move!, (let):
+; evaluating 
+;(cond ((if ... ... #t) (cond ... ... ... ... ...))
+;      ((greater-than-fixnum? n 4) (if ... ... ...))
+;      ((eq? n 4) (string-set! string2 ... ...) (string-set! string2 ... ...) (string-set! string2 ... ...) (string-set! string2 start2 ...))
+;      ((eq? n 3) (string-set! string2 ... ...) (string-set! string2 ... ...) (string-set! string2 start2 ...))
+;      ...)
+; for ### in
+;(begin ### (plus-fixnum start2 n))
+;
+;  54 samples in (runtime string), %substring-find-next-char, loop:
+; evaluating 
+;(cond ((eq? i end) #f) ((eq? ... char) i) (else (loop ...)))
+;
+;  58 samples in (runtime unparser), safe-car, (lambda):
+; evaluating 
+;(car pair)
+;
+;  60 samples in (runtime reference-trap), map-reference-trap:
+; evaluating 
+;(if (primitive-object-type? 50 (getter)) (let (...) (if ... ... ...)) (getter))
+;
+;  68 samples in (runtime environment), interpreter-environment/safe-lookup, (let):
+; evaluating 
+;(safe-lexical-reference environment name)
+; for ### in
+;(set-car! cell ###)
+;
+;  84 samples in (runtime number), <=:
+; evaluating 
+;(reduce-comparator (lambda (x y) (not ...)) zs '<=)
+;
+;  88 samples in (runtime string-i/o-port), update-column-for-substring!, (let), (let), (let):
+; evaluating 
+;(find-newline string start end)
+; for ### in
+;(let ((nl ###)) (if nl (loop ... 0) (loop start ...)))
+;
+; 138 samples in (runtime interrupt-handler), after-gc-interrupt-handler:
+; evaluating 
+;(begin (trigger-gc-daemons!) (clear-interrupts! interrupt-bit/after-gc))
+;
+; 139 samples in (user), assert-legal:
+; evaluating 
+;(if (&= (abs ...) 1) (assert (... ... ...) (format #f "Piece at ~A may not move backwards!" current-square)))
+; for ### in
+;(begin ### (assert (&= ... ...) "Non-diagnal motion!") (let (...) (cond ... ... ...)))
+;
+; 146 samples in (runtime string), %substring-move!, loop:
+; evaluating 
+;(if (less-than-fixnum? i1 end1) (begin (string-set! string2 i2 ...) (loop ... ...)))
+;
+; 148 samples in (runtime unicode), wide-string?:
+; evaluating 
+;(begin '#[block-declaration 23] (and (%record? object) (eq? ... .tag.1)))
+;
+; 152 samples in (runtime string-i/o-port), move-chars!, (let), (let):
+; evaluating 
+;(xsubstring-move! string start end string* ...)
+; for ### in
+;(begin ### n)
+;
+; 166 samples in (runtime string-i/o-port), update-column-for-substring!, (let), (lambda):
+; evaluating 
+;(if (&< i end) (loop (1+ i) (new-column ... column)) (%record-set! os 3 column))
+;
+; 191 samples in (runtime 1d-property), weak-assq, loop:
+; evaluating 
+;(if (null? alist) #f (let (... ...) (let ... ...)))
+;
+; 354 samples in (runtime state-space), %execute-at-new-state-point:
+; evaluating 
+;(%without-interrupts (lambda (interrupt-mask) (let ... ... ... ... ...)))
+; for ### in
+;(let ((old-root ###)) (let (...) (%translate-to-state-point old-root) value))
+;
+; 405 samples in (runtime error-handler), signal-condition, (let), (let), do-loop:
+; evaluating 
+;(if (let (...) (if ... ... #t)) (let (...) (define ... ... #!unspecific) (shallow-fluid-bind swap! ... swap!)))
+; for ### in
+;(begin ### (do-loop (cdr frames)))
+;
+; 406 samples in (runtime state-space), %execute-at-new-state-point, (let), (let):
+; evaluating 
+;(%translate-to-state-point old-root)
+; for ### in
+;(begin ### value)
+;
+; 865 samples in (user), generate-possible-moves, (lambda):
+; evaluating 
+;(ignore-errors (lambda () (assert-legal coordinate move board turn)))
+; for ### in
+;(condition? ###)
+;
+; 881 samples in (user), generate-possible-moves, (lambda):
+; evaluating 
+;(ignore-errors (lambda () (assert-legal coordinate move board turn)))
+; for ### in
+;(condition? ###)
+;
+;1303 samples in (user), assert-legal:
+; evaluating 
+;(assert (zero? (sqr-get target-square board)) (format #f "Target square ~A is not empty!" target-square))
+; for ### in
+;(begin ### (assert (for-all? ... ...) (format #f "Square '~A' is not on the board!" current-square)) (assert (for-all? ... ...) (format #f "Square '~A' is not on the board!" target-square)) (assert (and ... ...) (format #f "Square '~A' is not a legal square!" current-square)) ...)
+;
+;
+;Value: #t
+
