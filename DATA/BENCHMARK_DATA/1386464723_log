@@ -1,0 +1,8 @@
+BENCHMARK: MIDGAME NEGAMAX SEARCH (DEPTH 4, 10 ITERATIONS)
+---------------------------------------------
+RUN TIME:  14.861
+GC TIME:   .241
+REAL TIME: 16.777
+
+Comment: this is the uncompiled file
+

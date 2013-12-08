@@ -21,6 +21,9 @@ test:
 run:
 	${SCHEME} --load checkers.scm
 
+train:
+	${SCHEME} --heap 115941 --load data_generator.scm
+
 generate:
 	${SCHEME} --load data_generator.scm
 
