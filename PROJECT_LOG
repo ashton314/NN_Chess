@@ -1133,3 +1133,17 @@ Booyah!! My compiled code runs 30% faster than non-compiled code!!
 
 Generating training data... hopefully it will work this time!
 .
+
+Start: Mon Dec  9 07:54:10 MST 2013
+Stop:  Mon Dec  9 08:10:25 MST 2013
+
+
+My program crashed again, but not before generating 1300 points of
+interesting data!! I'm generating some more points, starting with a
+root node I pulled from the 1300 interesting points I made.
+
+That number 1300 is probably a bit high; I'm sure that there are some
+duplicate boards in that set. How many exactly, I don't know. I'm
+going to use Perl to filter out duplicate boards. Long live hash
+tables!!
+.
