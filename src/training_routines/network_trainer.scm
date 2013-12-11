@@ -4,13 +4,13 @@
 
 (load-option 'format)
 
-(load "engine.scm")
-(load "feature_detector.scm")
+;; (load "engine.scm")
+;; (load "feature_detector.scm")
 
 ;; Load neural network
  ; backup current network
 (copy-file "NN_DATA/network.scm" (let ((now (local-decoded-time)))
-				   (format #f "NN_DATA/~A~A~A~A~A~A.scm"
+				   (format #f "DATA/NN_DATA/~A~A~A~A~A~A.scm"
 					   (decoded-time/year now)
 					   (decoded-time/month now)
 					   (decoded-time/day now)
@@ -19,7 +19,7 @@
 					   (decoded-time/second now))))
 
  ; load network
-(define *network-stream* (open-input-file "NN_DATA/network.scm"))
+(define *network-stream* (open-input-file "DATA/NN_DATA/network.scm"))
 (define *output-nodes* (read *network-stream*))
 (define *hidden-layer* (read *network-stream*))
 (close-port *network-stream*)
@@ -52,6 +52,8 @@ Scoring:
   -6..-10    - bad (.7), very bad (.7)
   -10..-1000 - bad (.2), very bad (1)
 |#
+
+
 
 ;; Save network
 (set! *network-stream* (open-output-file "NN_DATA/network.scm"))
