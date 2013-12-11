@@ -22,6 +22,7 @@
 				    ret)) moves))))
 
 (define (score board)
+  ;; Returns simple score of board, relative to white
   (let ((scr 0)
 	(white 0)
 	(black 0))
