@@ -1,12 +1,12 @@
 ;;; Rigorous test for matrix feed-forward networks
 ;;; Ashton Wiersdorf
 
-(load "../../../lib/tap.scm")
-(load "../../../lib/utils.scm")
-(load "../../../lib/macros.scm")
-(load "../../../lib/network_trainer.scm")
+(load "../../../utils/tap.scm")
+(load "../../../utils/utils.scm")
+(load "../../../utils/macros.scm")
+(load "../../../utils/network_trainer.scm")
 
-(load "../../matrix.scm")
+(load "../../neural_network.scm")
 
 (load-option 'format)
 

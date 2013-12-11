@@ -1,8 +1,8 @@
 ;;; Test for matrix feed-forward networks
 ;;; Ashton Wiersdorf
 
-(load "../../lib/tap.scm")
-(load "../matrix.scm")
+(load "../../utils/tap.scm")
+(load "../neural_network.scm")
 
 (load-option 'format)
 
@@ -33,11 +33,15 @@
 
 ;; test-net01
 
-(define-feed-forward-net test-net01
-  1
-  4
-  ((0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0))
-  ((0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0)))
+;; (define-feed-forward-net test-net01
+;;   1
+;;   4
+;;   ((0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0))
+;;   ((0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0)))
+
+(define test-net01 (define-ffn 1 4
+		     '((0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0))
+		     '((0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0))))
 
 (define *test01-pattern0* '(1 0 0 1))
 (define *test01-pattern1* '(0 1 1 0))
