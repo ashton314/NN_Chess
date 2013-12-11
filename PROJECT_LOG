@@ -1150,7 +1150,9 @@ tables!!
 Start: Tue Dec 10 18:28:39 MST 2013
 Stop:  Tue Dec 10 18:51:45 MST 2013
 Start: Tue Dec 10 19:44:27 MST 2013
-Stop:
+Stop:  Tue Dec 10 21:19:37 MST 2013
+Start: Tue Dec 10 21:34:49 MST 2013
+Stop:  Tue Dec 10 22:17:56 MST 2013
 
 I would like to start training my neural network today. I'm working on
 getting the trainer working.
@@ -1198,4 +1200,17 @@ Current output scheme:
 
 datum is the score pattern if score is >= than min, and < than max
 
+num INPUTS: 13
+num OUTPUTS: 5
+num HIDDEN_LAYERS: 1
+num HIDDEN_NODES: 26
+
+Training!! None of the validation sets have passed so far... this
+worries me. I /did/ decrease the learning rate from 1 to 0.7, and this
+is the largest network I'm training so far. Hopefully it will work.
+
+Unfortuantly, my problem might not be separatable with hyperplanes, in
+which case I'm going to have to change some aspect of my project. I'll
+check the program in the morning to see how it is running; hopefully
+it will work!
 .
