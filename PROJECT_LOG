@@ -1137,7 +1137,6 @@ Generating training data... hopefully it will work this time!
 Start: Mon Dec  9 07:54:10 MST 2013
 Stop:  Mon Dec  9 08:10:25 MST 2013
 
-
 My program crashed again, but not before generating 1300 points of
 interesting data!! I'm generating some more points, starting with a
 root node I pulled from the 1300 interesting points I made.
@@ -1146,4 +1145,57 @@ That number 1300 is probably a bit high; I'm sure that there are some
 duplicate boards in that set. How many exactly, I don't know. I'm
 going to use Perl to filter out duplicate boards. Long live hash
 tables!!
+.
+
+Start: Tue Dec 10 18:28:39 MST 2013
+Stop:  Tue Dec 10 18:51:45 MST 2013
+Start: Tue Dec 10 19:44:27 MST 2013
+Stop:
+
+I would like to start training my neural network today. I'm working on
+getting the trainer working.
+
+I've got the first draft for my neural network engine down. I need to
+make sure that this is still working.
+
+
+I've got the neural network engine working. I've tested it on the
+basic tests, and then the iris test data set. Now I'm ready to code
+the primary trainer!
+
+I'm going to need to process the training data into a form that the
+network will use. I'll write that filter right now.
+
+I transformed all the data into a form the network will use. Here's
+the structure of the file:
+
+(input-list output-list)
+
+input list:
+  - side (1 => white, 0 => black)
+  - pawn-compare
+  - king-compare
+  - white-advancement-potential
+  - black-advancement-potential
+  - white-moves
+  - black-moves
+  - white-endangered-pieces
+  - black-endangered-pieces
+  - longest-jump-white
+  - longest-jump-black
+  - black-blocking-white (pieces-ahead-of board 'white)
+  - white-blocking-black (ditto)
+
+Current output scheme:
+  (min  max  datum)
+  (-1000 -6 (0   0  0 .5  1))	; evil
+  (-6 -2    (0   0  0 .7 .7))	; meh-evil
+  (-2 0     (0   0 .5  1 .5))	; bad
+  (0 1      (0  .5  1 .5  0))	; meh
+  (1 2      (.5  1 .5  0  0))	; good
+  (2 6      (.7 .7  0  0  0))	; meh-awesome
+  (6 1001   (1  .5  0  0  0)))) ; awesome
+
+datum is the score pattern if score is >= than min, and < than max
+
 .
