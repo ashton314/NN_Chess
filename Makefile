@@ -34,8 +34,8 @@ player.com: src/misc/header.scm ${COMMON_UTILS} src/player.scm src/checkers_engi
 	cat src/misc/header.scm ${COMMON_UTILS} src/player.scm src/checkers_engine/engine.scm src/game_tree_search/negamax.scm src/neural_networks/neural_network.scm > bin/player.scm
 	cd bin; ${SCHEME} ${SCHEME_FLAGS} --eval "(begin (${CF} \"player.scm\") (${EXIT}))"
 
-trainer.com: src/misc/header.scm ${COMMON_UTILS} src/checkers_engine/engine.scm src/game_tree_search/negamax.scm src/neural_networks/neural_network.scm src/checkers_engine/feature_detector.scm src/training_routines/network_trainer.scm
-	cat src/misc/header.scm ${COMMON_UTILS} src/checkers_engine/engine.scm src/game_tree_search/negamax.scm src/neural_networks/neural_network.scm src/checkers_engine/feature_detector.scm src/training_routines/network_trainer.scm > bin/trainer.scm
+trainer.com: src/misc/header.scm ${COMMON_UTILS} src/checkers_engine/engine.scm src/game_tree_search/negamax.scm src/neural_networks/neural_network.scm src/checkers_engine/feature_detector.scm src/utils/network_trainer.scm src/training_routines/network_trainer.scm
+	cat src/misc/header.scm ${COMMON_UTILS} src/checkers_engine/engine.scm src/game_tree_search/negamax.scm src/neural_networks/neural_network.scm src/checkers_engine/feature_detector.scm src/utils/network_trainer.scm src/training_routines/network_trainer.scm > bin/trainer.scm
 	cd bin; ${SCHEME} ${SCHEME_FLAGS} --eval "(begin (${CF} \"trainer.scm\") (${EXIT}))"
 
 generator.com: src/misc/header.scm ${COMMON_UTILS} src/checkers_engine/engine.scm src/game_tree_search/negamax.scm src/training_routines/data_generator.scm
