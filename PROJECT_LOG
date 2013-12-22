@@ -1214,3 +1214,34 @@ which case I'm going to have to change some aspect of my project. I'll
 check the program in the morning to see how it is running; hopefully
 it will work!
 .
+
+Start: Sat Dec 21 18:16:40 MST 2013
+Stop:  Sat Dec 21 18:53:43 MST 2013
+
+I'm recovering from a particularly nasty double-illness today. I don't
+know how good my code is going to look... I just need to hack!!
+
+I'd like to see if I can simplify creating neural networks (I just
+want to specify the number of hidden layer nodes and output nodes; why
+should I care about having their initial weights when they start up? I
+can modify that later.
+
+On further reflection, I'll keep the ability to specify the initial
+weights both as backward-compatability, and it will give me more
+power/options. I like that. Not quite as simple, but simple
+enough. There comes a point where your design is too simple, and it is
+insuffiently powerful. On the flip side, there is a point where your
+tool has too many features and it becomes virtually impossible to
+use.
+
+...
+
+I changed my mind. I want to see if I can generate those .ext files
+scheme says I need to link compiled files together. Ah well, I'm done
+for tonight anyways.
+
+Oh, by the way, I presented my project! It's over now!! So. Happy. I
+was very sick when I presented, but I had sufficient strength to give
+a presentation. I had better get a big, fat A for my project. I spent
+over 100 hours on nothing but code. That's for a school project.
+.
