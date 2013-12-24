@@ -20,12 +20,7 @@
     ((eof-object? line) (close-port *training-data-stream*))
   (push! line *training-data*))
 
-(define-feed-forward-net flower-net
-  1
-  4
-  ((0 0 0 0 0 0 0 0) (0 0 0 0 0 0 0 0) (0 0 0 0 0 0 0 0))
-  ((0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0) (0 0 0 0)))
-
+(define flower-net (define-ffn 1 4 3 8 4))
 (train-network flower-net *training-data* #t 5 0.1 0.9 #t #t)
 
 ;; final validation:

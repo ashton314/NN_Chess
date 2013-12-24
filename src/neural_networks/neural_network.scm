@@ -42,148 +42,158 @@ Syntax description:
   ((.1 .2) (.4 .3) (.8 .2)))		; hidden nodes
 |#
 
-(define (define-ffn learning-rate num-inputs output-definition . hidden-layer-definition)
-  (let ((input-values (make-vector num-inputs 0))
+(define (define-ffn learning-rate num-inputs num-outputs . hidden-layer-node-counts)
+  (let ((output-definition (if (list? num-outputs) num-outputs
+			       (map (lambda (n) (make-list (last hidden-layer-node-counts) 0)) (make-list num-outputs))))
+	(hidden-layer-definition (if (for-all? hidden-layer-node-counts list?)
+				     hidden-layer-node-counts
+				     (map (lambda (count previous-count)
+					    (map (lambda (n)
+						   (make-list previous-count 0))
+						 (make-list count)))
+					  hidden-layer-node-counts (cons num-inputs
+									 (list-head hidden-layer-node-counts (- (length hidden-layer-node-counts) 1)))))))
+    (let ((input-values (make-vector num-inputs 0))
 
-	;; These are lists of 2D vectors
-	;; ( #(#(a1 a2 a3) #(b1 b2 b3) ...) #( ... ))  ( layer layer ... ) layer => ((weights ...) (weights ...))
-	(hidden-layers (map (lambda (layer) (list->vector (map list->vector (map randomize layer)))) hidden-layer-definition))
-	(hidden-layers-r '())
-	(hidden-errors (map (lambda (layer) (list->vector (map (lambda (node) (list->vector (map (lambda (nul) 0) node))) layer)))
-			    hidden-layer-definition))
-	(hidden-errors-r '())
-	(hidden-values (map (lambda (layer) (list->vector (map (lambda (node) 0) layer)))
-			    hidden-layer-definition))
-	(hidden-values-r '())
-	
-	;; This is a 2D vector
-	(output-layer (list->vector (map list->vector (map randomize output-definition))))
-	(output-errors (list->vector (map (lambda (nul) 0) output-definition)))
-	(output-values (list->vector (map (lambda (nul) 0) output-definition))))
+	  ;; These are lists of 2D vectors
+	  ;; ( #(#(a1 a2 a3) #(b1 b2 b3) ...) #( ... ))  ( layer layer ... ) layer => ((weights ...) (weights ...))
+	  (hidden-layers (map (lambda (layer) (list->vector (map list->vector (map randomize layer)))) hidden-layer-definition))
+	  (hidden-layers-r '())
+	  (hidden-errors (map (lambda (layer) (list->vector (map (lambda (node) (list->vector (map (lambda (nul) 0) node))) layer)))
+			      hidden-layer-definition))
+	  (hidden-errors-r '())
+	  (hidden-values (map (lambda (layer) (list->vector (map (lambda (node) 0) layer)))
+			      hidden-layer-definition))
+	  (hidden-values-r '())
 
-    (set! hidden-layers-r (reverse hidden-layers))
-    (set! hidden-errors-r (reverse hidden-errors))
-    (set! hidden-values-r (reverse hidden-values))
+	  ;; This is a 2D vector
+	  (output-layer (list->vector (map list->vector (map randomize output-definition))))
+	  (output-errors (list->vector (map (lambda (nul) 0) output-definition)))
+	  (output-values (list->vector (map (lambda (nul) 0) output-definition))))
 
-    (define (feed-forward input layers values)
-      (cond
-       ((null? layers) (error "Must have some layers in the network before you can run it!"))
-       ((null? input)  (error "No input given for neural network!"))
-       (else
-	(let ((result (vector-map activation (matrix-* (car layers) input))))
-	  (vector-clobber! (car values) result)
-	  (if (null? (cdr layers))
-	      (begin
-		result)
-	      (feed-forward result (cdr layers) (cdr values)))))))
+      (set! hidden-layers-r (reverse hidden-layers))
+      (set! hidden-errors-r (reverse hidden-errors))
+      (set! hidden-values-r (reverse hidden-values))
 
-    (define (transpose matrix)	; working
-      (list->vector (reverse! (map (lambda (n) (vector-map (lambda (row) (vector-ref row n)) matrix))
-				   (range 0 (- (vector-length (vector-ref matrix 0)) 1))))))
+      (define (feed-forward input layers values)
+	(cond
+	 ((null? layers) (error "Must have some layers in the network before you can run it!"))
+	 ((null? input)  (error "No input given for neural network!"))
+	 (else
+	  (let ((result (vector-map activation (matrix-* (car layers) input))))
+	    (vector-clobber! (car values) result)
+	    (if (null? (cdr layers))
+		(begin
+		  result)
+		(feed-forward result (cdr layers) (cdr values)))))))
 
-    (define (back-prop weights values errors previous-weights previous-errors next-values)
-      ;; backpropogation algorithm
-      ;; `weights', `values', and `errors' are lists of layers
-      (vector-clobber! (car errors) ; calculate errors for this layer
-		       (vector-mapn (lambda (this-val prev-whts)
-				      (* this-val (- 1 this-val) (vector-reduce + (vector-zip * prev-whts previous-errors))))
-				    (car values) (transpose previous-weights)))
+      (define (transpose matrix)	; working
+	(list->vector (reverse! (map (lambda (n) (vector-map (lambda (row) (vector-ref row n)) matrix))
+				     (range 0 (- (vector-length (vector-ref matrix 0)) 1))))))
+
+      (define (back-prop weights values errors previous-weights previous-errors next-values)
+	;; backpropogation algorithm
+	;; `weights', `values', and `errors' are lists of layers
+	(vector-clobber! (car errors) ; calculate errors for this layer
+			 (vector-mapn (lambda (this-val prev-whts)
+					(* this-val (- 1 this-val) (vector-reduce + (vector-zip * prev-whts previous-errors))))
+				      (car values) (transpose previous-weights)))
 
 
-      ;; NOTE: (car weights) looks something like #(#(.1 .2) #(.3 .4) ...)
-      (vector-clobber! (car weights) ; update weights for this layer
-		       (vector-mapn (lambda (node delta)
-				      (vector-mapn (lambda (old-weight value)
-						     (+ old-weight (* learning-rate delta value)))
-						   node next-values))
-				    (car weights) (car errors)))
+	;; NOTE: (car weights) looks something like #(#(.1 .2) #(.3 .4) ...)
+	(vector-clobber! (car weights) ; update weights for this layer
+			 (vector-mapn (lambda (node delta)
+					(vector-mapn (lambda (old-weight value)
+						       (+ old-weight (* learning-rate delta value)))
+						     node next-values))
+				      (car weights) (car errors)))
 
-      (if (null? (cdr weights))
-	  #t			; algorithm finished
-	  (back-prop (cdr weights) (cdr values) (cdr errors) (car weights) (car errors)
-		     (let ((nxt-vals (cdr values)))
-		       (if (null? nxt-vals)
-			   input-values
-			   (car nxt-vals))))))
+	(if (null? (cdr weights))
+	    #t			; algorithm finished
+	    (back-prop (cdr weights) (cdr values) (cdr errors) (car weights) (car errors)
+		       (let ((nxt-vals (cdr values)))
+			 (if (null? nxt-vals)
+			     input-values
+			     (car nxt-vals))))))
 
-    (lambda (op . args)
-      (case op
-	;; Primary methods
-	((run)
-	 ;; Runs the neural network: (net 'run (list input1 input2 ...))
-	 (set! input-values (list->vector (car args)))
-	 (set! output-values (feed-forward input-values `(,@hidden-layers ,output-layer) `(,@hidden-values ,output-values)))
-	 output-values)
-	
-	((train)
-	 ;; Runs the backprop algorithm: (net 'train (list input1 input2 ...) (list target1 target2 ...))
-	 
-	 (let ((inputs (list->vector (car args)))
-	       (targets (list->vector (cadr args))))
-	   (set! input-values inputs)
+      (lambda (op . args)
+	(case op
+	  ;; Primary methods
+	  ((run)
+	   ;; Runs the neural network: (net 'run (list input1 input2 ...))
+	   (set! input-values (list->vector (car args)))
+	   (set! output-values (feed-forward input-values `(,@hidden-layers ,output-layer) `(,@hidden-values ,output-values)))
+	   output-values)
+
+	  ((train)
+	   ;; Runs the backprop algorithm: (net 'train (list input1 input2 ...) (list target1 target2 ...))
+
+	   (let ((inputs (list->vector (car args)))
+		 (targets (list->vector (cadr args))))
+	     (set! input-values inputs)
 
 					; update output deltas
-	   (set! output-values (feed-forward input-values `(,@hidden-layers ,output-layer) `(,@hidden-values ,output-values)))
-	   (set! output-errors (vector-zip (lambda (output target) ; vector
-					     (* (- target output) (- 1 output) output)) output-values targets))
-	   (set! output-layer (vector-zip (lambda (node delta) (vector-zip (lambda (current-weight value)
-									     (+ current-weight (* learning-rate delta value)))
-									   node (car hidden-values-r)))
-					  output-layer output-errors))
+	     (set! output-values (feed-forward input-values `(,@hidden-layers ,output-layer) `(,@hidden-values ,output-values)))
+	     (set! output-errors (vector-zip (lambda (output target) ; vector
+					       (* (- target output) (- 1 output) output)) output-values targets))
+	     (set! output-layer (vector-zip (lambda (node delta) (vector-zip (lambda (current-weight value)
+									       (+ current-weight (* learning-rate delta value)))
+									     node (car hidden-values-r)))
+					    output-layer output-errors))
 
 
 					; backpropogate
-	   (back-prop hidden-layers hidden-values hidden-errors output-layer output-errors
-		      (let ((next-values (cdr hidden-values)))
-			(if (null? next-values)
-			    input-values
-			    (car next-values))))))
+	     (back-prop hidden-layers hidden-values hidden-errors output-layer output-errors
+			(let ((next-values (cdr hidden-values)))
+			  (if (null? next-values)
+			      input-values
+			      (car next-values))))))
 
 
-	((last-errors)
-	 output-errors)
+	  ((last-errors)
+	   output-errors)
 
-	;; Debugging methods
-	((x-ray)
-	 ;; Full dump
-	 (format #t "-------------- FULL DUMP FOR: '~A' --------------~%" 'net-name)
+	  ;; Debugging methods
+	  ((x-ray)
+	   ;; Full dump
+	   (format #t "-------------- FULL DUMP FOR: '~A' --------------~%" 'net-name)
 
-	 (format #t "LAYER DUMP:~%")
-	 (map (lambda (layer) (vector-map (lambda (node) (pretty-print node) (write-string " ")) layer) (display "\n---\n")) hidden-layers)
-	 (vector-map (lambda (node) (pretty-print node) (write-string " ")) output-layer)
-	 (newline)
+	   (format #t "LAYER DUMP:~%")
+	   (map (lambda (layer) (vector-map (lambda (node) (pretty-print node) (write-string " ")) layer) (display "\n---\n")) hidden-layers)
+	   (vector-map (lambda (node) (pretty-print node) (write-string " ")) output-layer)
+	   (newline)
 
-	 (format #t "ERROR DUMP:~%")
-	 (map (lambda (layer) (vector-map (lambda (node) (pretty-print node) (write-string " ")) layer) (newline)) hidden-errors)
-	 (pretty-print output-errors)
-	 (newline)
+	   (format #t "ERROR DUMP:~%")
+	   (map (lambda (layer) (vector-map (lambda (node) (pretty-print node) (write-string " ")) layer) (newline)) hidden-errors)
+	   (pretty-print output-errors)
+	   (newline)
 
-	 (format #t "VALUE DUMP:~%")
-	 (format #t "Inputs: '~A'~%" input-values)
-	 (map (lambda (layer) (vector-map (lambda (node) (pretty-print node) (write-string " ")) layer) (newline)) hidden-values)
-	 (format #t "Outputs: '~A'~%" output-values)
-	 (newline)
+	   (format #t "VALUE DUMP:~%")
+	   (format #t "Inputs: '~A'~%" input-values)
+	   (map (lambda (layer) (vector-map (lambda (node) (pretty-print node) (write-string " ")) layer) (newline)) hidden-values)
+	   (format #t "Outputs: '~A'~%" output-values)
+	   (newline)
 
-	 (if (and (equal? hidden-layers-r (reverse hidden-layers))
-		  (equal? hidden-errors-r (reverse hidden-errors))
-		  (equal? hidden-values-r (reverse hidden-values)))
-	     (format #t "Reverse lists are up-to-date.~%")
-	     (format #t "ERROR!! Reverse lists have lost linkage to originals!~%")))
+	   (if (and (equal? hidden-layers-r (reverse hidden-layers))
+		    (equal? hidden-errors-r (reverse hidden-errors))
+		    (equal? hidden-values-r (reverse hidden-values)))
+	       (format #t "Reverse lists are up-to-date.~%")
+	       (format #t "ERROR!! Reverse lists have lost linkage to originals!~%")))
 
-	((debug-hidden-layers)
-	 (pretty-print hidden-layers)
-	 (newline))
+	  ((debug-hidden-layers)
+	   (pretty-print hidden-layers)
+	   (newline))
 
-	((debug-layers)
-	 (map (lambda (layer) (vector-map (lambda (node) (pretty-print node)) layer) (newline)) hidden-layers)
-	 (pretty-print output-layer)
-	 (newline))
+	  ((debug-layers)
+	   (map (lambda (layer) (vector-map (lambda (node) (pretty-print node)) layer) (newline)) hidden-layers)
+	   (pretty-print output-layer)
+	   (newline))
 
-	((debug-get-layers)
-	 (list hidden-layers output-layer))
-	
-	(else
-	 (error (format #f "Unknown option to neural net: '~A'~%" op)))))))
+	  ((debug-get-layers)
+	   (list hidden-layers output-layer))
+
+	  (else
+	   (error (format #f "Unknown option to neural net: '~A'~%" op))))))))
 
 
 
@@ -266,7 +276,7 @@ Syntax description:
 		    (set! input-values (list->vector (car args)))
 		    (set! output-values (feed-forward input-values `(,@hidden-layers ,output-layer) `(,@hidden-values ,output-values)))
 		    output-values)
-		   
+
 		   ((train)
 		    ;; Runs the backprop algorithm: (net 'train (list input1 input2 ...) (list target1 target2 ...))
 
@@ -333,7 +343,7 @@ Syntax description:
 
 		   ((debug-get-layers)
 		    (list hidden-layers output-layer))
-		   
+
 		   (else
 		    (error (format #f "Unknown option to neural net: '~A'~%" op)))))))))))
 
