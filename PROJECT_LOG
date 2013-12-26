@@ -1245,3 +1245,49 @@ was very sick when I presented, but I had sufficient strength to give
 a presentation. I had better get a big, fat A for my project. I spent
 over 100 hours on nothing but code. That's for a school project.
 .
+
+Start: Tue Dec 24 14:51:01 MST 2013
+Stop:  Tue Dec 24 15:49:06 MST 2013
+
+I lied. I don't want to try to see if I can generate those .ext
+files. I googled the problem for a while last night and I found
+nothing. I'm just going to work on my neural network.
+
+Ok. Simplified syntax in place. However, it looks like networks with
+more than one hidden layer break. I'm going to give this a whirl; I've
+never tested with a three-layer network before. This could be the
+start of something very bad...
+.
+
+Start: Wed Dec 25 20:51:13 MST 2013
+Stop:  Wed Dec 25 21:06:53 MST 2013
+Start: Wed Dec 25 21:58:32 MST 2013
+Stop:  Wed Dec 25 22:34:40 MST 2013
+
+Going to work on debugging multi-layer nns.
+
+I have an idea as to what the bug is from. I'm going to take a break
+now to play with Mercurial.
+
+OK, I'm back! I like Mercurial. I'm currently more familiar with Git,
+but apparently Mercurial is nicer. *shrug* I'll keep playing. Now back
+to that bug...
+
+NOTE: I've started counting the number of active layers, discouting
+the input layer when I classify networks. This is the number of hidden
+layers plus one output layer. For rationale, see _Neural Smithing_.
+
+I think I was backpropagating over the output nodes, then the /first/
+layer of hidden nodes, then the second, etc. I've reversed the hidden
+layers before they go into training. The program still works for
+1-hidden-layer networks (reversal nets nothing) and it no longer
+crashes for 2-hidden-layer networks. I don't know if this is working
+for certain, however; I started a three-layer network training on the
+iris data and it failed to converge within a few hundred training
+cycles. I'll start the program running over night to see if I get
+anywhere.
+
+I'll need to walk through a back-propagation session (at least two
+iterations) on a three-layer network to make sure my program is
+working. Merry Christmas!
+.
