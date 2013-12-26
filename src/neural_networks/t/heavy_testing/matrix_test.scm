@@ -20,7 +20,8 @@
     ((eof-object? line) (close-port *training-data-stream*))
   (push! line *training-data*))
 
-(define flower-net (define-ffn 1 4 3 8 4))
+(define flower-net (define-ffn 1 4 3 5 4)) ; this is the 3-layer network
+;(define flower-net (define-ffn .7 4 3 8)) ; two layers
 (train-network flower-net *training-data* #t 5 0.1 0.9 #t #t)
 
 ;; final validation:
