@@ -4,3 +4,4 @@ neural_network/t/heavy_testing/network_trainer.log
 *.com
 *.bci
 *.bin
+bin/*
