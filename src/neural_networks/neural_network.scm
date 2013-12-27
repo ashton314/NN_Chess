@@ -34,12 +34,19 @@
 	     (- (random 2.0) 1) n)) lst))
 
 #|
-Syntax description:
-(define-feed-forward-net test
-  1					; learning weight
-  2					; two inputs
-  ((.3 .1 .4) (.7 .2 .6))		; two outputs (weights from hidden layer)
-  ((.1 .2) (.4 .3) (.8 .2)))		; hidden nodes
+Usage:
+  (define net-name0
+    (define-ffn .3 2 2 3))
+ Creates a two-layer network with two inputs, a hidden layer of three
+ nodes, and two outputs. Weights initialized to random(-1..1)
+
+  (define net-name1
+    (define-ffn .3 2 '((.1 .2) (.4 -.2))
+       '((-.3 .2) (.7 -.6) (.9 -.4))
+       '((.2 -.6 .1) (-.1 .4 .7))))
+ Creates a three-layer network with two inputs, the first hidden layer
+ with three hidden nodes, the second with two nodes, and two output
+ nodes. Weights explicitly specified.
 |#
 
 (define (define-ffn learning-rate num-inputs num-outputs . hidden-layer-node-counts)
@@ -94,15 +101,6 @@ Syntax description:
       (define (back-prop weights values errors previous-weights previous-errors next-values)
 	;; backpropogation algorithm
 	;; `weights', `values', and `errors' are lists of layers
-
-	;; BUGS HERE: I'm guessing that I'm trying to update a layer
-	;; with the wrong set of errors or something; (car errors) and
-	;; (vector-mapn ...) are not matching up. Maybe I'm going at
-	;; the layers from different directions for the errors and the
-	;; weights
-
-	;; (write-string "Inspect (car errors) and (car values) and (transpose previous-weights)\n")
-	;; (debug)
 
 	(vector-clobber! (car errors) ; calculate errors for this layer
 			 (vector-mapn (lambda (this-val prev-whts)
