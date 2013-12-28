@@ -4,6 +4,8 @@
 
 (load-option 'format)
 
+(define *debug* #f)
+
 (define-syntax push!
   (syntax-rules ()
     ((push! datum place)
@@ -102,20 +104,20 @@ Usage:
 	;; backpropogation algorithm
 	;; `weights', `values', and `errors' are lists of layers
 
+	(if *debug*
+	    (begin
+	      (write-string "\nCalculating errors for this layer...\n")
+	      (format #t "Previous errors: ~A\nPrevious weights (transposed):\n ~A\nValues: ~A\n"
+		      previous-errors (transpose previous-weights) (car values))))
+
 	(vector-clobber! (car errors) ; calculate errors for this layer
 			 (vector-mapn (lambda (this-val prev-whts)
 					(* this-val (- 1 this-val) (vector-reduce + (vector-zip * prev-whts previous-errors))))
 				      (car values)
 				      (transpose previous-weights)))
 
-
-	;; NOTE: (car weights) looks something like #(#(.1 .2) #(.3 .4) ...)
-	(vector-clobber! (car weights) ; update weights for this layer
-			 (vector-mapn (lambda (node delta)
-					(vector-mapn (lambda (old-weight value)
-						       (+ old-weight (* learning-rate delta value)))
-						     node next-values))
-				      (car weights) (car errors)))
+	(if *debug*
+	    (format #t "Errors computed: ~A\n" (car errors)))
 
 	(if (null? (cdr weights))
 	    #t			; algorithm finished
@@ -123,7 +125,15 @@ Usage:
 		       (let ((nxt-vals (cdr values)))
 			 (if (null? nxt-vals)
 			     input-values
-			     (car nxt-vals))))))
+			     (car nxt-vals)))))
+
+	;; NOTE: (car weights) looks something like #(#(.1 .2) #(.3 .4) ...)
+	(vector-clobber! (car weights) ; update weights for this layer
+			 (vector-mapn (lambda (node delta)
+					(vector-mapn (lambda (old-weight value)
+						       (+ old-weight (* learning-rate delta value)))
+						     node next-values))
+				      (car weights) (car errors))))
 
       (lambda (op . args)
 	(case op
@@ -145,18 +155,20 @@ Usage:
 	     (set! output-values (feed-forward input-values `(,@hidden-layers ,output-layer) `(,@hidden-values ,output-values)))
 	     (set! output-errors (vector-zip (lambda (output target) ; vector
 					       (* (- target output) (- 1 output) output)) output-values targets))
-	     (set! output-layer (vector-zip (lambda (node delta) (vector-zip (lambda (current-weight value)
-									       (+ current-weight (* learning-rate delta value)))
-									     node (car hidden-values-r)))
-					    output-layer output-errors))
-
 
 					; backpropogate
 	     (back-prop (reverse hidden-layers) (reverse hidden-values) (reverse hidden-errors) output-layer output-errors
 			(let ((next-values (cdr (reverse hidden-values))))
 			  (if (null? next-values)
 			      input-values
-			      (car next-values))))))
+			      (car next-values))))
+
+	     ;; Question: should I update the output-layer before or after I backprop?
+	     (set! output-layer (vector-zip (lambda (node delta) (vector-zip (lambda (current-weight value)
+									       (+ current-weight (* learning-rate delta value)))
+									     node (car hidden-values-r)))
+					    output-layer output-errors))
+	     ))
 
 
 	  ((last-errors)

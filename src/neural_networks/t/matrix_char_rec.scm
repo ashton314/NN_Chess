@@ -1,8 +1,8 @@
 ;;; Character recognition
 ;;; Ashton Wiersdorf
 
-(load "../../lib/tap.scm")
-(load "../matrix.scm")
+(load "../../utils/tap.scm")
+(load "../neural_network.scm")
 
 (load-option 'format)
 
