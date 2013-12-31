@@ -163,12 +163,10 @@ Usage:
 			      input-values
 			      (car next-values))))
 
-	     ;; Question: should I update the output-layer before or after I backprop?
 	     (set! output-layer (vector-zip (lambda (node delta) (vector-zip (lambda (current-weight value)
 									       (+ current-weight (* learning-rate delta value)))
 									     node (car hidden-values-r)))
-					    output-layer output-errors))
-	     ))
+					    output-layer output-errors))))
 
 
 	  ((last-errors)
