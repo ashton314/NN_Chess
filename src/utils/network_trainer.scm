@@ -59,7 +59,17 @@
 	     (map (lambda (data-set)
 ;		    (format #t "  Data set: ~A\n" data-set)
 		    (network-object 'train (car data-set) (cdr data-set)))
-		  set)) train-sets))))
+		  set)) train-sets)
+      (if (and shuffle-data?
+	       (not (= i 0))
+	       (= 0 (remainder i training-sets)))
+	  ; reshuffle and partition
+	  (let* ((new-sets (n-partitions (shuffle data) training-sets)))
+	    ;; (write-string "Reshuffling and partitioning\n")
+	    ;; (write-string "Old train-sets:\n") (pp train-sets)
+	    ;; (write-string "New train-sets:\n") (pp (cdr new-sets))
+	    (set! validate-set (car new-sets))
+	    (set! train-sets (cdr new-sets)))))))
 
 (define (within-bounds network-object validate-set error-margin required-pass-rate)
   (define (num-diff a b)
