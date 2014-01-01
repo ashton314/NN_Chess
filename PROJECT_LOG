@@ -1310,3 +1310,29 @@ think tha there is only one bias input to the entire network, butI
 don't know for sure.
 .
 
+Start: Wed Jan  1 14:30:26 MST 2014
+Stop:  Wed Jan  1 15:22:48 MST 2014
+
+I've been working on understanding the backprop algorithm, and I
+finally figured out why the derivative of the sigmoid function is
+y(1-y):
+  f'(a) = y(1-y)
+    where y = f(a)
+I ran this through the CAS on my HP 50g (nicest calculator ever, by
+the way) and it all checked out.
+
+Initially I followed the instructions blindly, just wanting to get the
+project done. Now I'm going back over in _Neural Smithing_ to get a
+better understanding of the theory/concepts.
+
+Also, I found that I was only using hidden-values-r in my backprop
+algorithm. I commented out hidden-nodes-r and hidden-errors-r, and the
+tests passed. I think this will help me save on memory; I'll need to
+check. At any rate, removal of useless variables will definitly not
+hurt.
+
+I'm wondering if I need to negate the errors; I'm leaving that step
+out. I'll do some digging and see if I'm actually doing the negation
+at some point, some other step in the algorithm accomodates that,
+etc.
+.

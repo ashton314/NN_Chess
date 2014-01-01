@@ -154,6 +154,7 @@ Usage:
 					; update output deltas
 	     (set! output-values (feed-forward input-values `(,@hidden-layers ,output-layer) `(,@hidden-values ,output-values)))
 	     (set! output-errors (vector-zip (lambda (output target) ; vector
+					       ;; (lambda (output) (* (- 1 output) output)) is d/dx[sigmoid]
 					       (* (- target output) (- 1 output) output)) output-values targets))
 
 					; backpropogate
