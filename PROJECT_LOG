@@ -1293,7 +1293,7 @@ working. Merry Christmas!
 .
 
 Start: Tue Dec 31 14:28:08 MST 2013
-Stop:
+Stop:  Tue Dec 31 14:40:00 MST 2013
 
 MY THREE-LAYER NETWORK TRAINED!! I increased the number of nodes in
 the hidden layers to {8, 4}, dropped the learning rate to 0.5, and it
@@ -1303,4 +1303,10 @@ find a minimum value.
 Hhmmm... it looks like {4, 4} is too small. I want to try the {8, 4}
 again. ... Hhmmm... it's taking a /lot/ longer this time. I'll just
 let it run for a bit...
+
+It trained!! I don't know how long that took, but it eventually
+trained sufficently well. I really need to add that bias input. I
+think tha there is only one bias input to the entire network, butI
+don't know for sure.
+.
 
