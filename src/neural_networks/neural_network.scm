@@ -67,10 +67,10 @@ Usage:
 	  ;; These are lists of 2D vectors
 	  ;; ( #(#(a1 a2 a3) #(b1 b2 b3) ...) #( ... ))  ( layer layer ... ) layer => ((weights ...) (weights ...))
 	  (hidden-layers (map (lambda (layer) (list->vector (map list->vector (map randomize layer)))) hidden-layer-definition))
-	  (hidden-layers-r '())
+;	  (hidden-layers-r '())
 	  (hidden-errors (map (lambda (layer) (list->vector (map (lambda (node) (list->vector (map (lambda (nul) 0) node))) layer)))
 			      hidden-layer-definition))
-	  (hidden-errors-r '())
+;	  (hidden-errors-r '())
 	  (hidden-values (map (lambda (layer) (list->vector (map (lambda (node) 0) layer)))
 			      hidden-layer-definition))
 	  (hidden-values-r '())
@@ -80,8 +80,8 @@ Usage:
 	  (output-errors (list->vector (map (lambda (nul) 0) output-definition)))
 	  (output-values (list->vector (map (lambda (nul) 0) output-definition))))
 
-      (set! hidden-layers-r (reverse hidden-layers))
-      (set! hidden-errors-r (reverse hidden-errors))
+      ;; (set! hidden-layers-r (reverse hidden-layers))
+      ;; (set! hidden-errors-r (reverse hidden-errors))
       (set! hidden-values-r (reverse hidden-values))
 
       (define (feed-forward input layers values)
@@ -193,9 +193,10 @@ Usage:
 	   (format #t "Outputs: '~A'~%" output-values)
 	   (newline)
 
-	   (if (and (equal? hidden-layers-r (reverse hidden-layers))
-		    (equal? hidden-errors-r (reverse hidden-errors))
-		    (equal? hidden-values-r (reverse hidden-values)))
+	   ;; (if (and (equal? hidden-layers-r (reverse hidden-layers))
+	   ;; 	    (equal? hidden-errors-r (reverse hidden-errors))
+	   ;; 	    (equal? hidden-values-r (reverse hidden-values)))
+	   (if (equal? hidden-values-r (reverse hidden-values))
 	       (format #t "Reverse lists are up-to-date.~%")
 	       (format #t "ERROR!! Reverse lists have lost linkage to originals!~%")))
 
