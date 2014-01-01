@@ -1291,3 +1291,16 @@ I'll need to walk through a back-propagation session (at least two
 iterations) on a three-layer network to make sure my program is
 working. Merry Christmas!
 .
+
+Start: Tue Dec 31 14:28:08 MST 2013
+Stop:
+
+MY THREE-LAYER NETWORK TRAINED!! I increased the number of nodes in
+the hidden layers to {8, 4}, dropped the learning rate to 0.5, and it
+learned. I'm going to try decreasing the number of nodes until I can
+find a minimum value.
+
+Hhmmm... it looks like {4, 4} is too small. I want to try the {8, 4}
+again. ... Hhmmm... it's taking a /lot/ longer this time. I'll just
+let it run for a bit...
+
