@@ -53,12 +53,12 @@ Usage:
 
 (define (define-ffn learning-rate num-inputs num-outputs . hidden-layer-node-counts)
   (let ((output-definition (if (list? num-outputs) num-outputs
-			       (map (lambda (n) (make-list (last hidden-layer-node-counts) 0)) (make-list num-outputs))))
+			       (map (lambda (n) (make-list (+ (last hidden-layer-node-counts) 1) 0)) (make-list num-outputs)))) ; I add 1 to the length for the bias input
 	(hidden-layer-definition (if (for-all? hidden-layer-node-counts list?)
 				     hidden-layer-node-counts
 				     (map (lambda (count previous-count)
 					    (map (lambda (n)
-						   (make-list previous-count 0))
+						   (make-list (+ previous-count 1) 0)) ; one weight added for bias input
 						 (make-list count)))
 					  hidden-layer-node-counts (cons num-inputs
 									 (list-head hidden-layer-node-counts (- (length hidden-layer-node-counts) 1)))))))
@@ -67,10 +67,8 @@ Usage:
 	  ;; These are lists of 2D vectors
 	  ;; ( #(#(a1 a2 a3) #(b1 b2 b3) ...) #( ... ))  ( layer layer ... ) layer => ((weights ...) (weights ...))
 	  (hidden-layers (map (lambda (layer) (list->vector (map list->vector (map randomize layer)))) hidden-layer-definition))
-;	  (hidden-layers-r '())
 	  (hidden-errors (map (lambda (layer) (list->vector (map (lambda (node) (list->vector (map (lambda (nul) 0) node))) layer)))
 			      hidden-layer-definition))
-;	  (hidden-errors-r '())
 	  (hidden-values (map (lambda (layer) (list->vector (map (lambda (node) 0) layer)))
 			      hidden-layer-definition))
 	  (hidden-values-r '())
@@ -80,8 +78,6 @@ Usage:
 	  (output-errors (list->vector (map (lambda (nul) 0) output-definition)))
 	  (output-values (list->vector (map (lambda (nul) 0) output-definition))))
 
-      ;; (set! hidden-layers-r (reverse hidden-layers))
-      ;; (set! hidden-errors-r (reverse hidden-errors))
       (set! hidden-values-r (reverse hidden-values))
 
       (define (feed-forward input layers values)
@@ -89,7 +85,16 @@ Usage:
 	 ((null? layers) (error "Must have some layers in the network before you can run it!"))
 	 ((null? input)  (error "No input given for neural network!"))
 	 (else
-	  (let ((result (vector-map activation (matrix-* (car layers) input))))
+	  (let ((result (vector-map activation (matrix-* (car layers) (vector-append #(1) input))))) ; (vector-append #(1) input) => bias input
+
+	    (if *debug*
+		(begin
+		  (write-string "\nFORWARD PASS {\n")
+		  (format #t "  INPUTS: ~A\n  WEIGHTS:\n" (vector-append #(1) input))
+		  (vector-map pp (car layers))
+		  (format #t "  OUTPUTS: ~A\n" result)
+		  (write-string "}\n")))
+
 	    (vector-clobber! (car values) result)
 	    (if (null? (cdr layers))
 		(begin
@@ -102,13 +107,17 @@ Usage:
 
       (define (back-prop weights values errors previous-weights previous-errors next-values)
 	;; backpropogation algorithm
-	;; `weights', `values', and `errors' are lists of layers
+	;; `weights', `values', and `errors' are lists of layers remaining to process
+	;; car of `weights', `values', and `errors' are data for _this_ layer
+	;; previous-* contains the information for the layer ahead of this layer in standard forward-prop motion
 
 	(if *debug*
 	    (begin
-	      (write-string "\nCalculating errors for this layer...\n")
-	      (format #t "Previous errors: ~A\nPrevious weights (transposed):\n ~A\nValues: ~A\n"
-		      previous-errors (transpose previous-weights) (car values))))
+	      (write-string "\nBACKPROP CYCLE {\n  ERRORS {\n")
+	      (format #t "    PREVIOUS ERRORS: ~A\n    PREVIOUS WEIGHTS (TRANSPOSED):\n"
+		      previous-errors)
+	      (vector-map pp (transpose previous-weights))
+	      (format #t "    VALUES: ~A\n" (car values))))
 
 	(vector-clobber! (car errors) ; calculate errors for this layer
 			 (vector-mapn (lambda (this-val prev-whts)
@@ -117,7 +126,7 @@ Usage:
 				      (transpose previous-weights)))
 
 	(if *debug*
-	    (format #t "Errors computed: ~A\n" (car errors)))
+	    (format #t "  } ERRORS: ~A\n}\n" (car errors)))
 
 	(if (null? (cdr weights))
 	    #t			; algorithm finished
@@ -194,9 +203,6 @@ Usage:
 	   (format #t "Outputs: '~A'~%" output-values)
 	   (newline)
 
-	   ;; (if (and (equal? hidden-layers-r (reverse hidden-layers))
-	   ;; 	    (equal? hidden-errors-r (reverse hidden-errors))
-	   ;; 	    (equal? hidden-values-r (reverse hidden-values)))
 	   (if (equal? hidden-values-r (reverse hidden-values))
 	       (format #t "Reverse lists are up-to-date.~%")
 	       (format #t "ERROR!! Reverse lists have lost linkage to originals!~%")))

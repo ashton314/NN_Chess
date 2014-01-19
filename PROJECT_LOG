@@ -1336,3 +1336,20 @@ out. I'll do some digging and see if I'm actually doing the negation
 at some point, some other step in the algorithm accomodates that,
 etc.
 .
+
+Start: Sat Jan 18 22:36:25 MST 2014
+Stop: Sat Jan 18 22:36:30 MST 2014
+
+I'm working on adding bias inputs to each node. So far, it looks like
+the forward pass is working alright, but the backprop algorithm isn't
+training correctly. Maybe it is, and I just need to assert it.
+
+I've also been working on adding more and better diagnostics for my
+neural net. The problem with a Lisp language is that it wants to be
+super elegant and clean. All your data values should flow. However,
+when you need to debug, you need to blow your code wide open. This
+makes Lisp hard.
+
+However, with Lisp, you often have a debugger in which you can walk up
+and down the entire stack, inspecting code and variables at each
+point. That's pretty dang powerful.

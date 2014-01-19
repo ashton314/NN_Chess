@@ -1,3 +1,5 @@
+test-bias:
+	cd t; mit-scheme --load bias_test.scm
 test:
 	cd t/; mit-scheme --load multi_layer_test.scm
 iris:
