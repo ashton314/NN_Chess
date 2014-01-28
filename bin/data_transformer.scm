@@ -1,4 +1,4 @@
-(load "bin/trainer.com")
+(load "trainer.com")
 
 (define *input* (open-input-file "DATA/TRAINING_DATA/data_set01.scm"))
 (define *output* (open-output-file "DATA/TRAINING_DATA/data_set02.scm"))

@@ -21,13 +21,13 @@ test:
 	echo "not implemented"
 
 run:
-	${SCHEME} --load checkers.scm
+	cd bin/; ${SCHEME} --load checkers.scm
 
 generate:
-	${SCHEME} --heap 115941 --load data_generator.scm
+	cd bin; ${SCHEME} --heap 115941 --load data_generator.scm
 
 train:
-	${SCHEME} --heap 115941 --load network_trainer.scm
+	cd bin; ${SCHEME} --heap 115941 --load network_trainer.scm
 
 doc: README
 
