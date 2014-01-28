@@ -1336,3 +1336,10 @@ out. I'll do some digging and see if I'm actually doing the negation
 at some point, some other step in the algorithm accomodates that,
 etc.
 .
+
+Start: Mon Jan 27 18:38:51 MST 2014
+Stop:  
+
+Alright, cleanup time. I'm calling this version 1.50. I intend to
+clean this thing up big time.
+.

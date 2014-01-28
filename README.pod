@@ -7,9 +7,39 @@ Capstone Project -- Neural-network enhancements to a Negascout game framework
 Play game:
   make run
 
+=head1 VERSION
+
+Current development version is v1.50.
+
+Stable version is v1.00.
+
 =head1 DESCRIPTION
 
-This project is written using MIT-Scheme.
+This program plays a game of checkers. It also features a neural
+network engine to help optimize part of the game tree search
+
+=head2 Checkers Engine
+
+The current game engine is implemented using a 4x8 vector/matrix. Each
+time a move is submitted to the engine to be executed on the board,
+the engine asserts the legality of the move. If the given move is
+illegal, the engine throws an error.
+
+=head3 Board representation
+
+The board is a quasi-object closure. It keeps state for the board
+itself as a 4x8 object, and keeps track of the current side-to-move,
+represented as either the symbol `white' or `black'.
+
+=head3 Legality checker
+
+Throws an error if a move is illegal.
+
+=head2 Neural Networks
+
+=head1 DEVELOPMENT
+
+This project is written using MIT-Scheme. Versioning control via Git.
 
 =head1 HISTORICAL NOTES
 
