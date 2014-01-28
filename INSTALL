@@ -1,2 +1,8 @@
-make clean
-make compile
+You will need a copy of MIT-Scheme on your system. Make sure that it
+is executable on the command line as `mit-scheme'. If the command is
+different, you'll need to change every instance of "mit-scheme" in the
+Makefile to whatever your scheme implementation is.
+
+Once that is done, run the following commands:
+  make clean
+  make compile
