@@ -13,7 +13,9 @@ COMMON_UTILS=src/utils/macros.scm src/utils/utils.scm
 compile: player.com trainer.com generator.com
 
 clean:
-	rm bin/*
+	rm bin/*.bin
+	rm bin/*.bci
+	rm bin/*.com
 
 test:
 	echo "not implemented"
