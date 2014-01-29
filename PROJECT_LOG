@@ -1363,4 +1363,9 @@ switch. Also, I'm trying to make some of the functions (map, length,
 etc. (see utils/vector_utilities.scm for a list (the macro is where
 the problem is right now (I think)))) generic to help make the switch
 really easy and really non-invasive to the code.
+
+Cancel that!! I redefined map, and I think I killed the program with
+an infinite recursion. I'm not going to take the time to make map,
+reduce, and length generic.
+Bug eliminated.
 .
