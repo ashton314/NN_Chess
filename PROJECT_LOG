@@ -1343,3 +1343,24 @@ Stop:  Mon Jan 27 19:00:17 MST 2014
 Alright, cleanup time. I'm calling this version 1.50. I intend to
 clean this thing up big time.
 .
+
+Start: Tue Jan 28 20:31:30 MST 2014
+Stop:  Tue Jan 28 22:07:16 MST 2014
+
+I'm going to clobber my old nn engine and build it again from
+scratch. Emphasis on the /from scratch/. 
+
+I need to figure out a way to make libaries in scheme. Dang
+documentation. This will help me with a project so huge.
+
+There is something fishy with the macro I'm trying to write in
+utils/vector_utilities.scm. See the comment around there.
+
+I'm starting out with conses for the network. Once I've got it
+working, I hopefully will be able to switch back over to vectors. I've
+outlined some places that I will need to change when I make the
+switch. Also, I'm trying to make some of the functions (map, length,
+etc. (see utils/vector_utilities.scm for a list (the macro is where
+the problem is right now (I think)))) generic to help make the switch
+really easy and really non-invasive to the code.
+.

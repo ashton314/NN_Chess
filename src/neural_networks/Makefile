@@ -1,4 +1,4 @@
+SCHEME=mit-scheme
+
 test:
-	cd t/; mit-scheme --load multi_layer_test.scm
-iris:
-	cd t/heavy_testing; mit-scheme --load matrix_test.scm
+	cd t/; ${SCHEME} --load forward_prop.scm
