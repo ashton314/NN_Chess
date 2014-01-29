@@ -4,21 +4,19 @@
 ;;; Part of the NN_Chess project
 
 ;; Generic sequence routines
-(define-macro make-generic-application
-  (syntax-rules ()
-    ((_ sym vector-routine)
-     (let ((old-routine sym))		; something be wrong here
-       (set! sym
-	     (lambda (func . args)
-	       (cond ((for-all? args pair?)
-	       	      (apply old-routine (cons func args)))
-	       	     ((for-all? args vector?)
-	       	      (apply vector-routine (cons func args)))
-	       	     (else (error "Don't know how to do this for function" (quote sym))))))))))
+;; (define-syntax make-generic-application
+;;   (syntax-rules ()
+;;     ((_ sym vector-routine)
+;;      (let ((old-routine sym))		; something be wrong here
+;;        (set! sym
+;; 	     (lambda (func . args)
+;; 	       (cond ((for-all? args vector?)
+;; 	       	      (apply vector-routine (cons func args)))
+;; 	       	     (else (apply old-routine (cons func args))))))))))
 
-(make-generic-application map vector-mapn)
-(make-generic-application reduce vector-reduce)
-(make-generic-application length vector-length)
+;(make-generic-application map vector-mapn)      ;; bad idea to try to redefine this...
+;(make-generic-application reduce vector-reduce)
+;(make-generic-application length vector-length)
 
 ;; Utility functions
 (define (matrix-* matrix vect)
