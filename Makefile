@@ -20,11 +20,14 @@ UTIL=$(SRC)/utils
 	cp $< $(BIN)
 	cd $(BIN); $(SCHEME_EVAL) "(begin ($(CF) \"$<\") ($(EXIT)))"
 
-# top-level targets
+# primary targets
 clean:
 	rm $(BIN)/*
 
-test: $(BIN)/tester.com
+test: compile-test
+
+# secondary targets
+compile-test: $(BIN)/tester.com
 
 # subtargets
 $(BIN)/tester.com: $(SRC)/tester.scm $(BIN)/neural_network.com $(BIN)/tap.com
