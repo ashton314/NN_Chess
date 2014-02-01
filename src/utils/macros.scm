@@ -2,6 +2,9 @@
 ;;; Ashton Wiersdorf
 ;;; Part of the NN_Chess project
 
+(declare (usual-integrations)
+	 (integrate-operator call-once while dotimes inc! push! pop! this-and-next))
+
 (define-syntax call-once
   ;; Takes a thunk, and calls the thunk once. Next iteration, (or whatever) the thunk is NOT called
   (syntax-rules ()

@@ -8,10 +8,7 @@
 ;; (load "../../lib/utils.scm")
 ;; (load "negamax.scm")
 ;; (load "../../neural_network/matrix.scm")
-;; (declare (integrate-external "macros"))
-;; (declare (integrate-external "utils"))
-;; (declare (integrate-external "negamax"))
-;; (declare (integrate-external "neural_network"))
+(declare (integrate-external "macros" "utils" "negamax" "neural_network"))
 
 ;; Global variables
 (define *white-pawn* "w")
@@ -38,7 +35,7 @@ Board description:
 |#
 
 ;; Constructer function
-(define (make-board)
+(define-integrable (make-board)
   ;; Returns a new checkers board
 
   ; Internal macros
@@ -136,7 +133,7 @@ Board description:
 	  (sqr-set! (midpoint current-square target-square) 0 new-board)))
     (cons new-board (reverse! ret))))
 
-(define (assert-legal current-square target-square board turn)
+(define-integrable (assert-legal current-square target-square board turn)
   ;; NOTE: current-square and target-square are in split-raw format
 
   ; right turn to move
@@ -200,7 +197,7 @@ Board description:
 (define (black-piece? piece)
   (case piece ((-1 -2) #t) (else #f)))
 
-(define (format-board board)
+(define-integrable (format-board board)
   (string-append
    (format #f "
      1   2   3   4   5   6   7   8
@@ -225,10 +222,10 @@ Board description:
 
 
 ;; Helper functions
-(define (num-diff a b)
+(define-integrable (num-diff a b)
   (abs (- a b)))
 
-(define (assert condition if-err)
+(define-integrable (assert condition if-err)
   (if condition
       #t
       (error if-err)))
@@ -247,15 +244,15 @@ Board description:
   (cons (+ (car current) (/ (- (car target) (car current)) 2))
 	(+ (cdr current) (/ (- (cdr target) (cdr current)) 2))))
 
-(define (sqr-get sqr board)
+(define-integrable (sqr-get sqr board)
   ;; Takes a square from `split-num'
   ;; sqr is in raw form
   (vector-ref (vector-ref board (- (car sqr) 1)) (truncate (/ (- (cdr sqr) 1) 2))))
 
-(define (sqr-set! sqr obj board)
+(define-integrable (sqr-set! sqr obj board)
   (vector-set! (vector-ref board (- (car sqr) 1)) (truncate (/ (- (cdr sqr) 1) 2)) obj))
 
-(define (split-num num)
+(define-integrable (split-num num)
   ;; Takes something like 12 and returns (1 . 2)
   (if (< num 0)
       (cons 0 num)

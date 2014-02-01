@@ -4,10 +4,9 @@
 
 (load-option 'format)
 
-;(load "engine.scm")
-;(declare (integrate-external "engine"))
+(declare (integrate-external "engine"))
 
-(define (play-game depth)
+(define-integrable (play-game depth)
   (let ((board (make-board)))
 ;    (board 'set-board! #(#(0 0 0 0) #(1 0 0 0) #(1 0 0 0) #(0 0 1 0) #(0 0 0 0) #(0 -1 -1 0) #(0 0 0 0) #(0 0 0 0)))
 ;    (board 'set-board! #(#(0 0 0 0) #(0 0 0 0) #(0 0 0 0) #(1 1 1 1) #(0 0 0 0) #(-1 0 0 -1) #(0 0 0 0) #(0 0 0 0)))

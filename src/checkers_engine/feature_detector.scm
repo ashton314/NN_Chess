@@ -4,7 +4,7 @@
 
 ;; (load "../../lib/utils.scm")
 
-(define (pawn-compare board)
+(define-integrable (pawn-compare board)
   ;; Returns #white_pawns - #black_pawns
 
   ;; NOTE: I'm sure there's room for optimizing this routine and
@@ -15,7 +15,7 @@
 		  (vector-map (lambda (cell) (cond ((= cell 1) (inc! whites)) ((= cell -1) (inc! blacks)))) row)) board)
     (- whites blacks)))
 
-(define (king-compare board)
+(define-integrable (king-compare board)
   ;; Returns #white_kings - #black_kings
 
   (let ((whites 0)
@@ -24,7 +24,7 @@
 		  (vector-map (lambda (cell) (cond ((= cell 2) (inc! whites)) ((= cell -2) (inc! blacks)))) row)) board)
     (- whites blacks)))
 
-(define (advancement-potential board side)
+(define-integrable (advancement-potential board side)
   ;; Returns how many pieces are within two spaces of the relitive
   ;; "back" of the board
   (let ((count 0)
@@ -36,13 +36,13 @@
 		    (vector-head board 3)))
     count))
 
-(define (white-advancement-potential board)
+(define-integrable (white-advancement-potential board)
   (advancement-potential board 'white))
 
-(define (black-advancement-potential board)
+(define-integrable (black-advancement-potential board)
   (advancement-potential board 'black))
 
-(define (analyze-movement board)
+(define-integrable (analyze-movement board)
   (let* ((white-moves (possible-moves board 'white))
 	 (black-moves (possible-moves board 'black))
 
@@ -61,7 +61,7 @@
 	 (count-longest-jump-black (if (> count-white-endangered 0) (- (apply max (map length black-moves)) 1) 0)))
     (list count-white-moves count-black-moves count-white-endangered count-black-endangered count-longest-jump-white count-longest-jump-black)))
 
-(define (pieces-ahead-of board side)
+(define-integrable (pieces-ahead-of board side)
   (call-with-values
       (lambda () (cond ((eq? side 'white) (values reverse! white-piece? black-piece?))
 		       ((eq? side 'black) (values (lambda (x) x) black-piece? white-piece?))

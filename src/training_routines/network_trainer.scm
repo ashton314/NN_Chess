@@ -4,8 +4,7 @@
 
 (load-option 'format)
 
-;; (load "engine.scm")
-;; (load "feature_detector.scm")
+(declare (integrate-external "engine" "feature_detector"))
 
 (write-string "Comments: ")
 (define *comments* (read-line))

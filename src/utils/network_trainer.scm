@@ -2,10 +2,10 @@
 ;;; Ashton Wiersdorf
 ;;; Part of the NN_Chess project
 
-(define (shuffle lst)
+(define-integrable (shuffle lst)
   (sort lst (lambda (a b) (< (random 10) (random 10)))))
 
-(define (n-partitions lst num-sets)
+(define-integrable (n-partitions lst num-sets)
   ;; NOTE: I could make this more exact by using the fraction part to
   ;; figure out how to partition the last subset
   (define (partition pool pool-length partition-length set-acc)
@@ -18,7 +18,7 @@
 
 (define *training-session-id* (- (get-universal-time) epoch))
 
-(define (train-network network-object training-data
+(define-integrable (train-network network-object training-data
 		       shuffle-data? training-sets
 		       output-error-margin validation-pass-rate pass-validation? . debug?)
   ;; Trains a network.
@@ -71,7 +71,7 @@
 	    (set! validate-set (car new-sets))
 	    (set! train-sets (cdr new-sets)))))))
 
-(define (within-bounds network-object validate-set error-margin required-pass-rate)
+(define-integrable (within-bounds network-object validate-set error-margin required-pass-rate)
   (define (num-diff a b)
     (abs (- a b)))
 

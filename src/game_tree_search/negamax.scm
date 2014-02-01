@@ -9,7 +9,7 @@
 		      #(-1 -1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1)))
 (define *root-turn* 'white)
 
-(define (best-move-dumb board turn depth)
+(define-integrable (best-move-dumb board turn depth)
   (define (best-car best lst)
     (if (null? lst)
 	best
@@ -34,7 +34,7 @@
 	  ((= 0 black) 1000)
 	  (else scr))))
 
-(define (negamax board turn depth loudp history)
+(define-integrable (negamax board turn depth loudp history)
   (define (negamax-primary brd trn alpha beta depth-remaining hist)
     (if (= 0 depth-remaining)
 	(* (score brd) (if (eq? trn 'white) 1 -1))
@@ -74,7 +74,7 @@
   (format #t " ~A SCORE: ~A " current scr))
 
 ;; Move generation
-(define (possible-moves board turn)
+(define-integrable (possible-moves board turn)
   (reduce append '() 
 	  (map (lambda (coord)
 		 (delete-duplicates!
@@ -143,7 +143,7 @@
 (define (collapse-num pair)
   (+ (* (car pair) 10) (cdr pair)))
 
-(define (other-side side)
+(define-integrable (other-side side)
   (case side
     ('white 'black)
     ('black 'white)
