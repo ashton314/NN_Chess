@@ -3,5 +3,6 @@ scratch/
 *.com
 *.bci
 *.bin
+*.ext
 bin/*
 src/neural_networks/t/heavy_testing/network_trainer.log
