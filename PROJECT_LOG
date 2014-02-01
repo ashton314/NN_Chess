@@ -1371,11 +1371,39 @@ Bug eliminated.
 .
 
 Start: Fri Jan 31 20:37:44 MST 2014
-Stop:
+Stop:  Fri Jan 31 21:51:17 MST 2014
 
 I intend to figure out how to compile and link stuff today. Maybe. It
 would be /so/ nice if I could.
 
 I FINALLY FIGURED OUT HOW TO GET THOSE DARN .EXT FILES!! IT LOOKS LIKE
 I JUST NEED TO DEFINE EXTERNAL FUNCTIONS WITH `define-integrable'.
+
+Alright!! I'm getting stuff to compile, linking files, etc. The real
+problem was that I needed to have some `define-integrable'
+declarations in my code.
+
+Compiling scheme: I copy each file as I need it into bin/. Once that
+is done I cd into bin/ and compile the file there. This keeps
+everything nice and tidy.
+
+Example: neural_network.scm relies on utils/vector_utilities.scm for
+some functions. First I copy utils/vector_utilities.scm into
+bin/. Then I compile bin/vector_utilities.scm. All of the functions I
+call in here are defined with `define-integrable' with one
+exception. In the compilation process, this generates
+vector_utilities.ext in bin/. When I next copy neural_network.scm into
+bin/ and compile it, the compiler hits:
+  (declare (integrate-external "vector_utilities"))
+and sucks vector_utilities.ext into the code, doing some optimizations
+that I am not familiar with.
+
+Exception: There is one function that takes a variable number of
+arguments. (vector-mapn) In stead of writing this:
+  (define-integrable (vector-mapn func . args) ...)
+I have to write this:
+  (declare (integrate-operator vector-mapn))
+  (define vector-mapn (lambda (func . args) ...))
+
+Ah, a /very/ good night. Sleep well, everyone.
 .
