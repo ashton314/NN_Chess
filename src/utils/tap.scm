@@ -3,6 +3,9 @@
 
 (load-option 'format)
 
+(declare (usual-integrations)
+	 (integrate-operator plan-tests ok is is-eq done-testing))
+
 (define plan-tests)
 (define ok)
 (define is)

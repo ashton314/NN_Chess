@@ -3,7 +3,8 @@
 ;;; Part of the NN_Chess project
 
 (load-option 'format)
-(load "../utils/vector_utilities.scm")
+(declare (usual-integrations)
+	 (integrate-external "vector_utilities"))
 
 (define *debug* #f)
 
@@ -18,7 +19,6 @@
      (let ((temp1 (car place)))
        (set! place (cdr place))
        temp1))))
-
 
 (define (sigmoid val)
   ;; Sigmoid function
@@ -38,16 +38,18 @@ Usage:
     2))
 |#
 
-(define (define-ffn learning-rate input-count layers-definition . options)
-  ;; returns quasi-object closure
-  (let ((layers (initialize-layers input-count layers-definition)))
-    (lambda (op . args)
-      (case op
-	;; primary routines
-
-	;; debugging routines
-	((layers) layers)
-	((pp-layers) (map pp layers))))))
+(declare (integrate-operator define-ffn))
+(define define-ffn
+  (lambda (learning-rate input-count layers-definition . options)
+    ;; returns quasi-object closure
+    (let ((layers (initialize-layers input-count layers-definition)))
+      (lambda (op . args)
+	(case op
+	  ;; primary routines
+	  
+	  ;; debugging routines
+	  ((layers) layers)
+	  ((pp-layers) (map pp layers)))))))
 
 
 ;; utility routines
