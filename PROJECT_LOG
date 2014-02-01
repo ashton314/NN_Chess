@@ -1369,3 +1369,13 @@ an infinite recursion. I'm not going to take the time to make map,
 reduce, and length generic.
 Bug eliminated.
 .
+
+Start: Fri Jan 31 20:37:44 MST 2014
+Stop:
+
+I intend to figure out how to compile and link stuff today. Maybe. It
+would be /so/ nice if I could.
+
+I FINALLY FIGURED OUT HOW TO GET THOSE DARN .EXT FILES!! IT LOOKS LIKE
+I JUST NEED TO DEFINE EXTERNAL FUNCTIONS WITH `define-integrable'.
+.
