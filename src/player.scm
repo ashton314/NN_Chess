@@ -4,7 +4,8 @@
 
 (load-option 'format)
 
-(declare (integrate-external "engine"))
+(declare (usual-integrations)
+	 (integrate-external "engine"))
 
 (define-integrable (play-game depth)
   (let ((board (make-board)))
@@ -17,6 +18,7 @@
 	(cond ((list? comm) (board 'move! comm) (loop))
 	      ((eq? comm 'go) (board 'move! (cadr (best-move-dumb (board 'dump-board) ((board 'turn) 'get) depth))) (loop))
 	      ((eq? comm 'quit) 'bye)
+	      ((eq? comm 'help) (format #t "Movement: (xy xy)\nCommands: go quit help new-depth term\n") (loop))
 	      ((eq? comm 'new-depth) (let ((num (prompt-for-expression (format #f "New depth (~A): " depth))))
 				       (if (and (number? num) (integer? num) (positive? num)) (set! depth num))
 				       (format #t "Depth is: ~A~%" depth)

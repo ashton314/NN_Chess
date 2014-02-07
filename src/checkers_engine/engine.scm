@@ -8,13 +8,15 @@
 ;; (load "../../lib/utils.scm")
 ;; (load "negamax.scm")
 ;; (load "../../neural_network/matrix.scm")
-(declare (integrate-external "macros" "utils" "negamax" "neural_network"))
+(declare (usual-integrations)
+	 (integrate do-move split-num)
+	 (integrate-external "utils" "neural_network"))
 
 ;; Global variables
-(define *white-pawn* "w")
-(define *white-king* "W")
-(define *black-pawn* "b")
-(define *black-king* "B")
+(define-integrable *white-pawn* "w")
+(define-integrable *white-king* "W")
+(define-integrable *black-pawn* "b")
+(define-integrable *black-king* "B")
 
 ;; NOTES
 #|
@@ -73,14 +75,14 @@ Board description:
 
 	;; AI
 	((possible-moves) (possible-moves board turn))
-	((compute-move-dumb) (best-move-dumb board turn)) ; no NN
-	((compute-move-smart) (best-move-smart board turn neural-net))
-	((make-move-dumb!) (let ((data (do-move (best-move-dumb board turn) board turn)))
-			     (set! board (car data))
-			     (set! turn (case turn ('white 'black) ('black 'white)))))
-	((make-move-smart!) (let ((data (do-move (best-move-smart board turn neural-net) board turn)))
-			     (set! board (car data))
-			     (set! turn (case turn ('white 'black) ('black 'white)))))
+;; 	((compute-move-dumb) (best-move-dumb board turn)) ; no NN
+;;	((compute-move-smart) (best-move-smart board turn neural-net))
+;; 	((make-move-dumb!) (let ((data (do-move (best-move-dumb board turn) board turn)))
+;; 			     (set! board (car data))
+;; 			     (set! turn (case turn ('white 'black) ('black 'white)))))
+;;	((make-move-smart!) (let ((data (do-move (best-move-smart board turn neural-net) board turn)))
+;; 			     (set! board (car data))
+;; 			     (set! turn (case turn ('white 'black) ('black 'white)))))
 
 	;; Display/Debugging
 	((print) (write-string (format-board board)))
@@ -117,7 +119,7 @@ Board description:
 			   (error "non-jump move in multi-square chain"))))
     (make-move (car mvs) (cdr mvs) board '())))
 
-(define (copy-board-with-modifications current-square target-square board)
+(define-integrable (copy-board-with-modifications current-square target-square board)
   (let ((new-board (vector-copy (vector-map vector-copy board)))
 	(ret (list current-square target-square)))
     (sqr-set! target-square
@@ -184,19 +186,6 @@ Board description:
 		 "You can only jump over a piece of the opposite color!"))
     (else (error "You cannot move that far!"))))
     
-
-(define (right-turn sqr turn)
-  (eq? turn (case sqr ((1 2) 'white) ((-1 -2) 'black))))
-
-(define (king? piece)
-  (= (abs piece) 2))
-
-(define (white-piece? piece)
-  (case piece ((1 2) #t) (else #f)))
-
-(define (black-piece? piece)
-  (case piece ((-1 -2) #t) (else #f)))
-
 (define-integrable (format-board board)
   (string-append
    (format #f "
@@ -230,12 +219,12 @@ Board description:
       #t
       (error if-err)))
 
-(define (convert-coord sqr)
+(define-integrable (convert-coord sqr)
   ;; Converts a board coordinate into 0-index form
   (cons (- (car sqr) 1)
 	(floor (remainder (cdr sqr) 2))))
 
-(define (midpoint current target)
+(define-integrable (midpoint current target)
   ;; Given two squares on the same diagnal with one square between
   ;; them, returns that in-between square
   ;; Works on split-num'd raw squares
@@ -252,7 +241,7 @@ Board description:
 (define-integrable (sqr-set! sqr obj board)
   (vector-set! (vector-ref board (- (car sqr) 1)) (truncate (/ (- (cdr sqr) 1) 2)) obj))
 
-(define-integrable (split-num num)
+(define (split-num num)
   ;; Takes something like 12 and returns (1 . 2)
   (if (< num 0)
       (cons 0 num)

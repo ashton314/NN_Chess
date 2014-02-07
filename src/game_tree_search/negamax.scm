@@ -1,13 +1,28 @@
-;;; Checkers engine
+;;; Search engine
 ;;; Ashton Wiersdorf
 ;;; Part of the NN_Chess project
 
 (load-option 'format)
 
+(declare (usual-integrations)
+	 (integrate white-piece? black-piece? collapse-num sub-jumps))
+
 (define *root-node* #(#(1 1 1 1) #(1 1 1 1) #(1 1 1 1)
 		      #(0 0 0 0) #(0 0 0 0)
 		      #(-1 -1 -1 -1) #(-1 -1 -1 -1) #(-1 -1 -1 -1)))
 (define *root-turn* 'white)
+
+(define-integrable (right-turn sqr turn)
+  (eq? turn (case sqr ((1 2) 'white) ((-1 -2) 'black))))
+
+(define-integrable (king? piece)
+  (= (abs piece) 2))
+
+(define (white-piece? piece)
+  (case piece ((1 2) #t) (else #f)))
+
+(define (black-piece? piece)
+  (case piece ((-1 -2) #t) (else #f)))
 
 (define-integrable (best-move-dumb board turn depth)
   (define (best-car best lst)
@@ -21,7 +36,7 @@
 				    (newline)
 				    ret)) moves))))
 
-(define (score board)
+(define-integrable (score board)
   ;; Returns simple score of board, relative to white
   (let ((scr 0)
 	(white 0)
@@ -63,14 +78,14 @@
 	      (loop moves alpha)))))
   (negamax-primary board turn -1000000 1000000 depth history))
 
-(define (negamax-status currently-considering history best-alpha alpha beta)
+(define-integrable (negamax-status currently-considering history best-alpha alpha beta)
   (write-string
    "\r                                                                                                                                                    ")
   (write-string "\rConsidering: ")
   (format #t "~A" (apply string-append (map (lambda (choice) (format #f "~A " choice)) (reverse history))))
   (format #t "~A ### Alpha: ~A Beta: ~A" currently-considering best-alpha beta))
 
-(define (negamax-finish current history scr)
+(define-integrable (negamax-finish current history scr)
   (format #t " ~A SCORE: ~A " current scr))
 
 ;; Move generation
@@ -85,22 +100,24 @@
 			  )))
 	       (collect-coordinates board turn))))
 
-(define (generate-possible-moves board coordinate must-jump? turn)
+(define-integrable (generate-possible-moves first-board first-coordinate first-must-jump? first-turn)
   ;; if must-jump? is #t, then this must return legal jumps
-  (let ((jumps (filter (lambda (move) (not (condition? (ignore-errors (lambda () (assert-legal coordinate move board turn))))))
-		       (collect-diagnal-squares coordinate 2)))
-	(single-moves (if must-jump? '()
-			  (filter (lambda (move) (not (condition? (ignore-errors (lambda () (assert-legal coordinate move board turn))))))
-				  (collect-diagnal-squares coordinate 1)))))
-    (append (if (null? jumps) '()
-		(apply append (map (lambda (jump)
-				     (let ((new-board (car (copy-board-with-modifications coordinate jump board))))
-				       (let ((chains (generate-possible-moves new-board jump #t turn)))
-					 (if (null? chains)
-					     (list (list jump))
-					     (map (lambda (chain) (cons jump chain)) chains)))))
-				   jumps)))
-	    (map list single-moves))))
+  (define (loop board coordinate must-jump? turn)
+    (let ((jumps (filter (lambda (move) (not (condition? (ignore-errors (lambda () (assert-legal coordinate move board turn))))))
+			 (collect-diagnal-squares coordinate 2)))
+	  (single-moves (if must-jump? '()
+			    (filter (lambda (move) (not (condition? (ignore-errors (lambda () (assert-legal coordinate move board turn))))))
+				    (collect-diagnal-squares coordinate 1)))))
+      (append (if (null? jumps) '()
+		  (apply append (map (lambda (jump)
+				       (let ((new-board (car (copy-board-with-modifications coordinate jump board))))
+					 (let ((chains (loop new-board jump #t turn)))
+					   (if (null? chains)
+					       (list (list jump))
+					       (map (lambda (chain) (cons jump chain)) chains)))))
+				     jumps)))
+	      (map list single-moves))))
+  (loop first-board first-coordinate first-must-jump? first-turn))
 
 (define (sub-jumps chain)
   ;; All this does is return successive reversed CDRs of a reversed list
@@ -114,7 +131,7 @@
 	(post-process (cdr this-list) (cons (reverse (car this-list)) acc))))
   (post-process (loop (reverse chain) '()) '()))
   
-(define (collect-diagnal-squares square distance)
+(define-integrable (collect-diagnal-squares square distance)
   (let ((sqrs
 	 (filter (lambda (sqr)
 		   (and (< 0 (car sqr)) (< 0 (cdr sqr))
@@ -125,7 +142,7 @@
 		      '(1 -1 1 -1)))))
     sqrs))
 
-(define (collect-coordinates board turn)
+(define-integrable (collect-coordinates board turn)
   (define (loop row col acc)
     (if (and (= row 8) (= col 8))
 	acc
