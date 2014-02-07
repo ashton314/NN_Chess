@@ -28,8 +28,8 @@ clean:
 	rm $(BIN)/*
 	rm $(PWD)/player.com
 
-test: $(BIN)/tester.com
-#	bin $(BIN); $(SCHEME_EVAL) "(begin ($(CF) \"$\") ($(EXIT)))"
+test: $(BIN)/tester.com $(BIN)/tap.com
+	cd $(BIN); $(SCHEME) --load tester.com --eval "(do-tests)"
 
 play: $(PWD)/player.com
 	$(SCHEME) --load player.com
@@ -37,6 +37,11 @@ play: $(PWD)/player.com
 train: $(BIN)/network_trainer.com
 
 # subtargets
+$(BIN)/tester.com: $(SRC)/tester.scm
+	cp $(SRC)/tester.scm $(BIN)
+	cp $(UTILS)/tap.scm $(BIN)
+	cd $(BIN); $(SCHEME_EVAL) "(begin ($(CF) \"tester.scm\") ($(EXIT)))"
+
 $(PWD)/player.com: $(BIN)/player.com
 	cp $(BIN)/player.com $(PWD)
 
