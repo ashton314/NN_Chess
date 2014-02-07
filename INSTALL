@@ -3,6 +3,22 @@ is executable on the command line as `mit-scheme'. If the command is
 different, you'll need to change every instance of "mit-scheme" in the
 Makefile to whatever your scheme implementation is.
 
-Once that is done, run the following commands:
-  make clean
-  make compile
+Once that is done, run the following command:
+  make play
+
+This will automatically run the `make install' command.
+
+Occasionally, MIT-Scheme will not start properly (at least on OS X
+Mountain Lion). The error message I have been getting looks something
+like this:
+
+mit-scheme: can't find a readable default for option --band.
+        searched for file all.com in these directories:
+        /Applications/Scheme.app/Contents/Resources
+        /usr/local/lib/mit-scheme-x86-64
+
+Inconsistency detected.
+
+Just run the `make install' command until you don't get this error
+message any more. This error comes occasionally, but I have never had
+to try more than twice to get the program to compile properly.
