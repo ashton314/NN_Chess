@@ -1428,4 +1428,9 @@ Stop:
 
 Going to work on debugging the neural network creation routines. I
 think the problem is somewhere in the layer initilization routines.
+
+Okay, that bug is fixed. I was calling
+  (randomize (make-list <some int>))
+which was passing a list of '() to randomize. The fix:
+  (randomize (make-list <some int> 0))
 .
