@@ -19,7 +19,19 @@
     (let ((layers (test-net 'get-layers)))
       (is (length layers) 2 "two non-input layers")
       (is (length (car layers)) 3 "three nodes in hidden layers")
-      (is (length (cadr layers)) 2 "two output nodes"))
-    )
+      (is (length (cadr layers)) 2 "two output nodes")
+
+      (ok (for-all? (car layers) (lambda (n) (= (length n) 3))) "second layer has all weights (bias included)")
+      (ok (for-all? (cadr layers) (lambda (n) (= (length n) 4))) "third layer has all weights (bias included)")
+
+      (ok (for-all? (flatten (car layers)) (lambda (n) (and (> 1 n) (< -1 n)))) "small weights in second layer")
+      (ok (for-all? (flatten (cadr layers)) (lambda (n) (and (> 1 n) (< -1 n)))) "small weights in third layer")
+
+      (ok (not (apply = (flatten (car layers)))) "random weights in second layer")
+      (ok (not (apply = (flatten (cadr layers)))) "random weights in third layer")))
 
   (done-testing))
+
+(define (flatten lst)
+  (cond ((pair? lst) (apply append (map flatten lst)))
+	(else (list lst))))
