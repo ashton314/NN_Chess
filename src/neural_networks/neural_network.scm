@@ -46,7 +46,9 @@ Usage:
       (lambda (op . args)
 	(case op
 	  ;; primary routines
-	  
+	  ((run) (car (forward-prop (car args) layers)))
+	  ((run-with-values) (forward-prop (car args) layers))
+
 	  ((genetic-code) (error "option `genetic-code' not implemented")) ; returns genetic code to network (for genetic algorithms)
 
 	  ;; setters
@@ -59,6 +61,18 @@ Usage:
 
 	  ;; debugging routines
 	  ((pp-layers) (map (lambda (layer) (write-string "----------\n") (pp layer)) layers)))))))
+
+
+(define-integrable (forward-prop inputs all-layers)
+  (define (loop input layers value-acc)	; values-acc holds node values in REVERSE ORDER
+    (if (null? layers)			; forward pass finished
+	(cons input value-acc)
+	(let ((values (map (lambda (node) ; add bias here -----V
+			     (sigmoid (reduce + 0 (map * (cons 1 inputs) node))))
+			   (car layers))))
+	  (loop values (cdr layers) (cons values values-acc)))))
+  (loop inputs all-layers '()))
+
 
 
 ;; utility routines

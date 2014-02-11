@@ -37,6 +37,7 @@
 
   (done-testing))
 
+;; Utility functions
 (define (flatten lst)
   (cond ((pair? lst) (apply append (map flatten lst)))
 	(else (list lst))))
