@@ -28,7 +28,12 @@
       (ok (for-all? (flatten (cadr layers)) (lambda (n) (and (> 1 n) (< -1 n)))) "small weights in third layer")
 
       (ok (not (apply = (flatten (car layers)))) "random weights in second layer")
-      (ok (not (apply = (flatten (cadr layers)))) "random weights in third layer")))
+      (ok (not (apply = (flatten (cadr layers)))) "random weights in third layer"))
+
+    (test-net 'set-layers '(((.1 .2 .3) (.4 .5 .6) (.2 .8 .4))
+			    ((.5 .3 .2 .6) (.1 .3 .6 .5))))
+    (is (test-net 'get-layers) '(((.1 .2 .3) (.4 .5 .6) (.2 .8 .4))
+				 ((.5 .3 .2 .6) (.1 .3 .6 .5))) "layers set/get correctly"))
 
   (done-testing))
 

@@ -47,6 +47,8 @@ Usage:
 	(case op
 	  ;; primary routines
 	  
+	  ((genetic-code) (error "option `genetic-code' not implemented")) ; returns genetic code to network (for genetic algorithms)
+
 	  ;; setters
 	  ((set-learning-rate) (set! learning-rate (car args)))
 	  ((set-layers) (set! layers (car args)))
@@ -56,7 +58,7 @@ Usage:
 	  ((get-layers) layers)
 
 	  ;; debugging routines
-	  ((pp-layers) (map pp layers)))))))
+	  ((pp-layers) (map (lambda (layer) (write-string "----------\n") (pp layer)) layers)))))))
 
 
 ;; utility routines
