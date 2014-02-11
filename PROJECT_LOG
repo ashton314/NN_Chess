@@ -1422,3 +1422,10 @@ I'd like to get the project compiling all the way today.
 
 ALRIGHT!! I can play checkers again!
 .
+
+Start: Mon Feb 10 17:24:45 MST 2014
+Stop:
+
+Going to work on debugging the neural network creation routines. I
+think the problem is somewhere in the layer initilization routines.
+.

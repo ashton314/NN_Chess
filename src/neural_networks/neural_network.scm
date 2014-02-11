@@ -68,7 +68,7 @@ Usage:
 	       (loop (car layers) (cdr layers)
 		     (cons (map		                                          ; cons->vector mods here
 			    (lambda (node)
-			      (randomize (make-list (+ previous-input-count 1)))) ; cons->vector mods here
+			      (randomize (make-list (+ previous-input-count 1) 0))) ; cons->vector mods here
 			    (make-list (car layers)))
 			   acc)))
 
@@ -77,7 +77,7 @@ Usage:
 	       (loop (length (car layers)) (cdr layers)
 		     (cons (map
 			    (lambda (node)
-			      (if (not (= (length node) (+ 1 previous-inputs))) ;; bug here (and maybe vector-utils::randomize)
+			      (if (not (= (length node) (+ 1 previous-inputs)))
 				  (error (format #f "too few weights specified in layer ~A (you might have forgotten to account for the bias)" node))
 				  (if (for-all? node (lambda (n) (and (integer? n) (= n 0))))
 				      (randomize node)                            ; cons->vector mods here

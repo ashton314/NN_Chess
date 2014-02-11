@@ -11,15 +11,12 @@
 
 (define (do-tests)
   ;; neural network tests
-  (format #t "GOOD HERE 00\n")
   (let ((test-net (define-ffn .7 2 '(3 2))))
-    (format #t "GOOD HERE 01\n")
     (is (test-net 'get-learning-rate) .7 "learning rate initilized correctly")
     (test-net 'set-learning-rate .5)
     (is (test-net 'get-learning-rate) .5 "learning rate set correctly")
 
     (let ((layers (test-net 'get-layers)))
-      (format #t "GOOD HERE 02\n")
       (is (length layers) 2 "two non-input layers")
       (is (length (car layers)) 3 "three nodes in hidden layers")
       (is (length (cadr layers)) 2 "two output nodes"))
