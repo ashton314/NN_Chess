@@ -64,16 +64,14 @@ Usage:
 
 
 (define-integrable (forward-prop inputs all-layers)
-  (define (loop input layers value-acc)	; values-acc holds node values in REVERSE ORDER
-    (if (null? layers)			; forward pass finished
-	(cons input value-acc)
-	(let ((values (map (lambda (node) ; add bias here -----V
-			     (sigmoid (reduce + 0 (map * (cons 1 inputs) node))))
-			   (car layers))))
-	  (loop values (cdr layers) (cons values values-acc)))))
+  (define (loop input layers values-acc)  ; values-acc holds node values in REVERSE ORDER
+    (if (null? layers)			  ; forward pass finished
+	(cons input values-acc)
+	(let ((vals (map (lambda (node) ; add bias here -----V
+			   (sigmoid (reduce + 0 (map * (cons 1 inputs) node))))
+			 (car layers))))
+	  (loop vals (cdr layers) (cons vals values-acc)))))
   (loop inputs all-layers '()))
-
-
 
 ;; utility routines
 (define-integrable (initialize-layers input-count all-layers)
