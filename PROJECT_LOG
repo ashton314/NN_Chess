@@ -1424,7 +1424,7 @@ ALRIGHT!! I can play checkers again!
 .
 
 Start: Mon Feb 10 17:24:45 MST 2014
-Stop:
+Stop:  Mon Feb 10 18:20:24 MST 2014
 
 Going to work on debugging the neural network creation routines. I
 think the problem is somewhere in the layer initilization routines.
@@ -1433,4 +1433,9 @@ Okay, that bug is fixed. I was calling
   (randomize (make-list <some int>))
 which was passing a list of '() to randomize. The fix:
   (randomize (make-list <some int> 0))
+
+I think I've got the basic neural network creation working. I need to
+test if I can get it to initilize correctly when I specify the
+weights. This will be very important because I will use this feature
+throughout testing.
 .
