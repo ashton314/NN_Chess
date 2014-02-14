@@ -33,7 +33,11 @@
     (test-net 'set-layers '(((.1 .2 .3) (.4 .5 .6) (.2 .8 .4))
 			    ((.5 .3 .2 .6) (.1 .3 .6 .5))))
     (is (test-net 'get-layers) '(((.1 .2 .3) (.4 .5 .6) (.2 .8 .4))
-				 ((.5 .3 .2 .6) (.1 .3 .6 .5))) "layers set/get correctly"))
+				 ((.5 .3 .2 .6) (.1 .3 .6 .5))) "layers set/get correctly")
+    (let ((data (test-net 'run-with-values '(3 5))))
+      (is (car data) '(.8267297672138426 .8116342150555748) "forward prop runs correctly")
+      (is (cdr data) '((.8267297672138426 .8116342150555748)
+		       (.9002495108803148 .9926084586557181 .9900481981330957)) "internal values on forward prop correct")))
 
   (done-testing))
 

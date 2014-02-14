@@ -4,24 +4,36 @@
 
 (load-option 'format)
 (declare (usual-integrations)
+	 (integrate *debug*)
 	 (integrate-external "vector_utilities"))
 
 (define *debug* #f)
 
+(define-syntax debugging
+  (syntax-rules ()
+    ((_ (level) body ...)
+     (if (and *debug* (if (number? *debug*) (<= level *debug*) #t))
+	 (begin body ...)))
+    ((_ (level flag) body ...)
+     (if (or flag
+	     (and *debug* (if (number? *debug*) (<= level *debug*) #t)))
+	 (begin body ...)))))
+
 (define-syntax push!
   (syntax-rules ()
-    ((push! datum place)
+    ((_ datum place)
      (set! place (cons datum place)))))
 
 (define-syntax pop!
   (syntax-rules ()
-    ((pop! place)
+    ((_ place)
      (let ((temp1 (car place)))
        (set! place (cdr place))
        temp1))))
 
 (define-integrable (sigmoid val)
   ;; Sigmoid function
+  (debugging (3 #f) (format #t "SIGMOID: ~A\n" val))
   (/ 1 (+ 1 (exp (- val)))))
 
 (define-integrable (sigmoid-derivitive val)
@@ -65,11 +77,18 @@ Usage:
 
 (define-integrable (forward-prop inputs all-layers)
   (define (loop input layers values-acc)  ; values-acc holds node values in REVERSE ORDER
+    (debugging (2) (format #t "\n##### INPUT: ~A #####\n" input))
     (if (null? layers)			  ; forward pass finished
 	(cons input values-acc)
-	(let ((vals (map (lambda (node) ; add bias here -----V
-			   (sigmoid (reduce + 0 (map * (cons 1 inputs) node))))
+	(let ((vals (map (lambda (node) ; add bias here ---V
+			   (let* ((multiplied (map * (cons 1 input) node))
+				  (summed (reduce + 0 multiplied))
+				  (sigmoided (sigmoid summed)))
+ 			     (debugging (3) (format #t "## 0: ~A\n## 1: ~A\n## *: ~A\n## +: ~A\n## s:~A\n" (cons 1 inputs) node multiplied summed sigmoided))
+			     sigmoided))
 			 (car layers))))
+ 	  (debugging (2)
+		     (format #t "##### LAYER PROCESSED: ~A #####\n" (car layers)))
 	  (loop vals (cdr layers) (cons vals values-acc)))))
   (loop inputs all-layers '()))
 
